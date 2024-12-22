@@ -7,6 +7,35 @@ DomoticSystem::DomoticSystem()
   buildDevices();
 }
 
+void DomoticSystem::setOn(Device& device_) {
+}
+
+void DomoticSystem::setOff(Device& device_) {
+}
+
+void DomoticSystem::setDeviceTimer(Device& device_) {
+}
+
+void DomoticSystem::removeFromRunning(Device& device_) {
+}
+
+void::DomoticSystem::removeFromWaiting(Device& device_) {
+}
+
+// show methods
+
+void DomoticSystem::setTime(Time& time_) {
+}
+
+void DomoticSystem::resetTime() {
+}
+
+void DomoitcSystem::resetTimers() {
+}
+
+void DomoticSystem::resetAll() {
+}
+
 string DomoticSystem::parseTime(string time_) {
   int hours = 0;
   int minutes = 0;
