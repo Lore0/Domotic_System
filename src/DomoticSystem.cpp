@@ -7,10 +7,6 @@ DomoticSystem::DomoticSystem()
   buildDevices();
 }
 
-void DomoticSystem::buildDevices() {
-
-}
-
 string DomoticSystem::parseTime(string time_) {
   int hours = 0;
   int minutes = 0;
