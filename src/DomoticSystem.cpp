@@ -50,10 +50,10 @@ void DomoticSystem::buildDevices() {
 
     // gestione di M o CP
     if (type == "Manuale") {
-      devices.push_back(Manual(id, name, power, NULL, NULL);
+      devices_.push_back(Manual(id, name, power, NULL, NULL);
     } else {
       Time cycleDuration = parseTime(type);
-      devices.push_back(PrefixCycle(id, name, power, cycleDuration, NULL, NULL));
+      devices_.push_back(PrefixCycle(id, name, power, cycleDuration, NULL, NULL));
     }
   }
 
