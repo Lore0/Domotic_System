@@ -1,5 +1,5 @@
-#define DEVICE_H
 #ifndef DEVICE_H
+#define DEVICE_H
 
 class Device
 {
@@ -8,11 +8,11 @@ class Device
         std::string id_;
         double power_;
         bool status_; //on = true , off = false
-        
-    
-    public:
+        Time start_;
+        Time finish_;
         //costruttore
-        Device(const std::string& name, const std::string& id, double power);
+        Device(const std::string& name, const std::string& id, double power, Time start, Time finish);
+    public:
         
         //get
         bool getStatus() const;
@@ -23,11 +23,19 @@ class Device
 
         double getPowerConsumption() const;
 
+        Time getStart() const;
+
+        Time getFinish() const;
+
         //accendo il device
         virtual void turnOn();
 
         //spengo il device
         virtual void turnOff();
+
+        Device(const Device&) = delete;
+
+        Device& operator=(const Device&) = delete
 }
 
 #endif
