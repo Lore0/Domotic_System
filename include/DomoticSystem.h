@@ -1,13 +1,18 @@
 #ifndef DOMOTICSYSTEM_H
 #define DOMOTICSYSTEM_H
 
+#include "Device.h"
+#include "TimeManager.h"
+#include <string>
+#include <vector>
+
 class DomoticSystem {
   public:
     DomoticSystem();
-    void handleInput(std::string input_);
-    vector<Device> devices_;
+    void handleInput(const std::string input_);
+    std::vector<Device> devices_;
   private:
-    TimeManaget timeManager_;
+    TimeManager timeManager_;
     void buildDevices();
     void setOn(Device& device_); // must put null time end
     void setOff(Device& device_); // must set null all time
