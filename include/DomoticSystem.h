@@ -13,6 +13,7 @@ class DomoticSystem {
     std::vector<Device> devices_;
   private:
     TimeManager timeManager_;
+    std::string parseTime(std::string time_);
     void buildDevices();
     void setOn(Device& device_); // must put null time end
     void setOff(Device& device_); // must set null all time
