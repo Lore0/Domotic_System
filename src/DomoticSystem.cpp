@@ -59,3 +59,43 @@ void DomoticSystem::buildDevices() {
 
   file.close();
 }
+
+void DomoticSystem::handleDevices(const std::string input_) {
+  istringstream iss(input_);
+  string command, deviceName;
+  iss >> command;
+
+  if (command == "set") {
+    iss >> deviceName;
+    string action;
+    iss >> action;
+
+    if (action == "on") {
+      setOn(); // pass a Device (search on devices_)
+    } else if (action == "off") {
+      setOff(); // pass a device (dunno if make check)
+    } else {
+      cout << "[Erorre] Comando non riconosciuto" << endl;
+    }
+  } else if (command == "reset") {
+    string target;
+    iss >> target;
+
+    if (target == "time") {
+      resetTime();
+    } else if (target == "timers") {
+      resetTimers();
+    } else if (target == "all") {
+      resetAll();
+    } else {
+      cout << "[Errore] Comando non riconosciuto" << endl;
+    }
+  } else if (command == "show") {
+    // do search method call
+  } else if (command == "rm") {
+    iss >> deviceName;
+    // remove from running or from waiting
+  } else {
+    cout << "[Errore] Comando non riconosciuto" << endl;
+  }
+}
