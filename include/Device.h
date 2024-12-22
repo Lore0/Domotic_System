@@ -8,6 +8,7 @@ class Device
         std::string id_;
         double power_;
         bool status_; //on = true , off = false
+        
     
     public:
         //costruttore
@@ -23,19 +24,10 @@ class Device
         double getPowerConsumption() const;
 
         //accendo il device
-        virtual void turnOn(){
-            status_ = on;
-        }
+        virtual void turnOn();
 
         //spengo il device
-        virtual void turnOff(){
-            status_ = on;
-        }
-
-        
-
-
+        virtual void turnOff();
 }
-
 
 #endif
