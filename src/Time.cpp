@@ -2,23 +2,6 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-/**
-class Time {
-  public:
-    Time(std::string time);
-    Time();
-    void addTime(Time time);
-    void setTime(std::string time);
-    int getHours();
-    int getMinutes();
-    std::string toString();
-    
-  private:
-    int hours;
-    int minutes;
-    void StringToTime(std::string time);
-}
-*/
 
 using namespace std;
 
