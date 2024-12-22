@@ -57,7 +57,7 @@ void DomoticSystem::buildDevices() {
       devices.push_back(Manual(id, name, power, NULL, NULL);
     } else {
       Time cycleDuration = parseTime(type);
-      devces.push_back(PrefixCycle(id, name, power, cycleDuration, NULL, NULL));
+      devices.push_back(PrefixCycle(id, name, power, cycleDuration, NULL, NULL));
     }
   }
 
