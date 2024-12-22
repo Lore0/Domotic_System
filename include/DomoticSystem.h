@@ -15,6 +15,7 @@ class DomoticSystem {
     TimeManager timeManager_;
     std::string parseTime(std::string time_);
     void buildDevices();
+    Device searchDevice(std::string name_);
     void setOn(Device& device_); // must put null time end
     void setOff(Device& device_); // must set null all time
     void setDeviceTimer(Device& device_); // need to set the time on Device class

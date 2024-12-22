@@ -89,6 +89,15 @@ void DomoticSystem::buildDevices() {
   file.close();
 }
 
+Device DomoitcSystem::searchDevice(string name_) {
+  for (Device& d : devices_) {
+    if (d.getName() == name_) {
+      return d;
+    }
+  }
+  return NULL;
+}
+
 void DomoticSystem::handleDevices(const std::string input_) {
   istringstream iss(input_);
   string command, deviceName;
@@ -99,12 +108,23 @@ void DomoticSystem::handleDevices(const std::string input_) {
     string action;
     iss >> action;
 
+    Device d = searchDevice(deviceName);
+
     if (action == "on") {
-      setOn(); // pass a Device (search on devices_)
+      setOn(d); // change Time start to now
     } else if (action == "off") {
-      setOff(); // pass a device (dunno if make check)
+      setOff(d); // change Time end to now
     } else {
-      cout << "[Erorre] Comando non riconosciuto" << endl;
+      string startTime = action;
+      string endTime;
+      if (iss >> endTime) {
+        Manual m(d.getId(), d.getName(), d.getPowerConsumption(), startTime, endTime);
+        // manca check per vedere se é manual 
+        // non posso eseguire questo comando se é CP
+        setDeviceTimer(m);
+      } else {
+        cout << "[Errore] Occorre orario di fine" << endl;
+      }
     }
   } else if (command == "reset") {
     string target;
