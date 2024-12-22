@@ -1,0 +1,10 @@
+Impianto fotovoltaico, Manuale, + 1,5 kW
+Lavatrice, 1 ora e 50 minuti, - 2 kW
+Lavastoviglie, 1 ora e 50 minuti, - 1,5 kW
+Pompa di calore + termostato, Manuale, - 2 kW
+Tapparelle elettriche, 1 minuto, - 0,3 kW
+Scaldabagno, Manuale, - 1 kW
+Frigorifero, Manuale, - 0,4 kW
+Forno a microonde, 2 minuti, - 0,8 kW
+Asciugatrice, 1 ora, - 0,5 kW
+Televisore, 1 ora, - 0,2 kW
