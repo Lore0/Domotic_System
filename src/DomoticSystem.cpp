@@ -148,3 +148,10 @@ void DomoticSystem::handleDevices(const std::string input_) {
     cout << "[Errore] Comando non riconosciuto" << endl;
   }
 }
+
+string DomoticSystem::getCustomInput() {
+  cout << ">> ";
+  string input;
+  getline(cin, input);
+  return input;
+}

@@ -10,8 +10,9 @@
 class DomoticSystem {
   public:
     DomoticSystem();
-    void handleInput(const std::string input_);
     std::vector<Device> devices_;
+    void handleInput(const std::string input_);
+    std::string getCustomInput();
   private:
     TimeManager timeManager_;
     std::string parseTime(std::string time_);
