@@ -3,6 +3,7 @@
 
 #include "Device.h"
 #include "TimeManager.h"
+#include "Time.h"
 #include <string>
 #include <vector>
 

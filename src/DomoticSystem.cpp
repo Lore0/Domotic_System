@@ -81,7 +81,7 @@ void DomoticSystem::buildDevices() {
     if (type == "Manuale") {
       devices_.push_back(Manual(id, name, power, NULL, NULL);
     } else {
-      Time cycleDuration = parseTime(type);
+      Time cycleDuration(parseTime(type));
       devices_.push_back(PrefixCycle(id, name, power, cycleDuration, NULL, NULL));
     }
   }
