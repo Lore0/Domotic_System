@@ -12,7 +12,7 @@ class Time {
     class Invalid{};
     Time(std::string time);
     Time();
-    void addTime(Time time);
+    Time addTime(Time time);
     void setTime(std::string time);
     int getHours();
     int getMinutes();

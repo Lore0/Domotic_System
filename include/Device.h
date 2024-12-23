@@ -1,5 +1,7 @@
 #ifndef DEVICE_H
 #define DEVICE_H
+#include <string>
+#include "Time.h"
 
 class Device
 {
@@ -11,7 +13,7 @@ class Device
         Time start_;
         Time finish_;
         //costruttore
-        Device(const std::string& name, const std::string& id, double power, Time start, Time finish);
+        Device(const std::string& id, const std::string& name, double power, Time start, Time finish);
     public:
         
         //get
@@ -28,14 +30,14 @@ class Device
         Time getFinish() const;
 
         //accendo il device
-        virtual void turnOn();
+        void turnOn();
 
         //spengo il device
-        virtual void turnOff();
+        void turnOff();
 
         Device(const Device&) = delete;
 
-        Device& operator=(const Device&) = delete
-}
+        Device& operator=(const Device&) = delete;
+};
 
 #endif

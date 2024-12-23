@@ -25,6 +25,6 @@ class DomoticSystem {
     void resetTime();
     void resetTimers();
     void resetAll(); // call resetTime and resetTimers
-}
+};
 
 #endif // DOMOTICSYSTEM_H

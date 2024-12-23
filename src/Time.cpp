@@ -1,24 +1,6 @@
 #include "../include/Time.h"
 #include <string>
-#include <iostream>
 #include <sstream>
-/**
-class Time {
-  public:
-    Time(std::string time);
-    Time();
-    void addTime(Time time);
-    void setTime(std::string time);
-    int getHours();
-    int getMinutes();
-    std::string toString();
-    
-  private:
-    int hours;
-    int minutes;
-    void StringToTime(std::string time);
-}
-*/
 
 using namespace std;
 
@@ -46,11 +28,12 @@ void Time::StringToTime(string time){
   minutes_ = minutes;
 }
 
-void Time::addTime(Time time){
+Time Time::addTime(Time time){
   minutes_ += time.minutes_;
   hours_ += time.hours_ + (minutes_/60);
   minutes_ %= 60;
   hours_ %= 24;
+  return *this;
 }
 
 int Time::getHours(){
@@ -65,6 +48,7 @@ void Time::setTime(string time){
   StringToTime(time);
 }
 
-string Time::to_string(){
-  return;
+string Time::to_string(){ //TODO
+  return "A";
+
 }

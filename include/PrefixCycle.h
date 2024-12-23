@@ -7,7 +7,7 @@ class PrefixCycle : public Device{
     private:
         Time cycleDuration_;
     public:
-        PrefixCycle(const std::string& name, const std::string& id, double power, Time cycleDuration, Time start, Time finish);
-}
+        PrefixCycle(const std::string& id, const std::string& name, double power, Time cycleDuration, Time start);
+};
 
 #endif

@@ -1,13 +1,15 @@
 #ifndef DOMOTICSYSTEM_H
 #define DOMOTICSYSTEM_H
+#include <vector>
+#include "Device.h"
 
 class TimeManager {
   public:
     // implement methods
   private:
-    vectro<Device> running_;
-    vectro<Device> waiting_;
-    vectro<Device> finished_;
-}
+    std::vector<Device> running_;
+    std::vector<Device> waiting_;
+    std::vector<Device> finished_;
+};
 
 #endif // DOMOTICSYSTEM_H

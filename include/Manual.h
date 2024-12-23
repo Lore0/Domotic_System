@@ -4,9 +4,8 @@
 #include "Device.h"
 
 class Manual : public Device{
-    private:
     public:
-        Manual(const std::string& name, const std::string& id, double power, Time start, Time finish);
-}
+        Manual(const std::string& id, const std::string& name, double power, Time start, Time finish);
+};
 
 #endif
