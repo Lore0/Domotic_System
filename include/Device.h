@@ -13,9 +13,8 @@ class Device
         Time start_;
         Time finish_;
         //costruttore
-        Device(const std::string& id, const std::string& name, double power, Time start, Time finish);
+        Device(const std::string& name, const std::string& id, double power, Time start, Time finish);
     public:
-        
         //get
         bool getStatus() const;
 
