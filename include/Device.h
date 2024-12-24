@@ -3,40 +3,39 @@
 #include <string>
 #include "Time.h"
 
-class Device
-{
-    protected:
-        std::string name_;
-        std::string id_;
-        double power_;
-        bool status_; //on = true , off = false
-        Time start_;
-        Time finish_;
-        //costruttore
-        Device(const std::string& name, const std::string& id, double power, Time start, Time finish);
-    public:
-        //get
-        bool getStatus() const;
+class Device {
+  protected:
+    std::string name_;
+    std::string id_;
+    double power_;
+    bool status_; //on = true , off = false
+    Time start_;
+    Time finish_;
+    //costruttore
+    Device(const std::string& name, const std::string& id, double power, Time start, Time finish);
+  public:
+    //get
+    bool getStatus() const;
 
-        const std::string& getName() const;
+    const std::string& getName() const;
 
-        const std::string& getId() const;
+    const std::string& getId() const;
 
-        double getPowerConsumption() const;
+    double getPowerConsumption() const;
 
-        Time getStart() const;
+    Time getStart() const;
 
-        Time getFinish() const;
+    Time getFinish() const;
 
-        //accendo il device
-        void turnOn();
+    //accendo il device
+    void turnOn();
 
-        //spengo il device
-        void turnOff();
+    //spengo il device
+    void turnOff();
 
-        Device(const Device&) = delete;
+    Device(const Device&) = delete;
 
-        Device& operator=(const Device&) = delete;
+    Device& operator=(const Device&) = delete;
 };
 
 #endif

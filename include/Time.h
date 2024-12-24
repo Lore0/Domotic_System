@@ -20,5 +20,3 @@ class Time {
 };
 
 #endif // !#ifndef TIME_H TIME_H
-
-
