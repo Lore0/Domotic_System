@@ -100,13 +100,20 @@ void DomoticSystem::buildDevices() {
 }
 
 Device DomoitcSystem::searchDevice(string name_) {
-  for (Device& d : devices_) {
-    if (d.getName() == name_) {
-      return d;
+  Device& foundDevice == NULL;
+  while (founDevice == NULL) {
+    for (Device& d : devices_) {
+      if (d.getName() == name_) {
+        foundDevice = d;
+        break;
+      }
+    }
+    if (foundDevice == NULL) {
+      cout << "[Errore] Dispositivo non trovato, ora inserisci SOLO il nome del dispositivo" << endl;
+      name_ = getCustomInput();
     }
   }
-  // check if exists
-  return NULL;
+  return foundDevice;
 }
 
 void DomoticSystem::handleDevices(const std::string input_) {
