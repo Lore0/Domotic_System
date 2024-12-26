@@ -1,7 +1,8 @@
-#ifndef DOMOTICSYSTEM_H
-#define DOMOTICSYSTEM_H
-#include <vector>
+#ifndef TIMEMANAGER_H
+#define TIMEMANAGER_H
+
 #include "Device.h"
+#include <vector>
 
 class TimeManager {
   public:
