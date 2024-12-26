@@ -105,6 +105,7 @@ Device DomoitcSystem::searchDevice(string name_) {
       return d;
     }
   }
+  // check if exists
   return NULL;
 }
 
@@ -121,12 +122,13 @@ void DomoticSystem::handleDevices(const std::string input_) {
     Device d = searchDevice(deviceName);
 
     if (action == "on") {
-      setOn(d); // change Time start to now
+      setOn(d);
     } else if (action == "off") {
-      setOff(d); // change Time end to now
+      setOff(d);
     } else if (action == "time") {
       string time;
       iss >> time;
+      // check if time is valid
       Time t(time);
       setTime(t);
     } else {
