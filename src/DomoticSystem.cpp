@@ -160,8 +160,8 @@ void DomoticSystem::handleDevices(const std::string input_) {
     // do search method call
   } else if (command == "rm") {
     iss >> deviceName;
-    // remove from running or from waiting
-    // in base a Device (check se é ON (running) o OFF(waiting))
+    Device d = searchDevice(deviceName);
+    d.getStatus() == "ON" ? removeFromRunning(d) : removeFromWaiting(d);
   } else {
     cout << "[Errore] Comando non riconosciuto" << endl;
   }
