@@ -9,33 +9,41 @@ DomoticSystem::DomoticSystem()
 }
 
 void DomoticSystem::setOn(Device& device_) {
-  //tm.setOn();
+  tm.setOn(device_);
 }
 
 void DomoticSystem::setOff(Device& device_) {
+  tm.setOff(device_);
 }
 
 void DomoticSystem::setDeviceTimer(Device& device_) {
+  tm.setTimer(device_);
 }
 
 void DomoticSystem::removeFromRunning(Device& device_) {
+  tm.removeFromRunning(device_);
 }
 
 void::DomoticSystem::removeFromWaiting(Device& device_) {
+  tm.removeFromWaiting(device_);
 }
 
 // show methods
 
 void DomoticSystem::setTime(Time& time_) {
+  tm.setTime(time_);
 }
 
 void DomoticSystem::resetTime() {
+  tm.resetTime();
 }
 
 void DomoitcSystem::resetTimers() {
+  tm.resetTimers();
 }
 
 void DomoticSystem::resetAll() {
+  tm.resetAll();
 }
 
 string DomoticSystem::parseTime(string time_) {
