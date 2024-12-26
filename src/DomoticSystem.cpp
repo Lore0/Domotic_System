@@ -109,8 +109,7 @@ Device DomoitcSystem::searchDevice(string name_) {
       }
     }
     if (foundDevice == NULL) {
-      cout << "[Errore] Dispositivo non trovato, ora inserisci SOLO il nome del dispositivo" << endl;
-      name_ = getCustomInput();
+      cout << "[Errore] Dispositivo non trovato" << endl;
     }
   }
   return foundDevice;
@@ -129,9 +128,17 @@ void DomoticSystem::handleDevices(const std::string input_) {
     Device d = searchDevice(deviceName);
 
     if (action == "on") {
-      setOn(d);
+      if (d.getStatus()) {
+        cout << "[Errore] Dispositivo già acceso" << endl;
+      } else {
+        setOn(d);
+      }
     } else if (action == "off") {
-      setOff(d);
+      if (!d.getStatus()) {
+        cout << "[Errore] Dispositivo già spento o mai acceso" << endl;
+      } else {
+        setOff(d);
+      }
     } else if (action == "time") {
       string time;
       iss >> time;
