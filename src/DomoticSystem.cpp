@@ -5,9 +5,11 @@ using namespace std;
 DomoticSystem::DomoticSystem()
 {
   buildDevices();
+  TimeManager tm;
 }
 
 void DomoticSystem::setOn(Device& device_) {
+  //tm.setOn();
 }
 
 void DomoticSystem::setOff(Device& device_) {
@@ -114,12 +116,17 @@ void DomoticSystem::handleDevices(const std::string input_) {
       setOn(d); // change Time start to now
     } else if (action == "off") {
       setOff(d); // change Time end to now
+    } else if (action == "time") {
+      string time;
+      iss >> time;
+      Time t(time);
+      setTime(t);
     } else {
       string startTime = action;
       string endTime;
       if (iss >> endTime) {
         Manual m(d.getId(), d.getName(), d.getPowerConsumption(), startTime, endTime);
-        // manca check per vedere se é manual 
+        // manca check per vedere se é manual
         // non posso eseguire questo comando se é CP
         setDeviceTimer(m);
       } else {
@@ -144,6 +151,7 @@ void DomoticSystem::handleDevices(const std::string input_) {
   } else if (command == "rm") {
     iss >> deviceName;
     // remove from running or from waiting
+    // in base a Device (check se é ON (running) o OFF(waiting))
   } else {
     cout << "[Errore] Comando non riconosciuto" << endl;
   }
