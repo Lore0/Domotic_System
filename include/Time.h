@@ -19,4 +19,8 @@ class Time {
     std::string to_string();
 };
 
+bool operator>(Time t1, Time t2);
+bool operator<(Time t1, Time t2);
+bool operator==(Time t1, Time t2);
+
 #endif // !#ifndef TIME_H TIME_H

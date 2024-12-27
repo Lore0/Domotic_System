@@ -52,3 +52,41 @@ string Time::to_string(){ //TODO
   return "A";
 
 }
+
+bool operator>(Time t1, Time t2){
+  if(t1.getHours() == t2.getHours()){
+    if(t1.getMinutes() > t2.getMinutes()){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  if(t1.getHours() > t2.getHours()){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+bool operator<(Time t1, Time t2){
+  if(t1.getHours() == t2.getHours()){
+    if(t1.getMinutes() < t2.getMinutes()){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  if(t1.getHours() < t2.getHours()){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+bool operator==(Time t1, Time t2){
+  if(t1.getHours() == t2.getHours() && t1.getMinutes() == t2.getMinutes()){
+    return true;
+  }else{
+    return false;
+  }
+}
