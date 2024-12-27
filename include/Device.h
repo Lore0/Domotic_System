@@ -9,10 +9,8 @@ class Device {
     std::string id_;
     double power_;
     bool status_; //on = true , off = false
-    Time start_;
-    Time finish_;
     //costruttore
-    Device(const std::string& name, const std::string& id, double power, Time start, Time finish);
+    Device(const std::string& id, const std::string& name, double power);
   public:
     //get
     bool getStatus() const;
@@ -22,10 +20,6 @@ class Device {
     const std::string& getId() const;
 
     double getPowerConsumption() const;
-
-    Time getStart() const;
-
-    Time getFinish() const;
 
     //accendo il device
     void turnOn();
