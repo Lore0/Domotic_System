@@ -149,12 +149,24 @@ void DomoticSystem::handleDevices(const std::string input_) {
       string startTime = action;
       string endTime;
       if (iss >> endTime) {
-        Manual m(d.getId(), d.getName(), d.getPowerConsumption(), startTime, endTime);
-        // manca check per vedere se é manual
-        // non posso eseguire questo comando se é CP
-        setDeviceTimer(m);
+        if (Manual* m = dynamic_cast<Manual*>(&d)) {
+          Time start(startTime);
+          Time end(endTime);
+          Manual m(d.getId(), d.getName(), d.getPowerConsumption(), start, end);
+          setDeviceTimer(m);
+        } else {
+          cout << "[Errore] Non puoi dare orario di fine ad un device CP" << endl;
+        }
       } else {
-        cout << "[Errore] Occorre orario di fine" << endl;
+        if (Manual* m = dynamic_cast<Manual*>(&d)) {
+          Time t(startTime);
+          m.setStart(t);
+          setDeviceTimer(m);
+        } else {
+          PrefixCycle* p = dynamic_cast<PrefixCycle*>(&d);
+          // need to set start time on p
+          setDeviceTimer(p);
+        }
       }
     }
   } else if (command == "reset") {
