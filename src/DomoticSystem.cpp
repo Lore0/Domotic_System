@@ -69,7 +69,7 @@ string DomoticSystem::parseTime(string time_) {
 void DomoticSystem::buildDevices() {
   ifstream file("devices.txt");
   if (!file.is_open()) {
-    cout << "Errore: impossibile aprire il file " << file.name() << endl;
+    cout << "Errore: impossibile aprire il file " << "devices.txt" << endl;
     return;
   }
 
@@ -77,7 +77,6 @@ void DomoticSystem::buildDevices() {
   while (getline(file, line)) {
     stringstream ss(line);
     string id, name, type, pow;
-    double power_;
 
     // leggo dati separati da virgola
     getline(ss, id, ',');
@@ -85,7 +84,7 @@ void DomoticSystem::buildDevices() {
     getline(ss, type, ',');
     getline(ss, pow, ',');
 
-    power = stod(pow);
+    double power = stod(pow);
 
     // gestione di M o CP
     if (type == "Manuale") {
@@ -100,7 +99,7 @@ void DomoticSystem::buildDevices() {
 }
 
 Device DomoitcSystem::searchDevice(string name_) {
-  Device& foundDevice == NULL;
+  Device& foundDevice = NULL;
   while (founDevice == NULL) {
     for (Device& d : devices_) {
       if (d.getName() == name_) {
