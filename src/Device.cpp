@@ -31,8 +31,6 @@ Time Device::getFinish(){
     return finish_;
 }
 
-/**/
-
 double Device::getPowerConsumption() const{
     return power_;
 }
