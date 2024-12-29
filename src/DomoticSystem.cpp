@@ -117,22 +117,6 @@ Device* DomoticSystem::searchDevice(string name_) {
   return nullptr; // Return nullptr if the device is not found
 }
 
-// Device DomoticSystem::searchDevice(string name_) {
-//   Device& foundDevice = NULL;
-//   while (founDevice == NULL) {
-//     for (Device& d : devices_) {
-//       if (d.getName() == name_) {
-//         foundDevice = d;
-//         break;
-//       }
-//     }
-//     if (foundDevice == NULL) {
-//       cout << "[Errore] Dispositivo non trovato" << endl;
-//     }
-//   }
-//   return foundDevice;
-// }
-
 void DomoticSystem::handleInput(const std::string input_) {
   istringstream iss(input_);
   string command, deviceName;
