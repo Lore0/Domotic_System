@@ -14,7 +14,8 @@ class Device {
     //costruttore
     Device(const std::string& id, const std::string& name, double power, Time start, Time finish);
   public:
-    virtual ~Device() = default; // distruttore virtuale (per dynamic cast)
+    // distruttore virtuale (per dynamic cast)
+    virtual ~Device() = default;
 
     //get
     bool getStatus() const;
