@@ -5,45 +5,45 @@ using namespace std;
 DomoticSystem::DomoticSystem()
 {
   buildDevices();
-  Scheduler tm;
+  Scheduler s;
 }
 
 void DomoticSystem::setOn(Device& device_) {
-  tm.setOn(device_);
+  s.setOn(device_);
 }
 
 void DomoticSystem::setOff(Device& device_) {
-  tm.setOff(device_);
+  s.setOff(device_);
 }
 
 void DomoticSystem::setDeviceTimer(Device& device_) {
-  tm.setDeviceTimer(device_);
+  s.setDeviceTimer(device_);
 }
 
 void DomoticSystem::removeFromRunning(Device& device_) {
-  tm.removeFromRunning(device_);
+  s.removeFromRunning(device_);
 }
 
 void::DomoticSystem::removeFromWaiting(Device& device_) {
-  tm.removeFromWaiting(device_);
+  s.removeFromWaiting(device_);
 }
 
 // show methods
 
 void DomoticSystem::setTime(Time& time_) {
-  tm.setTime(time_);
+  s.setTime(time_);
 }
 
 void DomoticSystem::resetTime() {
-  tm.resetTime();
+  s.resetTime();
 }
 
 void DomoitcSystem::resetTimers() {
-  tm.resetTimers();
+  s.resetTimers();
 }
 
 void DomoticSystem::resetAll() {
-  tm.resetAll();
+  s.resetAll();
 }
 
 string DomoticSystem::parseTime(string time_) {
