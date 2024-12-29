@@ -17,7 +17,7 @@ void DomoticSystem::setOff(Device& device_) {
 }
 
 void DomoticSystem::setDeviceTimer(Device& device_) {
-  tm.setTimer(device_);
+  tm.setDeviceTimer(device_);
 }
 
 void DomoticSystem::removeFromRunning(Device& device_) {
