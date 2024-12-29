@@ -95,12 +95,14 @@ void DomoticSystem::buildDevices() {
 
     double power = stod(pow);
 
+    Time null("-1");
+
     // gestione di M o CP
     if (type == "Manuale") {
-      devices_.push_back(Manual(id, name, power, -1, -1));
+      devices_.push_back(Manual(id, name, power, null, null));
     } else {
       Time cycleDuration(parseTime(type));
-      devices_.push_back(PrefixCycle(id, name, power, -1, cycleDuration));
+      devices_.push_back(PrefixCycle(id, name, power, null, cycleDuration));
     }
   }
 
@@ -152,18 +154,16 @@ void DomoticSystem::handleInput(const std::string input_) {
       string endTime;
       if (iss >> endTime) {
         if (Manual* m = dynamic_cast<Manual*>(d)) {
-          Time start(startTime);
-          Time end(endTime);
-          m->setStart(start);
-          m->setFinish(end);
+          // need to check if time is valid input
+          m->setStart(Time(startTime));
+          m->setFinish(Time(endTime));
           setDeviceTimer(*m);
         } else {
           cout << "[Errore] Non puoi dare orario di fine ad un device CP" << endl;
         }
       } else {
         if (Manual* m = dynamic_cast<Manual*>(d)) {
-          Time t(startTime);
-          m->setStart(t);
+          m->setStart(Time(startTime));
           setDeviceTimer(*m);
         } else {
           PrefixCycle* p = dynamic_cast<PrefixCycle*>(d);
