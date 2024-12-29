@@ -2,48 +2,49 @@
 
 using namespace std;
 
-DomoticSystem::DomoticSystem()
+DomoticSystem::DomoticSystem(Scheduler s)
 {
   buildDevices();
-  Scheduler s;
+  scheduler_ = s;
 }
 
 void DomoticSystem::setOn(Device& device_) {
-  s.setOn(device_);
+  scheduler_.setOn(device_);
 }
 
 void DomoticSystem::setOff(Device& device_) {
-  s.setOff(device_);
+  scheduler_.setOff(device_);
 }
 
 void DomoticSystem::setDeviceTimer(Device& device_) {
-  s.setDeviceTimer(device_);
+  scheduler_.setDeviceTimer(device_);
 }
 
 void DomoticSystem::removeFromRunning(Device& device_) {
-  s.removeFromRunning(device_);
+  setOff(device_);
 }
 
 void::DomoticSystem::removeFromWaiting(Device& device_) {
-  s.removeFromWaiting(device_);
+  scheduler_.removeFromWaiting(device_);
 }
 
 // show methods
 
 void DomoticSystem::setTime(Time& time_) {
-  s.setTime(time_);
+  scheduler_.setTime(time_);
 }
 
 void DomoticSystem::resetTime() {
-  s.resetTime();
+  scheduler_.resetTime();
 }
 
-void DomoitcSystem::resetTimers() {
-  s.resetTimers();
+void DomoticSystem::resetTimers() {
+  scheduler_.resetTimers();
 }
 
 void DomoticSystem::resetAll() {
-  s.resetAll();
+  resetTimers();
+  resetTime();
 }
 
 string DomoticSystem::parseTime(string time_) {
