@@ -9,9 +9,9 @@
 using namespace std;
 
 DomoticSystem::DomoticSystem(Scheduler s)
+  : scheduler_(s)
 {
   buildDevices();
-  scheduler_ = s;
 }
 
 void DomoticSystem::setOn(Device& device_) {
