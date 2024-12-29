@@ -1,11 +1,19 @@
 #include "../include/DomoticSystem.h"
+#include "../include/Manual.h"
+#include "../include/PrefixCycle.h"
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <vector>
 
 using namespace std;
 
 DomoticSystem::DomoticSystem(Scheduler s)
+  : scheduler_(s)
 {
   buildDevices();
-  scheduler_ = s;
 }
 
 void DomoticSystem::setOn(Device& device_) {
@@ -89,33 +97,27 @@ void DomoticSystem::buildDevices() {
 
     // gestione di M o CP
     if (type == "Manuale") {
-      devices_.push_back(Manual(id, name, power, NULL, NULL);
+      devices_.push_back(Manual(id, name, power, -1, -1));
     } else {
       Time cycleDuration(parseTime(type));
-      devices_.push_back(PrefixCycle(id, name, power, cycleDuration, NULL, NULL));
+      devices_.push_back(PrefixCycle(id, name, power, -1, cycleDuration));
     }
   }
 
   file.close();
 }
 
-Device DomoitcSystem::searchDevice(string name_) {
-  Device& foundDevice = NULL;
-  while (founDevice == NULL) {
-    for (Device& d : devices_) {
-      if (d.getName() == name_) {
-        foundDevice = d;
-        break;
-      }
-    }
-    if (foundDevice == NULL) {
-      cout << "[Errore] Dispositivo non trovato" << endl;
+Device* DomoticSystem::searchDevice(string name_) {
+  for (Device& d : devices_) {
+    if (d.getName() == name_) {
+      return &d; // Return the address of the found device
     }
   }
-  return foundDevice;
+  cout << "[Errore] Dispositivo non trovato" << endl;
+  return nullptr; // Return nullptr if the device is not found
 }
 
-void DomoticSystem::handleDevices(const std::string input_) {
+void DomoticSystem::handleInput(const std::string input_) {
   istringstream iss(input_);
   string command, deviceName;
   iss >> command;
@@ -125,19 +127,19 @@ void DomoticSystem::handleDevices(const std::string input_) {
     string action;
     iss >> action;
 
-    Device d = searchDevice(deviceName);
+    Device* d = searchDevice(deviceName);
 
     if (action == "on") {
-      if (d.getStatus()) {
+      if (d->getStatus()) {
         cout << "[Errore] Dispositivo già acceso" << endl;
       } else {
-        setOn(d);
+        setOn(*d);
       }
     } else if (action == "off") {
-      if (!d.getStatus()) {
+      if (!d->getStatus()) {
         cout << "[Errore] Dispositivo già spento o mai acceso" << endl;
       } else {
-        setOff(d);
+        setOff(*d);
       }
     } else if (action == "time") {
       string time;
@@ -149,22 +151,24 @@ void DomoticSystem::handleDevices(const std::string input_) {
       string startTime = action;
       string endTime;
       if (iss >> endTime) {
-        if (Manual* m = dynamic_cast<Manual*>(&d)) {
+        if (Manual* m = dynamic_cast<Manual*>(d)) {
           Time start(startTime);
           Time end(endTime);
-          Manual m(d.getId(), d.getName(), d.getPowerConsumption(), start, end);
-          setDeviceTimer(m);
+          m->setStart(start);
+          m->setFinish(end);
+          setDeviceTimer(*m);
         } else {
           cout << "[Errore] Non puoi dare orario di fine ad un device CP" << endl;
         }
       } else {
-        if (Manual* m = dynamic_cast<Manual*>(&d)) {
+        if (Manual* m = dynamic_cast<Manual*>(d)) {
           Time t(startTime);
-          m.setStart(t);
-          setDeviceTimer(m);
+          m->setStart(t);
+          setDeviceTimer(*m);
         } else {
-          PrefixCycle* p = dynamic_cast<PrefixCycle*>(&d);
-          setDeviceTimer(p);
+          PrefixCycle* p = dynamic_cast<PrefixCycle*>(d);
+          p->setStartFinish(Time(startTime));
+          setDeviceTimer(*p);
         }
       }
     }
@@ -185,8 +189,8 @@ void DomoticSystem::handleDevices(const std::string input_) {
     // do search method call
   } else if (command == "rm") {
     iss >> deviceName;
-    Device d = searchDevice(deviceName);
-    d.getStatus() == "ON" ? removeFromRunning(d) : removeFromWaiting(d);
+    Device* d = searchDevice(deviceName);
+    d->getStatus() == true ? removeFromRunning(*d) : removeFromWaiting(*d);
   } else {
     cout << "[Errore] Comando non riconosciuto" << endl;
   }
