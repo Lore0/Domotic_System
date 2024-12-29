@@ -163,7 +163,6 @@ void DomoticSystem::handleDevices(const std::string input_) {
           setDeviceTimer(m);
         } else {
           PrefixCycle* p = dynamic_cast<PrefixCycle*>(&d);
-          // need to set start time on p
           setDeviceTimer(p);
         }
       }
