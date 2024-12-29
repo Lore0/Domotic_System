@@ -1,5 +1,11 @@
 #include "../include/DomoticSystem.h"
 
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <vector>
+
 using namespace std;
 
 DomoticSystem::DomoticSystem(Scheduler s)
@@ -99,7 +105,7 @@ void DomoticSystem::buildDevices() {
   file.close();
 }
 
-Device DomoitcSystem::searchDevice(string name_) {
+Device DomoticSystem::searchDevice(string name_) {
   Device& foundDevice = NULL;
   while (founDevice == NULL) {
     for (Device& d : devices_) {
@@ -115,7 +121,7 @@ Device DomoitcSystem::searchDevice(string name_) {
   return foundDevice;
 }
 
-void DomoticSystem::handleDevices(const std::string input_) {
+void DomoticSystem::handleInput(const std::string input_) {
   istringstream iss(input_);
   string command, deviceName;
   iss >> command;
@@ -186,7 +192,7 @@ void DomoticSystem::handleDevices(const std::string input_) {
   } else if (command == "rm") {
     iss >> deviceName;
     Device d = searchDevice(deviceName);
-    d.getStatus() == "ON" ? removeFromRunning(d) : removeFromWaiting(d);
+    d.getStatus() == true ? removeFromRunning(d) : removeFromWaiting(d);
   } else {
     cout << "[Errore] Comando non riconosciuto" << endl;
   }
