@@ -29,6 +29,7 @@ void Time::StringToTime(string time){
 }
 
 Time Time::addTime(Time time){
+  if(time.getHours()==-1) return *this;
   minutes_ += time.minutes_;
   hours_ += time.hours_ + (minutes_/60);
   minutes_ %= 60;

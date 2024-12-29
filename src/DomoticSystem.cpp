@@ -5,7 +5,7 @@ using namespace std;
 DomoticSystem::DomoticSystem()
 {
   buildDevices();
-  TimeManager tm;
+  Scheduler tm;
 }
 
 void DomoticSystem::setOn(Device& device_) {

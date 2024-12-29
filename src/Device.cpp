@@ -3,11 +3,13 @@
 
 using namespace std;
 
-Device::Device(const string& id, const string& name, double power)
+Device::Device(const string& id, const string& name, double power, Time start, Time finish)
     :   id_(id),
         name_(name),
         power_(power),
-        status_(false)
+        status_(false),
+        start_(start),
+        finish_(finish)
 {
     //left intentionally blank
 }
@@ -20,6 +22,16 @@ const string& Device::getId() const{
 const string& Device::getName() const{
     return name_;
 }
+
+Time Device::getStart(){
+    return start_;
+}
+
+Time Device::getFinish(){
+    return finish_;
+}
+
+/**/
 
 double Device::getPowerConsumption() const{
     return power_;

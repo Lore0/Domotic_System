@@ -2,7 +2,7 @@
 #define DOMOTICSYSTEM_H
 
 #include "Device.h"
-#include "TimeManager.h"
+#include "Scheduler.h"
 #include "Time.h"
 #include <string>
 #include <vector>
@@ -14,7 +14,7 @@ class DomoticSystem {
     void handleInput(const std::string input_);
     std::string getCustomInput();
   private:
-    TimeManager timeManager_;
+    Scheduler scheduler_;
     std::string parseTime(std::string time_);
     void buildDevices();
     Device searchDevice(std::string name_);
