@@ -18,7 +18,6 @@ const string& Device::getId() const{
     return id_;
 }
 
-
 const string& Device::getName() const{
     return name_;
 }
@@ -53,4 +52,12 @@ void Device::turnOff(){
         return;
     }
     status_ = false;
+}
+
+bool operator==(Device d1, Device d2){
+    if(d1.getId().compare(d2.getId()) != 0){
+        return false;
+    }else{
+        return true;
+    }
 }

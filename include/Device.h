@@ -11,12 +11,11 @@ class Device {
     bool status_; //on = true , off = false
     Time start_;
     Time finish_;
+
+  public:
     //costruttore
     Device(const std::string& id, const std::string& name, double power, Time start, Time finish);
-  public:
-    // distruttore virtuale (per dynamic cast)
-    virtual ~Device() = default;
-
+    
     //get
     bool getStatus() const;
 
@@ -30,6 +29,8 @@ class Device {
 
     double getPowerConsumption() const;
 
+   
+
     //accendo il device
     void turnOn();
 
@@ -39,6 +40,10 @@ class Device {
     Device(const Device&) = delete;
 
     Device& operator=(const Device&) = delete;
+
+    virtual ~Device() = default;
 };
+
+bool operator==(Device d1, Device d2);
 
 #endif
