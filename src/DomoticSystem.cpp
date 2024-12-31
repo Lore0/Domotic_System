@@ -187,7 +187,7 @@ void DomoticSystem::handleInput(const std::string input_) {
     }
   } else if (command == "show") {
     // do search method call
-  } else if (command == "rm") {
+  } else if (command == "rm") {   //NO, DEVE RIMUOVERE IL TIMER NO IL DISPOSITIVO
     iss >> deviceName;
     Device* d = searchDevice(deviceName);
     d->getStatus() == true ? removeFromRunning(*d) : removeFromWaiting(*d);

@@ -21,6 +21,7 @@ class Scheduler {
   private:
     const int MAX_POWER;
     int inUsePower;
+    Time currTime;
     std::vector<Device> running_;
     std::vector<Device> waiting_;
     std::vector<Device> finished_;
