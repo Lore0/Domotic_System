@@ -8,7 +8,7 @@ PrefixCycle::PrefixCycle(const std::string& id, const std::string& name, double 
     //left intentionally blank
 }
 
-void PrefixCycle::setStart(Time start){
+void PrefixCycle::setStartFinish(Time start){
     start_ = start;
     finish_ = start.addTime(getDuration());
 }

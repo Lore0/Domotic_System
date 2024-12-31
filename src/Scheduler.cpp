@@ -49,10 +49,18 @@ void Scheduler::setDeviceTimer(Device &device)
     waiting_.insert(waiting_.begin() + i, device);
 }
 
-void Scheduler::removeFromWaiting(Device &device) {
+void Scheduler::removeTimerFromWaiting(Device &device) {     //toglie il timer da waiting
     int targetIndex = search(waiting_, device);
     if(targetIndex==-1) return;
     waiting_.erase(waiting_.begin() + targetIndex);
+}
+
+void Scheduler::removeTimerFromRunning(Device &device) {     //toglie il timer da running --> va all'infinito
+    int targetIndex = search(running_, device);
+    if(targetIndex==-1) return;
+    int i=running_.size();
+    while(i>=0&&running_.at(i).getFinish()>Time("24:00"))   i--;
+    swap(running_[targetIndex], running_[i]);
 }
 // show
 // showdevice;

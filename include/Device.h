@@ -29,7 +29,8 @@ class Device {
 
     double getPowerConsumption() const;
 
-   
+    void setStart(Time start);
+    void setFinish(Time finish);
 
     //accendo il device
     void turnOn();

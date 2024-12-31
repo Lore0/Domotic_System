@@ -38,6 +38,14 @@ bool Device::getStatus() const{
     return status_;
 }
 
+void Device::setStart(Time start){
+    start_ = start;
+}
+
+void Device::setFinish(Time finish){
+    finish_ = finish;
+}
+
 void Device::turnOn(){
     if(status_ == true){
         cout<<"The device is already ON. \n";

@@ -10,8 +10,8 @@ class Scheduler {
     void setOn(Device& device_);
     void setOff(Device& device_);
     void setDeviceTimer(Device& device_);
-    //void removeFromRunning(Device& device_);  
-    void removeFromWaiting(Device& device_);
+    void removeTimerFromRunning(Device& device_);  
+    void removeTimerFromWaiting(Device& device_);
     //show
     //showdevice;
     void setTime(Time& time_);
