@@ -1,20 +1,23 @@
 ### Struttura progetto
 
 ```
-Domotic System:
-- include/
-  - Device.h
-  - Manual.h
-  - PrefixCycle.h
-  - TimeManager.h
-  - DomoticSystem.h
-  - Time.h
-- src/
-  - Device.cpp
-  - Manual.cpp
-  - PrefixCycle.cpp
-  - TimeManager.cpp
-  - DomoticSystem.cpp
-  - Time.cpp
-  - main.cpp
+*Domotic System*:
+├── README.md
+├── docs
+│   ├── device.txt
+│   └── progetto.pdf
+├── include
+│   ├── Device.h
+│   ├── DomoticSystem.h
+│   ├── Manual.h
+│   ├── PrefixCycle.h
+│   ├── Scheduler.h
+│   └── Time.h
+└── src
+    ├── Device.cpp
+    ├── DomoticSystem.cpp
+    ├── Manual.cpp
+    ├── PrefixCycle.cpp
+    ├── Scheduler.cpp
+    └── Time.cpp
 ```
