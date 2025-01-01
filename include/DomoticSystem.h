@@ -11,24 +11,24 @@ class DomoticSystem {
   public:
     DomoticSystem(Scheduler s);
     std::vector<Device> devices_;
-    void handleInput(const std::string input_);
+    std::string handleInput(const std::string input_);
     std::string getCustomInput();
   private:
     Scheduler scheduler_;
     std::string parseTime(std::string time_);
     void buildDevices();
     Device* searchDevice(std::string name_);
-    void setOn(Device& device_); // must put null time end
-    void setOff(Device& device_); // must set null all time
-    void setDeviceTimer(Device& device_); // need to set the time on Device class
-    void removeFromRunning(Device& device_); // must check if device is on or not
-    void removeFromWaiting(Device& device_); // must check if device is on or not
+    std::string setOn(Device& device_); 
+    std::string setOff(Device& device_); 
+    std::string setDeviceTimer(Device& device_); 
+    std::string removeFromRunning(Device& device_); 
+    std::string removeFromWaiting(Device& device_); 
     // show
     // show device
-    void setTime(Time& time_);
-    void resetTime();
-    void resetTimers();
-    void resetAll(); // call resetTime and resetTimers
+    std::string setTime(Time& time_);
+    std::string resetTime();
+    std::string resetTimers();
+    std::string resetAll(); 
 };
 
 #endif // DOMOTICSYSTEM_H

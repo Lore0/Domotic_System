@@ -16,43 +16,53 @@ DomoticSystem::DomoticSystem(Scheduler s)
   buildDevices();
 }
 
-void DomoticSystem::setOn(Device& device_) {
-  scheduler_.setOn(device_);
+string DomoticSystem::setOn(Device& device_) {
+  string log = scheduler_.setOn(device_);
+  return log;
 }
 
-void DomoticSystem::setOff(Device& device_) {
-  scheduler_.setOff(device_);
+string DomoticSystem::setOff(Device& device_) {
+  string log = scheduler_.setOff(device_);
+  return log;
 }
 
-void DomoticSystem::setDeviceTimer(Device& device_) {
-  scheduler_.setDeviceTimer(device_);
+string DomoticSystem::setDeviceTimer(Device& device_) {
+  string log = scheduler_.setDeviceTimer(device_);
+  return log; 
 }
 
-void DomoticSystem::removeFromRunning(Device& device_) {
-  setOff(device_);
+string DomoticSystem::removeFromRunning(Device& device_) {
+  string log = setOff(device_);
+  return log;
 }
 
-void::DomoticSystem::removeFromWaiting(Device& device_) {
-  scheduler_.removeTimerFromWaiting(device_);
+string DomoticSystem::removeFromWaiting(Device& device_) {
+  string log = scheduler_.removeTimerFromWaiting(device_);
+  return log;
 }
 
 // show methods
 
-void DomoticSystem::setTime(Time& time_) {
-  scheduler_.setTime(time_);
+string DomoticSystem::setTime(Time& time_) {
+  string log = scheduler_.setTime(time_);
+  return log;
 }
 
-void DomoticSystem::resetTime() {
-  scheduler_.resetTime();
+string DomoticSystem::resetTime() {
+  string log = scheduler_.resetTime();
+  return log;
 }
 
-void DomoticSystem::resetTimers() {
-  scheduler_.resetTimers();
+string DomoticSystem::resetTimers() {
+  string log = scheduler_.resetTimers();
+  return log;
 }
 
-void DomoticSystem::resetAll() {
+string DomoticSystem::resetAll() {
   resetTimers();
   resetTime();
+  return "Tutti i timer resettati";
+  // bisogna fare il log (perché non chiamo riccardo)
 }
 
 string DomoticSystem::parseTime(string time_) {
@@ -119,9 +129,10 @@ Device* DomoticSystem::searchDevice(string name_) {
   return nullptr; // Return nullptr if the device is not found
 }
 
-void DomoticSystem::handleInput(const std::string input_) {
+string DomoticSystem::handleInput(const string input_) {
   istringstream iss(input_);
   string command, deviceName;
+  string log;
   iss >> command;
 
   if (command == "set") {
@@ -135,20 +146,23 @@ void DomoticSystem::handleInput(const std::string input_) {
       if (d->getStatus()) {
         cout << "[Errore] Dispositivo già acceso" << endl;
       } else {
-        setOn(*d);
+        log = setOn(*d);
+        return log;
       }
     } else if (action == "off") {
       if (!d->getStatus()) {
         cout << "[Errore] Dispositivo già spento o mai acceso" << endl;
       } else {
-        setOff(*d);
+        log = setOff(*d);
+        return log;
       }
     } else if (action == "time") {
       string time;
       iss >> time;
       // check if time is valid
       Time t(time);
-      setTime(t);
+      log = setTime(t);
+      return log;
     } else {
       string startTime = action;
       string endTime;
@@ -157,18 +171,21 @@ void DomoticSystem::handleInput(const std::string input_) {
           // need to check if time is valid input
           m->setStart(Time(startTime));
           m->setFinish(Time(endTime));
-          setDeviceTimer(*m);
+          log = setDeviceTimer(*m);
+          return log;
         } else {
           cout << "[Errore] Non puoi dare orario di fine ad un device CP" << endl;
         }
       } else {
         if (Manual* m = dynamic_cast<Manual*>(d)) {
           m->setStart(Time(startTime));
-          setDeviceTimer(*m);
+          log = setDeviceTimer(*m);
+          return log;
         } else {
           PrefixCycle* p = dynamic_cast<PrefixCycle*>(d);
           p->setStartFinish(Time(startTime));
-          setDeviceTimer(*p);
+          log = setDeviceTimer(*p);
+          return log;
         }
       }
     }
@@ -177,11 +194,14 @@ void DomoticSystem::handleInput(const std::string input_) {
     iss >> target;
 
     if (target == "time") {
-      resetTime();
+      log = resetTime();
+      return log;
     } else if (target == "timers") {
-      resetTimers();
+      log = resetTimers();
+      return log;
     } else if (target == "all") {
-      resetAll();
+      log = resetAll();
+      return log;
     } else {
       cout << "[Errore] Comando non riconosciuto" << endl;
     }
@@ -190,7 +210,13 @@ void DomoticSystem::handleInput(const std::string input_) {
   } else if (command == "rm") {   //NO, DEVE RIMUOVERE IL TIMER NO IL DISPOSITIVO
     iss >> deviceName;
     Device* d = searchDevice(deviceName);
-    d->getStatus() == true ? removeFromRunning(*d) : removeFromWaiting(*d);
+    if (d->getStatus() == true) {
+      log = removeFromRunning(*d);
+      return log;
+    } else {
+      log = removeFromWaiting(*d);
+      return log;
+    }
   } else {
     cout << "[Errore] Comando non riconosciuto" << endl;
   }
