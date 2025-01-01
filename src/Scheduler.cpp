@@ -21,6 +21,7 @@ void Scheduler::setOn(Device &device) // controllo se c'è già su waiting?
                 i++;
             running_.insert(running_.begin() + i, device);
             device.turnOn();
+            device.setStart(currTime);
             inUsePower += device.getPowerConsumption();
         } // fare log
           // cosa fare in caso non c'è abbastanza potenza
@@ -37,6 +38,7 @@ void Scheduler::setOff(Device &device)
     }
     running_.erase(running_.begin() + targetIndex);
     device.turnOff();
+    device.setFinish(currTime);
     Device temp{device.getId(), device.getName(), device.getPowerConsumption(), device.getStart(), device.getFinish()};
     finished_.push_back(temp);
 }
@@ -49,37 +51,56 @@ void Scheduler::setDeviceTimer(Device &device)
     waiting_.insert(waiting_.begin() + i, device);
 }
 
-void Scheduler::removeTimerFromWaiting(Device &device) {     //toglie il timer da waiting
+void Scheduler::removeTimerFromWaiting(Device &device)
+{ // toglie il timer da waiting
     int targetIndex = search(waiting_, device);
-    if(targetIndex==-1) return;
+    if (targetIndex == -1)
+        return;
     waiting_.erase(waiting_.begin() + targetIndex);
 }
 
-void Scheduler::removeTimerFromRunning(Device &device) {     //toglie il timer da running --> va all'infinito
+void Scheduler::removeTimerFromRunning(Device &device)
+{ // toglie il timer da running --> va all'infinito
     int targetIndex = search(running_, device);
-    if(targetIndex==-1) return;
-    int i=running_.size();
-    while(i>=0&&running_.at(i).getFinish()>Time("24:00"))   i--;
-    swap(running_[targetIndex], running_[i]);
+    if (targetIndex == -1)
+        return;
+    int i = running_.size();
+    while (i >= 0 && running_.at(i).getFinish() > Time("24:00"))
+        i--;
+    Device temp = running_[targetIndex];
+    running_[targetIndex] = running_[i];
+    running_[i] = temp;
 }
 // show
 // showdevice;
-void Scheduler::setTime(Time &time) {
-    while (time>waiting_.at(0).getStart())
+void Scheduler::setTime(Time &time)
+{
+    if(currTime>time) return;   //fare qualcosa se l'ora non è valida
+    //controllare se lista vuota
+    //controllaere qual'è minore
+    //se sono uguali tolgo prima da running
+    //fino a che non sono entrambi < time
+    while (
+        ()
+    )
     {
         /* code */
     }
-    
 }
 
-void Scheduler::resetTime() {
+void Scheduler::resetTime()
+{
     currTime.setTime("0:0");
-    //spostare tutti i running e finished in waiting
+    for_each(running_.begin(), running_.end(), setDeviceTimer);
+    for_each(finished_.begin(), finished_.end(), setDeviceTimer); // controllare se il dispositivo è stato acceso più di una volta
+    running_.clear();
+    finished_.clear();
 }
 
-void Scheduler::resetTimers() {
+void Scheduler::resetTimers()
+{
     waiting_.clear();
-    //cosa fare con running
+    for_each(running_.begin(), running_.end(), removeTimerFromRunning);
 }
 
 int search(vector<Device> &list, Device &target)

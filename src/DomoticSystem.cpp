@@ -33,7 +33,7 @@ void DomoticSystem::removeFromRunning(Device& device_) {
 }
 
 void::DomoticSystem::removeFromWaiting(Device& device_) {
-  scheduler_.removeFromWaiting(device_);
+  scheduler_.removeTimerFromWaiting(device_);
 }
 
 // show methods
