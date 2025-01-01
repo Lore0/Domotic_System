@@ -21,3 +21,6 @@ Domotic System:
     ├── Scheduler.cpp
     └── Time.cpp
 ```
+
+### ToDo
+- su `DomoticSystem.cpp` ricordati di deallocare puntatori
