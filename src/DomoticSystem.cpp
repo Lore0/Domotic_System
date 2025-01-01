@@ -78,7 +78,7 @@ string DomoticSystem::parseTime(string time_) {
 void DomoticSystem::buildDevices() {
   ifstream file("devices.txt");
   if (!file.is_open()) {
-    cout << "Errore: impossibile aprire il file " << "devices.txt" << endl;
+    cout << "Errore: impossibile aprire il file devices.txt" << endl;
     return;
   }
 
