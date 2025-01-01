@@ -61,7 +61,7 @@ string DomoticSystem::resetTimers() {
 string DomoticSystem::resetAll() {
   resetTimers();
   resetTime();
-  return "Tutti i timer resettati";
+  return "Comando resetAll() eseguito con successo";
   // bisogna fare il log (perché non chiamo riccardo)
 }
 
