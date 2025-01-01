@@ -75,16 +75,30 @@ void Scheduler::removeTimerFromRunning(Device &device)
 // showdevice;
 void Scheduler::setTime(Time &time)
 {
-    if(currTime>time) return;   //fare qualcosa se l'ora non è valida
-    //controllare se lista vuota
-    //controllaere qual'è minore
-    //se sono uguali tolgo prima da running
-    //fino a che non sono entrambi < time
-    while (
-        ()
-    )
+    if (currTime > time)
+        return; // fare qualcosa se l'ora non è valida
+    // controllare se lista vuota
+    // controllaere qual'è minore
+    // se sono uguali tolgo prima da running
+    // fino a che non sono entrambi < time
+    while ((!running_.empty() || !waiting_.empty()) && (!(running_.at(0).getFinish() > time) || !(waiting_.at(0).getStart() > time)))
     {
-        /* code */
+        if (!running_.empty())
+        {
+            while (!(running_.at(0).getFinish() > time) && (waiting_.empty() || !(running_.at(0).getFinish() > waiting_.at(0).getStart())))
+            {
+                currTime = running_.at(0).getFinish();
+                setOn(running_.at(0));
+            }
+        }
+        if (!waiting_.empty())
+        {
+            while (!(waiting_.at(0).getStart() > time) && (running_.empty() || !(waiting_.at(0).getStart() > running_.at(0).getFinish())))
+            {
+                currTime = waiting_.at(0).getStart();
+                setOff(waiting_.at(0));
+            }
+        }
     }
 }
 
