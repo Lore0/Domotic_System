@@ -1,7 +1,7 @@
 ### Struttura progetto
 
 ```
-*Domotic System*:
+Domotic System:
 ├── README.md
 ├── docs
 │   ├── device.txt
