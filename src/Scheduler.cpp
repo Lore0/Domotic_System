@@ -8,7 +8,7 @@ Scheduler::Scheduler(int maxPower)
     // nothing
 }
 
-void Scheduler::setOn(Device &device) // controllo se c'è già su waiting?
+string Scheduler::setOn(Device &device) // controllo se c'è già su waiting?
 {
     if (running_.empty())
         running_.push_back(device);
@@ -28,7 +28,7 @@ void Scheduler::setOn(Device &device) // controllo se c'è già su waiting?
     }
 }
 
-void Scheduler::setOff(Device &device)
+string Scheduler::setOff(Device &device)
 {
     int targetIndex = search(running_, device);
     if (device.getStatus())
@@ -43,7 +43,7 @@ void Scheduler::setOff(Device &device)
     finished_.push_back(temp);
 }
 
-void Scheduler::setDeviceTimer(Device &device)
+string Scheduler::setDeviceTimer(Device &device)
 {
     int i;
     while (i < waiting_.size() && waiting_[i].getFinish() < device.getFinish())
@@ -51,7 +51,7 @@ void Scheduler::setDeviceTimer(Device &device)
     waiting_.insert(waiting_.begin() + i, device);
 }
 
-void Scheduler::removeTimerFromWaiting(Device &device)
+string Scheduler::removeTimerFromWaiting(Device &device)
 { // toglie il timer da waiting
     int targetIndex = search(waiting_, device);
     if (targetIndex == -1)
@@ -59,7 +59,7 @@ void Scheduler::removeTimerFromWaiting(Device &device)
     waiting_.erase(waiting_.begin() + targetIndex);
 }
 
-void Scheduler::removeTimerFromRunning(Device &device)
+string Scheduler::removeTimerFromRunning(Device &device)
 { // toglie il timer da running --> va all'infinito
     int targetIndex = search(running_, device);
     if (targetIndex == -1)
@@ -73,7 +73,7 @@ void Scheduler::removeTimerFromRunning(Device &device)
 }
 // show
 // showdevice;
-void Scheduler::setTime(Time &time)
+string Scheduler::setTime(Time &time)
 {
     if (currTime > time)
         return; // fare qualcosa se l'ora non è valida
@@ -102,7 +102,7 @@ void Scheduler::setTime(Time &time)
     }
 }
 
-void Scheduler::resetTime()
+string Scheduler::resetTime()
 {
     currTime.setTime("0:0");
     for_each(running_.begin(), running_.end(), setDeviceTimer);
@@ -111,7 +111,7 @@ void Scheduler::resetTime()
     finished_.clear();
 }
 
-void Scheduler::resetTimers()
+string Scheduler::resetTimers()
 {
     waiting_.clear();
     for_each(running_.begin(), running_.end(), removeTimerFromRunning);
