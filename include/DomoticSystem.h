@@ -15,9 +15,10 @@ class DomoticSystem {
     std::string getCustomInput();
   private:
     Scheduler scheduler_;
-    std::string parseTime(std::string time_);
+    std::string parseTime(std::string& time_);
+    bool isValidTimeFormat(std::string& time);
     void buildDevices();
-    Device* searchDevice(std::string name_);
+    Device* searchDevice(std::string& name_);
     std::string setOn(Device& device_); 
     std::string setOff(Device& device_); 
     std::string setDeviceTimer(Device& device_); 

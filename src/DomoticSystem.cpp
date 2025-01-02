@@ -65,7 +65,7 @@ string DomoticSystem::resetAll() {
   // bisogna fare il log (perché non chiamo riccardo)
 }
 
-string DomoticSystem::parseTime(string time_) {
+string DomoticSystem::parseTime(string& time_) {
   int hours = 0;
   int minutes = 0;
   istringstream iss(time_);
@@ -119,7 +119,7 @@ void DomoticSystem::buildDevices() {
   file.close();
 }
 
-Device* DomoticSystem::searchDevice(string name_) {
+Device* DomoticSystem::searchDevice(string& name_) {
   for (Device& d : devices_) {
     if (d.getName() == name_) {
       return &d; // Return the address of the found device
