@@ -147,6 +147,9 @@ string DomoticSystem::handleInput(const string input_) {
     iss >> action;
 
     Device* d = searchDevice(deviceName);
+    if (d == nullptr) {
+      return "[Errore] Dispositivo non trovato";
+    }
 
     if (action == "on") {
       if (d->getStatus()) {
