@@ -19,6 +19,7 @@ class DomoticSystem {
     std::string parseTime(const std::string& time_);
     bool isValidTimeFormat(const std::string& time);
     void buildDevices();
+    void log(const std::string& message_);
     Device* searchDevice(const std::string& name_);
     std::string setOn(Device& device_); 
     std::string setOff(Device& device_); 

@@ -91,6 +91,14 @@ bool DomoticSystem::isValidTimeFormat(const string& time) {
   return regex_match(time, timeFormat);
 }
 
+void DomoticSystem::log(const string& message) {
+  ofstream logFile("log.txt", ios::app);
+  if (logFile.is_open()) {
+    logFile << message << endl;
+    logFile.close();
+  }
+}
+
 void DomoticSystem::buildDevices() {
   ifstream file("devices.txt");
   if (!file.is_open()) {
