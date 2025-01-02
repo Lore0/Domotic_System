@@ -7,6 +7,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <regex>
 
 using namespace std;
 
@@ -85,6 +86,11 @@ string DomoticSystem::parseTime(string& time_) {
   return res.str();
 }
 
+bool DomoticSystem::isValidTimeFormat(string& time) {
+  regex timeFormat("^([0-1][0-9]|2[0-3]):([0-5][0-9])$");
+  return regex_match(time, timeFormat);
+}
+
 void DomoticSystem::buildDevices() {
   ifstream file("devices.txt");
   if (!file.is_open()) {
@@ -159,7 +165,10 @@ string DomoticSystem::handleInput(const string input_) {
     } else if (action == "time") {
       string time;
       iss >> time;
-      // check if time is valid
+      if (!isValidTimeFormat(time)) {
+        cout << "[Errore] Formato orario non valido" << endl;
+        return;
+      }
       Time t(time);
       log = setTime(t);
       return log;
@@ -169,6 +178,10 @@ string DomoticSystem::handleInput(const string input_) {
       if (iss >> endTime) {
         if (Manual* m = dynamic_cast<Manual*>(d)) {
           // need to check if time is valid input
+          if (!isValidTimeFormat(startTime) || !isValidTimeFormat(endTime)) {
+            cout << "[Errore] Formato orario non valido" << endl;
+            return;
+          }
           m->setStart(Time(startTime));
           m->setFinish(Time(endTime));
           log = setDeviceTimer(*m);
@@ -178,11 +191,19 @@ string DomoticSystem::handleInput(const string input_) {
         }
       } else {
         if (Manual* m = dynamic_cast<Manual*>(d)) {
+          if (!isValidTimeFormat(startTime)) {
+            cout << "[Errore] Formato orario non valido" << endl;
+            return;
+          }
           m->setStart(Time(startTime));
           log = setDeviceTimer(*m);
           return log;
         } else {
           PrefixCycle* p = dynamic_cast<PrefixCycle*>(d);
+          if (!isValidTimeFormat(startTime)) {
+            cout << "[Errore] Formato orario non valido" << endl;
+            return;
+          }
           p->setStartFinish(Time(startTime));
           log = setDeviceTimer(*p);
           return log;
