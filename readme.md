@@ -25,3 +25,5 @@ Domotic System:
 ### ToDo
 - ~~su `DomoticSystem.cpp` ricordati di deallocare puntatori~~
 - fare vari `handle()`su `handleInput()` per evitare tutti gli `if-else` annidati
+- rindondanza di check
+- log
