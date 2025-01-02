@@ -9,7 +9,7 @@
 
 class DomoticSystem {
   public:
-    DomoticSystem(Scheduler s);
+    DomoticSystem();
     std::vector<Device> devices_;
     std::string handleInput(const std::string input_);
     std::string getCustomInput();

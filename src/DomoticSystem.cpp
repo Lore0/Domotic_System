@@ -11,8 +11,8 @@
 
 using namespace std;
 
-DomoticSystem::DomoticSystem(Scheduler s)
-  : scheduler_(s)
+DomoticSystem::DomoticSystem()
+  : scheduler_(3.5)
 {
   buildDevices();
 }
