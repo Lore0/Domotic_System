@@ -66,7 +66,7 @@ string DomoticSystem::resetAll() {
   // bisogna fare il log (perché non chiamo riccardo)
 }
 
-string DomoticSystem::parseTime(string& time_) {
+string DomoticSystem::parseTime(const string& time_) {
   int hours = 0;
   int minutes = 0;
   istringstream iss(time_);
@@ -86,7 +86,7 @@ string DomoticSystem::parseTime(string& time_) {
   return res.str();
 }
 
-bool DomoticSystem::isValidTimeFormat(string& time) {
+bool DomoticSystem::isValidTimeFormat(const string& time) {
   regex timeFormat("^([0-1][0-9]|2[0-3]):([0-5][0-9])$");
   return regex_match(time, timeFormat);
 }
@@ -125,7 +125,7 @@ void DomoticSystem::buildDevices() {
   file.close();
 }
 
-Device* DomoticSystem::searchDevice(string& name_) {
+Device* DomoticSystem::searchDevice(const string& name_) {
   for (Device& d : devices_) {
     if (d.getName() == name_) {
       return &d; // Return the address of the found device
