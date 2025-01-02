@@ -12,7 +12,7 @@
 using namespace std;
 
 DomoticSystem::DomoticSystem()
-  : scheduler_(3.5)
+  : scheduler_(kMaxPower)
 {
   buildDevices();
 }

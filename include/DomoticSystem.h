@@ -15,6 +15,7 @@ class DomoticSystem {
     std::string getCustomInput();
   private:
     Scheduler scheduler_;
+    double kMaxPower = 3.5;
     std::string parseTime(const std::string& time_);
     bool isValidTimeFormat(const std::string& time);
     void buildDevices();
