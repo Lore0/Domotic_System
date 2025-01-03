@@ -156,7 +156,20 @@ string DomoticSystem::handleInput(const string& input_) {
 
   if (command == "set") {
     iss >> deviceName;
-    string action;
+    if (deviceName == "time") {
+      string time;
+      iss >> time;
+      if (!isValidTimeFormat(time)) {
+        log = scheduler_.getStringCurrTime() + " Errore : Formato orario non valido";
+        cout << log << endl;
+        return log;
+      }
+      Time t(time);
+      log = setTime(t);
+      cout << log << endl;
+      return log;
+    } else {
+      string action;
     iss >> action;
 
     Device* d = searchDevice(deviceName);
@@ -186,18 +199,6 @@ string DomoticSystem::handleInput(const string& input_) {
         cout << log << endl;
         return log;
       }
-    } else if (action == "time") {
-      string time;
-      iss >> time;
-      if (!isValidTimeFormat(time)) {
-        log = scheduler_.getStringCurrTime() + " Errore : Formato orario non valido";
-        cout << log << endl;
-        return log;
-      }
-      Time t(time);
-      log = setTime(t);
-      cout << log << endl;
-      return log;
     } else {
       string startTime = action;
       string endTime;
@@ -244,6 +245,7 @@ string DomoticSystem::handleInput(const string& input_) {
         }
       }
     }
+  }
   } else if (command == "reset") {
     string target;
     iss >> target;
