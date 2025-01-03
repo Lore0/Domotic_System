@@ -10,7 +10,7 @@ Scheduler::Scheduler(int maxPower)
 
 string Scheduler::setOn(Device &device) // controllo se c'è già su waiting?
 {
-    string log=getCurrTime(currTime);
+    string log = logMessage(currTime);
     if (running_.empty())
         running_.push_back(device);
     else
@@ -24,8 +24,9 @@ string Scheduler::setOn(Device &device) // controllo se c'è già su waiting?
             device.turnOn();
             device.setStart(currTime);
             inUsePower += device.getPowerConsumption();
-        } // fare log
-          // cosa fare in caso non c'è abbastanza potenza
+            log = log + "\n" + getCurrTime() + " Il dispositivo " + device.getName() + " si è acceso"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è acceso
+        }
+        // cosa fare in caso non c'è abbastanza potenza
     }
     return log;
 }
@@ -41,6 +42,7 @@ string Scheduler::setOff(Device &device)
     running_.erase(running_.begin() + targetIndex);
     device.turnOff();
     device.setFinish(currTime);
+    string log = log + "\n" + getCurrTime() + " Il dispositivo " + device.getName() + " si è acceso"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è spendo
     Device temp{device.getId(), device.getName(), device.getPowerConsumption(), device.getStart(), device.getFinish()};
     finished_.push_back(temp);
 }
@@ -133,10 +135,16 @@ int search(vector<Device> &list, Device &target)
     return -1;
 }
 
-string getCurrTime(Time currTime){
-    return "["+currTime.to_string()+"] L'orario attuale è "+currTime.to_string(); //[13:00]L’orarioattualeè13:00
+string logMessage(Time currTime)
+{
+    return "[" + currTime.to_string() + "] L'orario attuale è " + currTime.to_string(); //[13:00]L’orarioattualeè13:00
 }
 
-string Scheduler::getCurrTime() {
-    return "["+currTime.to_string()+"]";
+string Scheduler::getStringCurrTime()
+{
+    return "[" + currTime.to_string() + "]";
+}
+Time Scheduler::getCurrTime()
+{
+    return currTime.to_string();
 }
