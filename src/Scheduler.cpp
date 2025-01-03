@@ -36,7 +36,7 @@ string Scheduler::setOn(Device &device)
 
 string Scheduler::setOff(Device &device)
 {
-    int targetIndex = search(running_, device);
+    int targetIndex = searchDevice(running_, device);
     if (device.getStatus())
     {
         return "Errore: "+device.getName()+" è già spento ";
@@ -61,18 +61,18 @@ string Scheduler::setDeviceTimer(Device &device)
 
 string Scheduler::removeTimerFromWaiting(Device &device)
 { // toglie il timer da waiting
-    int targetIndex = search(waiting_, device);
+    int targetIndex = searchDevice(waiting_, device);
     if (targetIndex == -1)
-        return;
+        return getStringCurrTime()+" Errore: dispositivo non in attesa";
     waiting_.erase(waiting_.begin() + targetIndex);
     return getStringCurrTime()+" Rimosso il timer dal dispositivo "+device.getName(); // [13:00]Rimossoil timerdaldispositivo‘${DEVICENAME}’
 }
 
 string Scheduler::removeTimerFromRunning(Device &device)
 { // toglie il timer da running --> va all'infinito
-    int targetIndex = search(running_, device);
+    int targetIndex = searchDevice(running_, device);
     if (targetIndex == -1)
-        return;
+        return getStringCurrTime()+" Errore: dispositivo non in funzione";
     int i = running_.size();
     while (i >= 0 && running_.at(i).getFinish() > Time("24:00"))
         i--;
@@ -135,7 +135,7 @@ string Scheduler::resetTimers()
     return log;
 }
 
-int search(vector<Device> &list, Device &target)
+int searchDevice(vector<Device> &list, Device &target)
 {
     // Usa std::find per cercare il dispositivo
     auto iter = find(list.begin(), list.end(), target);
