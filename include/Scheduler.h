@@ -28,6 +28,6 @@ class Scheduler {
     std::vector<Device> waiting_;
     std::vector<Device> finished_;
 };
-int searchDevice(vector<Device> &list, Device &target);
+int searchDevice(std::vector<Device> &list, Device &target);
 
 #endif // SCHEDULER_H
