@@ -10,6 +10,7 @@ Scheduler::Scheduler(int maxPower)
 
 string Scheduler::setOn(Device &device) // controllo se c'è già su waiting?
 {
+    string log=getCurrTime(currTime);
     if (running_.empty())
         running_.push_back(device);
     else
@@ -26,6 +27,7 @@ string Scheduler::setOn(Device &device) // controllo se c'è già su waiting?
         } // fare log
           // cosa fare in caso non c'è abbastanza potenza
     }
+    return log;
 }
 
 string Scheduler::setOff(Device &device)
@@ -129,4 +131,8 @@ int search(vector<Device> &list, Device &target)
     }
     // Se non trovato, restituisce -1
     return -1;
+}
+
+string getCurrTime(Time currTime){
+    return "["+currTime.to_string()+"] L'orario attuale è "+currTime.to_string(); //[13:00]L’orarioattualeè13:00
 }
