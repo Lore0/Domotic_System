@@ -97,7 +97,7 @@ bool DomoticSystem::isValidTimeFormat(const string& time) {
   return regex_match(time, timeFormat);
 }
 
-void DomoticSystem::log(const string& message, ofstream logFile) {
+void DomoticSystem::log(const string& message, ofstream& logFile) {
   // ofstream logFile("log.txt", ios::app); da fare nel main
   if (logFile.is_open()) {
     logFile << message << endl;
@@ -106,9 +106,9 @@ void DomoticSystem::log(const string& message, ofstream logFile) {
 }
 
 void DomoticSystem::buildDevices() {
-  ifstream file("devices.txt");
+  ifstream file("../docs/device.txt");
   if (!file.is_open()) {
-    cout << "Errore: impossibile aprire il file devices.txt" << endl;
+    cout << "Errore: impossibile aprire il file device.txt" << endl;
     return;
   }
 
@@ -125,7 +125,7 @@ void DomoticSystem::buildDevices() {
 
     double power = stod(pow);
 
-    Time null("-1");
+    Time null("00:00");
 
     // gestione di M o CP
     if (type == "Manuale") {
@@ -160,7 +160,7 @@ string DomoticSystem::handleInput(const string& input_) {
     iss >> action;
 
     Device* d = searchDevice(deviceName);
-    if (d == nullptr) {
+    if (!d) {
       log = scheduler_.getStringCurrTime() + " Errore : Dispositivo non trovato";
       cout << log << endl;
       return log;

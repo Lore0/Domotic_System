@@ -1,9 +1,10 @@
 #include "../include/Scheduler.h"
 #include <algorithm>
+#include <iostream> 
 using namespace std;
 
 Scheduler::Scheduler(int maxPower)
-    : MAX_POWER(maxPower), inUsePower(0), currTime("0:0")
+    : MAX_POWER(maxPower), inUsePower(0), currTime("00:00")
 {
     // nothing
 }
@@ -161,5 +162,5 @@ string Scheduler::getStringCurrTime()
 }
 Time Scheduler::getCurrTime()
 {
-    return currTime.to_string();
+    return currTime;
 }

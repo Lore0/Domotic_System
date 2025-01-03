@@ -50,8 +50,7 @@ void Time::setTime(string time){
 }
 
 string Time::to_string(){ //TODO
-  return "A";
-
+  return std::to_string(getHours())+":"+std::to_string(getMinutes());
 }
 
 bool operator>(Time t1, Time t2){
