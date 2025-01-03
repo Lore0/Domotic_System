@@ -132,7 +132,6 @@ Device* DomoticSystem::searchDevice(const string& name_) {
       return &d; // Return the address of the found device
     }
   }
-  cout << "[Errore] Dispositivo non trovato" << endl;
   return nullptr; // Return nullptr if the device is not found
 }
 
@@ -149,7 +148,9 @@ string DomoticSystem::handleInput(const string input_) {
 
     Device* d = searchDevice(deviceName);
     if (d == nullptr) {
-      return "[Errore] Dispositivo non trovato";
+      log = scheduler_.getCurrTime() + " Errore : Dispositivo non trovato";
+      cout << log << endl;
+      return log;
     }
 
     if (action == "on") {
