@@ -284,6 +284,7 @@ string DomoticSystem::handleInput(const string& input_) {
     cout << log << endl;
     return log;
   }
+  return "";
 }
 
 string DomoticSystem::getCustomInput() {
