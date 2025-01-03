@@ -136,3 +136,7 @@ int search(vector<Device> &list, Device &target)
 string getCurrTime(Time currTime){
     return "["+currTime.to_string()+"] L'orario attuale è "+currTime.to_string(); //[13:00]L’orarioattualeè13:00
 }
+
+string Scheduler::getCurrTime() {
+    return currTime.to_string();
+}

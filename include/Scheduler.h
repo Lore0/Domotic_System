@@ -7,6 +7,7 @@
 class Scheduler {
   public:
     Scheduler(int maxPower);
+    std::string getCurrTime();
     std::string setOn(Device& device_);
     std::string setOff(Device& device_);
     std::string setDeviceTimer(Device& device_);
