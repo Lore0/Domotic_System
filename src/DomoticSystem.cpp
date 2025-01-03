@@ -153,6 +153,7 @@ string DomoticSystem::handleInput(const string input_) {
     if (action == "on") {
       if (d->getStatus()) {
         cout << "[Errore] Dispositivo già acceso" << endl;
+        return;
       } else {
         return setOn(*d);
       }
