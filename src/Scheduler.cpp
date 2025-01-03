@@ -138,5 +138,5 @@ string getCurrTime(Time currTime){
 }
 
 string Scheduler::getCurrTime() {
-    return currTime.to_string();
+    return "["+currTime.to_string()+"]";
 }
