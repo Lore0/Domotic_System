@@ -8,11 +8,14 @@ Scheduler::Scheduler(int maxPower)
     // nothing
 }
 
-string Scheduler::setOn(Device &device) // controllo se c'è già su waiting?
+string Scheduler::setOn(Device &device) 
 {
-    string log = logMessage(currTime);
+    string log = "";
     if (running_.empty())
+    {
         running_.push_back(device);
+        log = "\n" + getStringCurrTime() + " Il dispositivo " + device.getName() + " si è acceso"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è acceso
+    }
     else
     {
         int i = 0;
@@ -24,7 +27,7 @@ string Scheduler::setOn(Device &device) // controllo se c'è già su waiting?
             device.turnOn();
             device.setStart(currTime);
             inUsePower += device.getPowerConsumption();
-            log = log + "\n" + getCurrTime() + " Il dispositivo " + device.getName() + " si è acceso"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è acceso
+            log = "\n" + getStringCurrTime() + " Il dispositivo " + device.getName() + " si è acceso"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è acceso
         }
         // cosa fare in caso non c'è abbastanza potenza
     }
@@ -36,15 +39,15 @@ string Scheduler::setOff(Device &device)
     int targetIndex = search(running_, device);
     if (device.getStatus())
     {
-        // fare qualcosa se il dispositivo non è on
-        return;
+        return "Errore: "+device.getName()+" è già spento ";
     }
     running_.erase(running_.begin() + targetIndex);
     device.turnOff();
     device.setFinish(currTime);
-    string log = log + "\n" + getCurrTime() + " Il dispositivo " + device.getName() + " si è acceso"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è spendo
+    string log = log + "\n" + getStringCurrTime() + " Il dispositivo " + device.getName() + " si è spento"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è spendo
     Device temp{device.getId(), device.getName(), device.getPowerConsumption(), device.getStart(), device.getFinish()};
     finished_.push_back(temp);
+    return log;
 }
 
 string Scheduler::setDeviceTimer(Device &device)
@@ -53,6 +56,7 @@ string Scheduler::setDeviceTimer(Device &device)
     while (i < waiting_.size() && waiting_[i].getFinish() < device.getFinish())
         i++;
     waiting_.insert(waiting_.begin() + i, device);
+    return getStringCurrTime()+" Impostato un timer per il dispositivo "+device.getName()+" dalle "+device.getStart().to_string()+" alle "+device.getFinish().to_string(); //[13:00] Impostatountimerper ildispositivo‘${DEVICENAME}’dalleXX:YYalleZZ:WW
 }
 
 string Scheduler::removeTimerFromWaiting(Device &device)
@@ -61,6 +65,7 @@ string Scheduler::removeTimerFromWaiting(Device &device)
     if (targetIndex == -1)
         return;
     waiting_.erase(waiting_.begin() + targetIndex);
+    return getStringCurrTime()+" Rimosso il timer dal dispositivo "+device.getName(); // [13:00]Rimossoil timerdaldispositivo‘${DEVICENAME}’
 }
 
 string Scheduler::removeTimerFromRunning(Device &device)
@@ -74,17 +79,19 @@ string Scheduler::removeTimerFromRunning(Device &device)
     Device temp = running_[targetIndex];
     running_[targetIndex] = running_[i];
     running_[i] = temp;
+    return getStringCurrTime()+" Rimosso il timer dal dispositivo "+device.getName(); // [13:00]Rimossoil timerdaldispositivo‘${DEVICENAME}’
 }
 // show
 // showdevice;
 string Scheduler::setTime(Time &time)
 {
-    if (currTime > time)
-        return; // fare qualcosa se l'ora non è valida
+    if (currTime > time)    //ora non valida
+        return getStringCurrTime()+" Errore: ora minore a quella attuale"; 
     // controllare se lista vuota
     // controllaere qual'è minore
     // se sono uguali tolgo prima da running
     // fino a che non sono entrambi < time
+    string log="";
     while ((!running_.empty() || !waiting_.empty()) && (!(running_.at(0).getFinish() > time) || !(waiting_.at(0).getStart() > time)))
     {
         if (!running_.empty())
@@ -92,7 +99,7 @@ string Scheduler::setTime(Time &time)
             while (!(running_.at(0).getFinish() > time) && (waiting_.empty() || !(running_.at(0).getFinish() > waiting_.at(0).getStart())))
             {
                 currTime = running_.at(0).getFinish();
-                setOn(running_.at(0));
+                log+=setOn(running_.at(0));
             }
         }
         if (!waiting_.empty())
@@ -100,10 +107,11 @@ string Scheduler::setTime(Time &time)
             while (!(waiting_.at(0).getStart() > time) && (running_.empty() || !(waiting_.at(0).getStart() > running_.at(0).getFinish())))
             {
                 currTime = waiting_.at(0).getStart();
-                setOff(waiting_.at(0));
+                log+=setOff(waiting_.at(0));
             }
         }
     }
+    return log+"\n"+getStringCurrTime()+"L'orario attuale è "+getCurrTime().to_string();
 }
 
 string Scheduler::resetTime()
@@ -113,12 +121,18 @@ string Scheduler::resetTime()
     for_each(finished_.begin(), finished_.end(), setDeviceTimer); // controllare se il dispositivo è stato acceso più di una volta
     running_.clear();
     finished_.clear();
+    return getStringCurrTime()+" L'orario attuale è 00:00";//[00:00]L’orarioattualeè00:00
 }
 
 string Scheduler::resetTimers()
 {
+    string log="";
     waiting_.clear();
-    for_each(running_.begin(), running_.end(), removeTimerFromRunning);
+    for (auto& device : running_)
+    {
+        log += removeTimerFromRunning(device);
+    }
+    return log;
 }
 
 int search(vector<Device> &list, Device &target)
@@ -133,11 +147,6 @@ int search(vector<Device> &list, Device &target)
     }
     // Se non trovato, restituisce -1
     return -1;
-}
-
-string logMessage(Time currTime)
-{
-    return "[" + currTime.to_string() + "] L'orario attuale è " + currTime.to_string(); //[13:00]L’orarioattualeè13:00
 }
 
 string Scheduler::getStringCurrTime()
