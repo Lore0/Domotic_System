@@ -135,7 +135,7 @@ Device* DomoticSystem::searchDevice(const string& name_) {
   return nullptr; // Return nullptr if the device is not found
 }
 
-string DomoticSystem::handleInput(const string input_) {
+string DomoticSystem::handleInput(const string& input_) {
   istringstream iss(input_);
   string command, deviceName;
   iss >> command;

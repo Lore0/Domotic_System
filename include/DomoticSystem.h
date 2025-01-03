@@ -11,7 +11,7 @@ class DomoticSystem {
   public:
     DomoticSystem();
     std::vector<Device> devices_;
-    std::string handleInput(const std::string input_);
+    std::string handleInput(const std::string& input_);
     std::string getCustomInput();
     void log(const std::string& message_, std::ofstream logFile);
   private:
