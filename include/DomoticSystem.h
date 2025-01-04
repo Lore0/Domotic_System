@@ -10,7 +10,7 @@
 class DomoticSystem {
   public:
     DomoticSystem();
-    std::vector<Device> devices_;
+    std::vector<Device> devices_; // fai 2 vector (cp e m)
     std::string handleInput(const std::string& input_);
     std::string getCustomInput();
     void log(const std::string& message_, std::ofstream& logFile);
@@ -22,17 +22,17 @@ class DomoticSystem {
     void buildDevices();
     Device* searchDevice(const std::string& name_);
     std::string logTime();
-    std::string setOn(Device& device_); 
-    std::string setOff(Device& device_); 
-    std::string setDeviceTimer(Device& device_); 
-    std::string removeFromRunning(Device& device_); 
-    std::string removeFromWaiting(Device& device_); 
+    std::string setOn(Device& device_);
+    std::string setOff(Device& device_);
+    std::string setDeviceTimer(Device& device_);
+    std::string removeFromRunning(Device& device_);
+    std::string removeFromWaiting(Device& device_);
     // show
     // show device
     std::string setTime(Time& time_);
     std::string resetTime();
     std::string resetTimers();
-    std::string resetAll(); 
+    std::string resetAll();
 };
 
 #endif // DOMOTICSYSTEM_H
