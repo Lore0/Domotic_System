@@ -228,6 +228,7 @@ string DomoticSystem::handleInput(const string& input_) {
             return log;
           }
           m->setStart(Time(startTime));
+          m->setFinish(Time("25:00")); // andare avanti all'infinito
           log = setDeviceTimer(*m);
           cout << log << endl;
           return log;
