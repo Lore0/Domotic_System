@@ -143,6 +143,7 @@ string Scheduler::setTime(Time &time)
         else
         {
             cout << "cc" << endl;
+            cout<<waiting_.at(0).getName()<<endl;
             if (waiting_.at(0).getStart() < running_.at(0).getFinish())
             {
                 cout << "cd" << endl;
