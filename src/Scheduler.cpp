@@ -95,7 +95,7 @@ string Scheduler::setTime(Time &time)
     // fino a che non sono entrambi < time
     string log = "";
     cout<<waiting_.at(0).getName()<<endl;
-    while (!(currTime>time)){  
+    while (!(currTime>time)){
         if((running_.empty() && waiting_.empty())||){}
     }
     /*while ((!running_.empty() || !waiting_.empty()) && (!(running_.at(0).getFinish() > time) || !(waiting_.at(0).getStart() > time)))
@@ -148,6 +148,14 @@ string Scheduler::resetTimers()
         log += removeTimerFromRunning(device);
     }
     return log;
+}
+
+string Scheduler::showAll() {
+  return "";
+}
+
+string Scheduler::showDevice(Device& device) {
+  return "";
 }
 
 int searchDevice(vector<Device> &list, Device &target)
