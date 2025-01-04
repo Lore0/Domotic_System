@@ -14,14 +14,16 @@ string Scheduler::setOn(Device &device)
     string log = "";
     if (running_.empty())
     {
+        cout << "empty" << endl;
         running_.push_back(device);
-        device.turnOn();
+        device.turnOn(); // ste tre istruzioni sono da mettere alla fine
         device.setStart(currTime);
         inUsePower += device.getPowerConsumption();
         log = "\n" + getStringCurrTime() + " Il dispositivo " + device.getName() + " si è acceso"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è acceso
     }
     else
     {
+        cout << "roba" << endl;
         int i = 0;
         if (inUsePower + device.getPowerConsumption() <= MAX_POWER)
         {
