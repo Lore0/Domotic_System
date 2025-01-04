@@ -276,6 +276,12 @@ string DomoticSystem::handleInput(const string &input_)
         else
         {
           string startTime = action;
+          string endTime;
+
+          if (iss >> endTime) {
+            return logError("Dispositivo CP non supporta orario di fine. Devi specificare solo l'orario di inizio");
+          }
+
           if (!isValidTimeFormat(startTime))
           {
             return logError("Formato orario non valido");
