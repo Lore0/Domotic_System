@@ -94,9 +94,40 @@ string Scheduler::setTime(Time &time)
     // se sono uguali tolgo prima da running
     // fino a che non sono entrambi < time
     string log = "";
-    cout<<waiting_.at(0).getName()<<endl;
-    while (!(currTime>time)){
-        if((running_.empty() && waiting_.empty())||){}
+    cout << waiting_.at(0).getName() << endl;
+    while (!(currTime > time))
+    {
+        if ((running_.empty() && waiting_.empty()) || (running_.at(0).getFinish() > time || waiting_.at(0).getStart() > time))  //controllo di fine (entrambe liste vuote o entrambe con tempi maggiuori a time)
+        {
+            currTime = time;
+            break;
+        }
+        if (running_.empty() || waiting_.empty())
+        {
+            if (running_.empty())
+            {
+                while (!waiting_.empty() && waiting_.at(0).getStart() < time)
+                {
+                    currTime=waiting_.at(0).getStart();
+                    setOn(waiting_.at(0));
+                }
+            }
+            if(waiting_.empty()){
+                while (!running_.empty() && running_.at(0).getFinish() < time)
+                {
+                    currTime=running_.at(0).getFinish();
+                    setOff(running_.at(0));
+                }
+            }
+        }else{
+            if(waiting_.at(0).getStart()<running_.at(0).getFinish()){
+                currTime=waiting_.at(0).getStart();
+                setOn(waiting_.at(0));
+            }else{
+                currTime=running_.at(0).getFinish();
+                setOff(running_.at(0));
+            }
+        }
     }
     /*while ((!running_.empty() || !waiting_.empty()) && (!(running_.at(0).getFinish() > time) || !(waiting_.at(0).getStart() > time)))
     {
@@ -150,12 +181,14 @@ string Scheduler::resetTimers()
     return log;
 }
 
-string Scheduler::showAll() {
-  return "";
+string Scheduler::showAll()
+{
+    return "";
 }
 
-string Scheduler::showDevice(Device& device) {
-  return "";
+string Scheduler::showDevice(Device &device)
+{
+    return "";
 }
 
 int searchDevice(vector<Device> &list, Device &target)
