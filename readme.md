@@ -28,6 +28,4 @@ Domotic System:
 - fare vari `handle()`su `handleInput()` per evitare tutti gli `if-else` annidati
 - rindondanza di check
 - log
-- sistemare che set i set cercano sempre un device
-    - da non fare perche set time non vuole device
-
+- `setTime()` non worka
