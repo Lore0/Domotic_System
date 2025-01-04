@@ -3,6 +3,8 @@
 #include <iostream>
 using namespace std;
 
+//cout in setdevice time 
+
 Scheduler::Scheduler(int maxPower)
     : MAX_POWER(maxPower), inUsePower(0), currTime("00:00")
 {
