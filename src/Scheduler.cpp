@@ -1,6 +1,6 @@
 #include "../include/Scheduler.h"
 #include <algorithm>
-#include <iostream> 
+#include <iostream>
 using namespace std;
 
 Scheduler::Scheduler(int maxPower)
@@ -15,6 +15,9 @@ string Scheduler::setOn(Device &device)
     if (running_.empty())
     {
         running_.push_back(device);
+        device.turnOn();
+        device.setStart(currTime);
+        inUsePower += device.getPowerConsumption();
         log = "\n" + getStringCurrTime() + " Il dispositivo " + device.getName() + " si è acceso"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è acceso
     }
     else
@@ -125,7 +128,7 @@ string Scheduler::resetTime()
     for (Device &d : waiting_)
     {
         setDeviceTimer(d);
-    }// controllare se il dispositivo è stato acceso più di una volta
+    } // controllare se il dispositivo è stato acceso più di una volta
     running_.clear();
     finished_.clear();
     return getStringCurrTime() + " L'orario attuale è 00:00"; //[00:00]L’orarioattualeè00:00
