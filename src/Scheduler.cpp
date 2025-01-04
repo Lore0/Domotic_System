@@ -94,6 +94,7 @@ string Scheduler::setTime(Time &time)
     // se sono uguali tolgo prima da running
     // fino a che non sono entrambi < time
     string log = "";
+    cout<<"0"<<endl;
     while ((!running_.empty() || !waiting_.empty()) && (!(running_.at(0).getFinish() > time) || !(waiting_.at(0).getStart() > time)))
     {
         cout << "a" << endl;
