@@ -1,6 +1,8 @@
 #ifndef DOMOTICSYSTEM_H
 #define DOMOTICSYSTEM_H
 
+#include "Manual.h"
+#include "PrefixCycle.h"
 #include "Scheduler.h"
 #include "Time.h"
 #include <string>
