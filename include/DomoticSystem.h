@@ -21,6 +21,7 @@ class DomoticSystem {
     bool isValidTimeFormat(const std::string& time);
     void buildDevices();
     Manual* searchManual(const std::string& name_);
+    PrefixCycle* searchPrefixCycle(const std::string& name_);
     std::string logTime();
     std::string setOn(Device& device_);
     std::string setOff(Device& device_);
