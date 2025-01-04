@@ -207,7 +207,7 @@ string DomoticSystem::handleInput(const string &input_)
     if (iss.peek() == '"')
     {
       getline(iss, target, '"'); // Legge il contenuto tra le virgolette
-      target = target.substr(1); 
+      target = target.substr(1);
     }
     else
     {
