@@ -47,7 +47,17 @@ string DomoticSystem::removeFromWaiting(Device &device_)
   return time + scheduler_.removeTimerFromWaiting(device_);
 }
 
-// show methods
+string DomoticSystem::showDevice(Device &device_)
+{
+  string time = logTime() + "\n";
+  return time + scheduler_.showDevice(device_);
+}
+
+string DomoticSystem::showAll()
+{
+  string time = logTime() + "\n";
+  return time + scheduler_.showAll();
+}
 
 string DomoticSystem::setTime(Time &time_)
 {
