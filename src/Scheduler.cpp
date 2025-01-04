@@ -94,7 +94,7 @@ string Scheduler::setTime(Time &time)
     // se sono uguali tolgo prima da running
     // fino a che non sono entrambi < time
     string log = "";
-    cout << waiting_.at(0).getName() << endl;
+    //cout << waiting_.at(0).getName() << endl;
     while (!(currTime > time))
     {
         cout << "a" << endl;
@@ -109,7 +109,7 @@ string Scheduler::setTime(Time &time)
             cout << "ba" << endl;
             if (running_.empty())
             {
-                if (waiting_.at(0).getStart() < time)
+                if (waiting_.at(0).getStart() > time)
                 {
                     cout << "stopwaitalta" << endl;
                     currTime = time;
@@ -125,7 +125,7 @@ string Scheduler::setTime(Time &time)
             }
             if (waiting_.empty())
             {
-                if (running_.at(0).getFinish() < time)
+                if (running_.at(0).getFinish() > time)
                 {
                     cout << "stoprunalta" << endl;
                     currTime = time;
