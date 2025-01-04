@@ -37,6 +37,7 @@ string Scheduler::setOn(Device &device)
         }
         // cosa fare in caso non c'è abbastanza potenza
     }
+    if(device.getStatus()) cout<<"acceso"<< endl;
     return log;
 }
 
