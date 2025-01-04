@@ -313,7 +313,28 @@ string DomoticSystem::handleInput(const string &input_)
   }
   else if (command == "show")
   {
-    // do search method call
+    if (iss >> deviceName)
+    {
+      if (Manual *m = searchManual(deviceName))
+      {
+        log = showDevice(*m);
+        cout << log << endl;
+        return log;
+      }
+      else if (PrefixCycle *p = searchPrefixCycle(deviceName))
+      {
+        log = showDevice(*p);
+        cout << log << endl;
+        return log;
+      }
+      return logError("Dispositivo non trovato");
+    }
+    else
+    {
+      log = showAll();
+      cout << log << endl;
+      return log;
+    }
   }
   else if (command == "rm")
   { // NO, DEVE RIMUOVERE IL TIMER NO IL DISPOSITIVO
