@@ -1,7 +1,6 @@
 #ifndef DOMOTICSYSTEM_H
 #define DOMOTICSYSTEM_H
 
-#include "Device.h"
 #include "Scheduler.h"
 #include "Time.h"
 #include <string>
@@ -10,7 +9,8 @@
 class DomoticSystem {
   public:
     DomoticSystem();
-    std::vector<Device> devices_; // fai 2 vector (cp e m)
+    std::vector<Manual> manual_;
+    std::vector<PrefixCycle> prefixCycle_;
     std::string handleInput(const std::string& input_);
     std::string getCustomInput();
     void log(const std::string& message_, std::ofstream& logFile);
@@ -20,7 +20,7 @@ class DomoticSystem {
     std::string parseTime(const std::string& time_);
     bool isValidTimeFormat(const std::string& time);
     void buildDevices();
-    Device* searchDevice(const std::string& name_);
+    Manual* searchManual(const std::string& name_);
     std::string logTime();
     std::string setOn(Device& device_);
     std::string setOff(Device& device_);

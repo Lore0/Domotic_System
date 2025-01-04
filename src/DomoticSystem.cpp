@@ -12,54 +12,63 @@
 using namespace std;
 
 DomoticSystem::DomoticSystem()
-  : scheduler_(kMaxPower)
+    : scheduler_(kMaxPower)
 {
   buildDevices();
 }
 
-string DomoticSystem::setOn(Device& device_) {
+string DomoticSystem::setOn(Device &device_)
+{
   string time = logTime() + "\n";
   return time + scheduler_.setOn(device_);
 }
 
-string DomoticSystem::setOff(Device& device_) {
+string DomoticSystem::setOff(Device &device_)
+{
   string time = logTime() + "\n";
   return time + scheduler_.setOff(device_);
 }
 
-string DomoticSystem::setDeviceTimer(Device& device_) {
+string DomoticSystem::setDeviceTimer(Device &device_)
+{
   string time = logTime() + "\n";
   return time + scheduler_.setDeviceTimer(device_);
 }
 
-string DomoticSystem::removeFromRunning(Device& device_) {
+string DomoticSystem::removeFromRunning(Device &device_)
+{
   string time = logTime() + "\n";
   return time + setOff(device_);
 }
 
-string DomoticSystem::removeFromWaiting(Device& device_) {
+string DomoticSystem::removeFromWaiting(Device &device_)
+{
   string time = logTime() + "\n";
   return time + scheduler_.removeTimerFromWaiting(device_);
 }
 
 // show methods
 
-string DomoticSystem::setTime(Time& time_) {
+string DomoticSystem::setTime(Time &time_)
+{
   string time = logTime() + "\n";
   return time + scheduler_.setTime(time_);
 }
 
-string DomoticSystem::resetTime() {
+string DomoticSystem::resetTime()
+{
   string time = logTime() + "\n";
   return time + scheduler_.resetTime();
 }
 
-string DomoticSystem::resetTimers() {
+string DomoticSystem::resetTimers()
+{
   string time = logTime() + "\n";
   return time + scheduler_.resetTimers();
 }
 
-string DomoticSystem::resetAll() {
+string DomoticSystem::resetAll()
+{
   resetTimers();
   resetTime();
   string time = logTime() + "\n";
@@ -68,20 +77,26 @@ string DomoticSystem::resetAll() {
   // bisogna fare il log (perché non chiamo riccardo)
 }
 
-string DomoticSystem::logTime(){
+string DomoticSystem::logTime()
+{
   return scheduler_.getStringCurrTime() + " L'orario attuale è " + scheduler_.getCurrTime().to_string();
 }
 
-string DomoticSystem::parseTime(const string& time_) {
+string DomoticSystem::parseTime(const string &time_)
+{
   int hours = 0;
   int minutes = 0;
   istringstream iss(time_);
   string temp;
 
-  while (iss >> temp) {
-    if (temp == "ora" || temp == "ore") {
+  while (iss >> temp)
+  {
+    if (temp == "ora" || temp == "ore")
+    {
       iss >> hours;
-    } else if (temp == "minuto" || temp == "minuti") {
+    }
+    else if (temp == "minuto" || temp == "minuti")
+    {
       iss >> minutes;
     }
   }
@@ -92,28 +107,34 @@ string DomoticSystem::parseTime(const string& time_) {
   return res.str();
 }
 
-bool DomoticSystem::isValidTimeFormat(const string& time) {
+bool DomoticSystem::isValidTimeFormat(const string &time)
+{
   regex timeFormat("^([0-1][0-9]|2[0-3]):([0-5][0-9])$");
   return regex_match(time, timeFormat);
 }
 
-void DomoticSystem::log(const string& message, ofstream& logFile) {
+void DomoticSystem::log(const string &message, ofstream &logFile)
+{
   // ofstream logFile("log.txt", ios::app); da fare nel main
-  if (logFile.is_open()) {
+  if (logFile.is_open())
+  {
     logFile << message << endl;
     // logFile.close(); da fare nel main
   }
 }
 
-void DomoticSystem::buildDevices() {
+void DomoticSystem::buildDevices()
+{
   ifstream file("../docs/device.txt");
-  if (!file.is_open()) {
+  if (!file.is_open())
+  {
     cout << "Errore: impossibile aprire il file device.txt" << endl;
     return;
   }
 
   string line;
-  while (getline(file, line)) {
+  while (getline(file, line))
+  {
     stringstream ss(line);
     string id, name, type, pow;
 
@@ -128,169 +149,207 @@ void DomoticSystem::buildDevices() {
     Time null("00:00");
 
     // gestione di M o CP
-    if (type == "Manuale") {
-      devices_.push_back(Manual(id, name, power, null, null));
-    } else {
+    if (type == "Manuale")
+    {
+      manual_.push_back(Manual(id, name, power, null, null));
+    }
+    else
+    {
       Time cycleDuration(parseTime(type));
-      devices_.push_back(PrefixCycle(id, name, power, null, cycleDuration));
+      prefixCycle_.push_back(PrefixCycle(id, name, power, null, cycleDuration));
     }
   }
 
   file.close();
 }
 
-Device* DomoticSystem::searchDevice(const string& name_) {
-  for (Device& d : devices_) {
-    if (d.getName() == name_) {
-      return &d; // Return the address of the found device
+Manual *DomoticSystem::searchManual(const string &name)
+{
+  for (auto &m : manual_)
+  {
+    if (m.getName() == name)
+    {
+      return &m;
     }
   }
-  return nullptr; // Return nullptr if the device is not found
+  return nullptr;
 }
 
-string DomoticSystem::handleInput(const string& input_) {
+PrefixCycle *DomoticSystem::searchPrefixCycle(const string &name)
+{
+  for (auto &p : prefixCycle_)
+  {
+    if (p.getName() == name)
+    {
+      return &p;
+    }
+  }
+  return nullptr;
+}
+
+string DomoticSystem::handleInput(const string &input_)
+{
   istringstream iss(input_);
   string command, deviceName;
   iss >> command;
   string log;
 
-  if (command == "set") {
+  auto logError = [this](const string &error)
+  {
+    string logM = scheduler_.getStringCurrTime() + " Errore : " + error;
+    cout << logM << endl;
+    return logM;
+  };
+
+  if (command == "set")
+  {
     iss >> deviceName;
-    if (deviceName == "time") {
+    if (deviceName == "time")
+    {
       string time;
       iss >> time;
-      if (!isValidTimeFormat(time)) {
-        log = scheduler_.getStringCurrTime() + " Errore : Formato orario non valido";
-        cout << log << endl;
-        return log;
+      if (!isValidTimeFormat(time))
+      {
+        return logError("Formato orario non valido");
       }
       Time t(time);
       log = setTime(t);
       cout << log << endl;
       return log;
-    } else {
-      string action;
-    iss >> action;
-
-    Device* d = searchDevice(deviceName);
-    if (!d) {
-      log = scheduler_.getStringCurrTime() + " Errore : Dispositivo non trovato";
-      cout << log << endl;
-      return log;
     }
+    else
+    {
+      string action;
+      iss >> action;
 
-    if (action == "on") {
-      if (d->getStatus()) {
-        log = scheduler_.getStringCurrTime() + " Errore : " + d->getName() + " è già acceso";
-        cout << log << endl;
-        return log;
-      } else {
-        log = setOn(*d);
-        cout << log << endl;
-        return log;
-      }
-    } else if (action == "off") {
-      if (!d->getStatus()) {
-        log = scheduler_.getStringCurrTime() + " Errore : " + d->getName() + " è già spento";
-        cout << log << endl;
-        return log;
-      } else {
-        log = setOff(*d);
-        cout << log << endl;
-        return log;
-      }
-    } else {
-      string startTime = action;
-      string endTime;
-      if (iss >> endTime) {
-        if (Manual* m = dynamic_cast<Manual*>(d)) {
-          // need to check if time is valid input
-          if (!isValidTimeFormat(startTime) || !isValidTimeFormat(endTime)) {
-            log = scheduler_.getStringCurrTime() + " Errore : Formato orario non valido";
-            cout << log << endl;
-            return log;
-          }
-          m->setStart(Time(startTime));
-          m->setFinish(Time(endTime));
-          log = setDeviceTimer(*m);
-          cout << log << endl;
-          return log;
-        } else {
-          log = scheduler_.getStringCurrTime() + " Errore : Non puoi dare orario di fine ad un device CP";
+      // new code
+      if (Manual *m = searchManual(deviceName))
+      {
+        if (action == "on")
+        {
+          log = m->getStatus() ? logError(m->getName() + " è già acceso") : setOn(*m);
           cout << log << endl;
           return log;
         }
-      } else {
-        if (Manual* m = dynamic_cast<Manual*>(d)) {
-          if (!isValidTimeFormat(startTime)) {
-            log = scheduler_.getStringCurrTime() + " Errore : Formato orario non valido";
-            cout << log << endl;
-            return log;
+        else if (action == "off")
+        {
+          log = !m->getStatus() ? logError(m->getName() + " è già spento") : setOff(*m);
+          cout << log << endl;
+          return log;
+        }
+        else
+        {
+          string startTime = action, endTime;
+          iss >> endTime;
+          if (!isValidTimeFormat(startTime) || (!endTime.empty() && !isValidTimeFormat(endTime)))
+          {
+            return logError("Formato orario non valido");
           }
           m->setStart(Time(startTime));
-          m->setFinish(Time("25:00")); // andare avanti all'infinito
+          if (!endTime.empty())
+          {
+            m->setFinish(Time(endTime));
+          }
+          else
+          {
+            m->setFinish(Time("25:00")); // andare avanti all'infinito
+          }
           log = setDeviceTimer(*m);
           cout << log << endl;
           return log;
-        } else {
-          PrefixCycle* p = dynamic_cast<PrefixCycle*>(d);
-          if (!isValidTimeFormat(startTime)) {
-            log = scheduler_.getStringCurrTime() + " Errore : Formato orario non valido";
-            cout << log << endl;
-            return log;
+        }
+      }
+      else if (PrefixCycle *p = searchPrefixCycle(deviceName))
+      {
+        if (action == "on")
+        {
+          log = p->getStatus() ? logError(p->getName() + " è già acceso") : setOn(*p);
+          cout << log << endl; // Stampa il risultato
+          return log;
+        }
+        else if (action == "off")
+        {
+          log = !p->getStatus() ? logError(p->getName() + " è già spento") : setOff(*p);
+          cout << log << endl; // Stampa il risultato
+          return log;
+        }
+        else
+        {
+          string startTime = action;
+          if (!isValidTimeFormat(startTime))
+          {
+            return logError("Formato orario non valido");
           }
           p->setStartFinish(Time(startTime));
           log = setDeviceTimer(*p);
-          cout << log << endl;
+          cout << log << endl; // Stampa il risultato
           return log;
         }
       }
+      else
+      {
+        return logError("Dispositivo non trovato");
+      }
     }
   }
-  } else if (command == "reset") {
+  else if (command == "reset")
+  {
     string target;
     iss >> target;
 
-    if (target == "time") {
+    if (target == "time")
+    {
       log = resetTime();
       cout << log << endl;
       return log;
-    } else if (target == "timers") {
+    }
+    else if (target == "timers")
+    {
       log = resetTimers();
       cout << log << endl;
       return log;
-    } else if (target == "all") {
+    }
+    else if (target == "all")
+    {
       log = resetAll();
       cout << log << endl;
       return log;
-    } else {
-      log = scheduler_.getStringCurrTime() + " Errore : Comando non riconosciuto";
-      cout << log << endl;
-      return log;
     }
-  } else if (command == "show") {
-    // do search method call
-  } else if (command == "rm") {   //NO, DEVE RIMUOVERE IL TIMER NO IL DISPOSITIVO
-    iss >> deviceName;
-    Device* d = searchDevice(deviceName);
-    if (d->getStatus() == true) {
-      log = removeFromRunning(*d);
-      cout << log << endl;
-      return log;
-    } else {
-      log = removeFromWaiting(*d);
-      cout << log << endl;
-      return log;
+    else
+    {
+      return logError("Comando non riconosciuto");
     }
-  } else {
-    log = scheduler_.getStringCurrTime() + " Errore : Comando non riconosciuto";
-    cout << log << endl;
-    return log;
   }
-  return "";
+  else if (command == "show")
+  {
+    // do search method call
+  }
+  else if (command == "rm")
+  { // NO, DEVE RIMUOVERE IL TIMER NO IL DISPOSITIVO
+    iss >> deviceName;
+    if (Manual *m = searchManual(deviceName))
+    {
+      log = m->getStatus() ? removeFromRunning(*m) : removeFromWaiting(*m);
+      cout << log << endl;
+      return log;
+    }
+    else if (PrefixCycle *p = searchPrefixCycle(deviceName))
+    {
+      log = p->getStatus() ? removeFromRunning(*p) : removeFromWaiting(*p);
+      cout << log << endl;
+      return log;
+    }
+    return logError("Dispositivo non trovato");
+  }
+  else
+  {
+    return logError("Comando non riconosciuto");
+  }
+  return logError("Errore");
 }
 
-string DomoticSystem::getCustomInput() {
+string DomoticSystem::getCustomInput()
+{
   cout << ">> ";
   string input;
   getline(cin, input);
