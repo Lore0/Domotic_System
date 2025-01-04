@@ -98,9 +98,9 @@ string Scheduler::setTime(Time &time)
     while (!(currTime > time))
     {
         cout << "a" << endl;
-        if ((running_.empty() && waiting_.empty()) || (running_.at(0).getFinish() > time || waiting_.at(0).getStart() > time))  //controllo di fine (entrambe liste vuote o entrambe con tempi maggiuori a time)
+        if ((running_.empty() && waiting_.empty()) /*(running_.at(0).getFinish() > time || waiting_.at(0).getStart() > time)*/) // controllo di fine (entrambe liste vuote)
         {
-            cout << "stop" << endl;
+            cout << "stopvuote" << endl;
             currTime = time;
             break;
         }
@@ -109,30 +109,48 @@ string Scheduler::setTime(Time &time)
             cout << "ba" << endl;
             if (running_.empty())
             {
+                if (waiting_.at(0).getStart() < time)
+                {
+                    cout << "stopwaitalta" << endl;
+                    currTime = time;
+                    break;
+                }
                 cout << "aaa" << endl;
                 while (!waiting_.empty() && waiting_.at(0).getStart() < time)
                 {
                     cout << "bb" << endl;
-                    currTime=waiting_.at(0).getStart();
+                    currTime = waiting_.at(0).getStart();
                     setOn(waiting_.at(0));
                 }
             }
-            if(waiting_.empty()){
+            if (waiting_.empty())
+            {
+                if (running_.at(0).getFinish() < time)
+                {
+                    cout << "stoprunalta" << endl;
+                    currTime = time;
+                    break;
+                }
                 cout << "aab" << endl;
                 while (!running_.empty() && running_.at(0).getFinish() < time)
                 {
                     cout << "bc" << endl;
-                    currTime=running_.at(0).getFinish();
+                    currTime = running_.at(0).getFinish();
                     setOff(running_.at(0));
                 }
             }
-        }else{
+        }
+        else
+        {
             cout << "cc" << endl;
-            if(waiting_.at(0).getStart()<running_.at(0).getFinish()){
-                currTime=waiting_.at(0).getStart();
+            if (waiting_.at(0).getStart() < running_.at(0).getFinish())
+            {
+                currTime = waiting_.at(0).getStart();
                 setOn(waiting_.at(0));
-            }else{
-                currTime=running_.at(0).getFinish();
+            }
+            else
+            {
+                currTime = running_.at(0).getFinish();
                 setOff(running_.at(0));
             }
         }
