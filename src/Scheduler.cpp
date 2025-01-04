@@ -44,10 +44,6 @@ string Scheduler::setOn(Device &device)
 string Scheduler::setOff(Device &device)
 {
     int targetIndex = searchDevice(running_, device);
-    if (device.getStatus())
-    {
-        return "Errore: " + device.getName() + " è già spento ";
-    }
     running_.erase(running_.begin() + targetIndex);
     device.turnOff();
     device.setFinish(currTime);
