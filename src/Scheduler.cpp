@@ -14,7 +14,6 @@ string Scheduler::setOn(Device &device)
     string log = "";
     if (running_.empty())
     {
-        cout << "empty" << endl;
         running_.push_back(device);
         device.turnOn(); // ste tre istruzioni sono da mettere alla fine
         device.setStart(currTime);
@@ -23,7 +22,6 @@ string Scheduler::setOn(Device &device)
     }
     else
     {
-        cout << "roba" << endl;
         int i = 0;
         if (inUsePower + device.getPowerConsumption() <= MAX_POWER)
         {
@@ -37,7 +35,6 @@ string Scheduler::setOn(Device &device)
         }
         // cosa fare in caso non c'è abbastanza potenza
     }
-    if(device.getStatus()) cout<<"acceso"<< endl;
     return log;
 }
 
