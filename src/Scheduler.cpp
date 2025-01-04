@@ -109,6 +109,7 @@ string Scheduler::setTime(Time &time)
             cout << "ba" << endl;
             if (running_.empty())
             {
+                cout << "aaa" << endl;
                 while (!waiting_.empty() && waiting_.at(0).getStart() < time)
                 {
                     cout << "bb" << endl;
@@ -117,6 +118,7 @@ string Scheduler::setTime(Time &time)
                 }
             }
             if(waiting_.empty()){
+                cout << "aab" << endl;
                 while (!running_.empty() && running_.at(0).getFinish() < time)
                 {
                     cout << "bc" << endl;
