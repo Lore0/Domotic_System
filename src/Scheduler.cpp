@@ -116,7 +116,7 @@ string Scheduler::setTime(Time &time)
                     break;
                 }
                 cout << "aaa" << endl;
-                while (!waiting_.empty() && waiting_.at(0).getStart() < time)
+                if (!waiting_.empty() && waiting_.at(0).getStart() < time)
                 {
                     cout << "bb" << endl;
                     currTime = waiting_.at(0).getStart();
@@ -132,7 +132,7 @@ string Scheduler::setTime(Time &time)
                     break;
                 }
                 cout << "aab" << endl;
-                while (!running_.empty() && running_.at(0).getFinish() < time)
+                if (!running_.empty() && running_.at(0).getFinish() < time)
                 {
                     cout << "bc" << endl;
                     currTime = running_.at(0).getFinish();
