@@ -203,113 +203,7 @@ string DomoticSystem::handleInput(const string &input_)
 
   if (command == "set")
   {
-    // Legge il target che può essere "time" o un deviceName tra virgolette
-    if (iss.peek() == '"')
-    {
-      getline(iss, target, '"'); // Legge il contenuto tra le virgolette
-      target = target.substr(1);
-    }
-    else
-    {
-      iss >> target; // Legge "time" o un valore non racchiuso tra virgolette
-    }
-
-    if (target == "time")
-    {
-      // Gestione del comando "set time HH:MM"
-      string time;
-      iss >> time;
-
-      if (!isValidTimeFormat(time))
-      {
-        return logError("Formato orario non valido");
-      }
-
-      Time t(time);
-      log = setTime(t);
-      cout << log << endl;
-      return log;
-    }
-    else
-    {
-      // Gestione del comando "set "deviceName" on/off"
-      string action;
-      iss >> action;
-
-      if (target.empty())
-      {
-        return logError("Nome del dispositivo non specificato");
-      }
-
-      if (Manual *m = searchManual(target))
-      {
-        if (action == "on")
-        {
-          log = m->getStatus() ? logError(m->getName() + " è già acceso") : setOn(*m);
-          cout << log << endl;
-          return log;
-        }
-        else if (action == "off")
-        {
-          log = !m->getStatus() ? logError(m->getName() + " è già spento") : setOff(*m);
-          cout << log << endl;
-          return log;
-        }
-        else
-        {
-          string startTime = action, endTime;
-          iss >> endTime;
-          if (!isValidTimeFormat(startTime) || (!endTime.empty() && !isValidTimeFormat(endTime)))
-          {
-            return logError("Formato orario non valido");
-          }
-          m->setStart(Time(startTime));
-          if (!endTime.empty())
-          {
-            m->setFinish(Time(endTime));
-          }
-          else
-          {
-            m->setFinish(Time("25:00")); // andare avanti all'infinito
-          }
-          log = setDeviceTimer(*m);
-          cout << log << endl;
-          return log;
-        }
-      }
-      else if (PrefixCycle *p = searchPrefixCycle(target))
-      {
-        if (action == "on")
-        {
-          log = p->getStatus() ? logError(p->getName() + " è già acceso") : setOn(*p);
-          cout << log << endl; // Stampa il risultato
-          return log;
-        }
-        else if (action == "off")
-        {
-          log = !p->getStatus() ? logError(p->getName() + " è già spento") : setOff(*p);
-          cout << log << endl; // Stampa il risultato
-          return log;
-        }
-        else
-        {
-          string startTime = action;
-          if (!isValidTimeFormat(startTime))
-          {
-            return logError("Formato orario non valido");
-          }
-          p->setStartFinish(Time(startTime));
-          log = setDeviceTimer(*p);
-          cout << log << endl; // Stampa il risultato
-          return log;
-        }
-      }
-      else
-      {
-        return logError("Dispositivo non trovato");
-      }
-    }
-    /*iss >> deviceName;
+    iss >> deviceName;
     if (deviceName == "time")
     {
       string time;
@@ -396,7 +290,7 @@ string DomoticSystem::handleInput(const string &input_)
       {
         return logError("Dispositivo non trovato");
       }
-    }*/
+    }
   }
   else if (command == "reset")
   {
@@ -432,30 +326,7 @@ string DomoticSystem::handleInput(const string &input_)
   }
   else if (command == "rm")
   { // NO, DEVE RIMUOVERE IL TIMER NO IL DISPOSITIVO
-    iss >> ws;
-    if (iss.peek() == '"')
-    {
-      getline(iss, target, '"'); // Salta la prima virgoletta
-      getline(iss, target, '"'); // Legge fino alla seconda virgoletta
-    }
-    else
-    {
-      return logError("Nome del dispositivo non racchiuso tra doppi apici");
-    }
-
-    if (Manual *m = searchManual(target))
-    {
-      log = m->getStatus() ? removeFromRunning(*m) : removeFromWaiting(*m);
-      cout << log << endl;
-      return log;
-    }
-    else if (PrefixCycle *p = searchPrefixCycle(target))
-    {
-      log = p->getStatus() ? removeFromRunning(*p) : removeFromWaiting(*p);
-      cout << log << endl;
-      return log;
-    }
-    /*iss >> deviceName;
+    iss >> deviceName;
     if (Manual *m = searchManual(deviceName))
     {
       log = m->getStatus() ? removeFromRunning(*m) : removeFromWaiting(*m);
@@ -467,7 +338,7 @@ string DomoticSystem::handleInput(const string &input_)
       log = p->getStatus() ? removeFromRunning(*p) : removeFromWaiting(*p);
       cout << log << endl;
       return log;
-    }*/
+    }
     return logError("Dispositivo non trovato");
   }
   else
