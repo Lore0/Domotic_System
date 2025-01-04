@@ -30,8 +30,8 @@ class DomoticSystem {
     std::string setDeviceTimer(Device& device_);
     std::string removeFromRunning(Device& device_);
     std::string removeFromWaiting(Device& device_);
-    // show
-    // show device
+    std::string showDevice(Device& device_);
+    std::string showAll();
     std::string setTime(Time& time_);
     std::string resetTime();
     std::string resetTimers();
