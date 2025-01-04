@@ -95,7 +95,10 @@ string Scheduler::setTime(Time &time)
     // fino a che non sono entrambi < time
     string log = "";
     cout<<waiting_.at(0).getName()<<endl;
-    while ((!running_.empty() || !waiting_.empty()) && (!(running_.at(0).getFinish() > time) || !(waiting_.at(0).getStart() > time)))
+    while (!(currTime>time)){  
+        if((running_.empty() && waiting_.empty())||){}
+    }
+    /*while ((!running_.empty() || !waiting_.empty()) && (!(running_.at(0).getFinish() > time) || !(waiting_.at(0).getStart() > time)))
     {
         cout << "a" << endl;
         if (!running_.empty())
@@ -116,7 +119,7 @@ string Scheduler::setTime(Time &time)
                 log += setOff(waiting_.at(0));
             }
         }
-    }
+    }*/
     return log + "\n" + getStringCurrTime() + "L'orario attuale è " + getCurrTime().to_string();
 }
 
