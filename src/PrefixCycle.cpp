@@ -5,7 +5,7 @@ PrefixCycle::PrefixCycle(const std::string& id, const std::string& name, double 
         cycleDuration_(cycleDuration)
 
 {
-    //left intentionally blank
+  // left intentionally blank
 }
 
 void PrefixCycle::setStartFinish(Time start){

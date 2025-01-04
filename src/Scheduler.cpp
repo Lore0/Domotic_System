@@ -3,6 +3,8 @@
 #include <iostream>
 using namespace std;
 
+// cout in setdevice time
+
 Scheduler::Scheduler(int maxPower)
     : MAX_POWER(maxPower), inUsePower(0), currTime("00:00")
 {
@@ -92,12 +94,15 @@ string Scheduler::setTime(Time &time)
     // se sono uguali tolgo prima da running
     // fino a che non sono entrambi < time
     string log = "";
+    cout<<waiting_.at(0).getName()<<endl;
     while ((!running_.empty() || !waiting_.empty()) && (!(running_.at(0).getFinish() > time) || !(waiting_.at(0).getStart() > time)))
     {
+        cout << "a" << endl;
         if (!running_.empty())
         {
             while (!(running_.at(0).getFinish() > time) && (waiting_.empty() || !(running_.at(0).getFinish() > waiting_.at(0).getStart())))
             {
+                cout << "b" << endl;
                 currTime = running_.at(0).getFinish();
                 log += setOn(running_.at(0));
             }
@@ -106,6 +111,7 @@ string Scheduler::setTime(Time &time)
         {
             while (!(waiting_.at(0).getStart() > time) && (running_.empty() || !(waiting_.at(0).getStart() > running_.at(0).getFinish())))
             {
+                cout<<"c"<<endl;
                 currTime = waiting_.at(0).getStart();
                 log += setOff(waiting_.at(0));
             }

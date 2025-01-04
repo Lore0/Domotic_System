@@ -82,31 +82,6 @@ string DomoticSystem::logTime()
   return scheduler_.getStringCurrTime() + " L'orario attuale è " + scheduler_.getCurrTime().to_string();
 }
 
-string DomoticSystem::parseTime(const string &time_)
-{
-  int hours = 0;
-  int minutes = 0;
-  istringstream iss(time_);
-  string temp;
-
-  while (iss >> temp)
-  {
-    if (temp == "ora" || temp == "ore")
-    {
-      iss >> hours;
-    }
-    else if (temp == "minuto" || temp == "minuti")
-    {
-      iss >> minutes;
-    }
-  }
-
-  // costruisco il res come "HH:MM"
-  ostringstream res;
-  res << hours << ":" << (minutes < 10 ? "0" : "") << minutes;
-  return res.str();
-}
-
 bool DomoticSystem::isValidTimeFormat(const string &time)
 {
   regex timeFormat("^([0-1][0-9]|2[0-3]):([0-5][0-9])$");
@@ -155,7 +130,7 @@ void DomoticSystem::buildDevices()
     }
     else
     {
-      Time cycleDuration(parseTime(type));
+      Time cycleDuration(type);
       prefixCycle_.push_back(PrefixCycle(id, name, power, null, cycleDuration));
     }
   }
