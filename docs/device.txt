@@ -1,10 +1,10 @@
 1,Impianto_fotovoltaico,Manuale,+1,5
-2,Lavatrice,1 ora e 50 minuti,-2
-3,Lavastoviglie,1 ora e 50 minuti,-1,5
+2,Lavatrice,01:50,-2
+3,Lavastoviglie,01:50,-1,5
 4,Pompa_di_calore_+_termostato,Manuale,-2
-5,Tapparelle_elettriche,1 minuto,-0,3
+5,Tapparelle_elettriche,00:01,-0,3
 6,Scaldabagno,Manuale,-1
 7,Frigorifero,Manuale,-0,4
-8,Forno_a_microonde,2 minuti,-0,8
-9,Asciugatrice,1 ora,-0,5
-10,Televisore,1 ora,-0,2
+8,Forno_a_microonde,00:02,-0,8
+9,Asciugatrice,01:00,-0,5
+10,Televisore,01:00,-0,2
