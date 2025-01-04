@@ -207,7 +207,7 @@ string DomoticSystem::handleInput(const string &input_)
     iss >> ws; // Salta spazi bianchi
     if (iss.peek() == '"')
     {
-      getline(iss, target, '"'); // Salta la prima virgoletta
+      iss.get(); // salta la prima virgoletta
       getline(iss, target, '"'); // Legge il contenuto tra le virgolette
     }
     else
