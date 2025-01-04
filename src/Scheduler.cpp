@@ -97,17 +97,21 @@ string Scheduler::setTime(Time &time)
     cout << waiting_.at(0).getName() << endl;
     while (!(currTime > time))
     {
+        cout << "a" << endl;
         if ((running_.empty() && waiting_.empty()) || (running_.at(0).getFinish() > time || waiting_.at(0).getStart() > time))  //controllo di fine (entrambe liste vuote o entrambe con tempi maggiuori a time)
         {
+            cout << "stop" << endl;
             currTime = time;
             break;
         }
         if (running_.empty() || waiting_.empty())
         {
+            cout << "ba" << endl;
             if (running_.empty())
             {
                 while (!waiting_.empty() && waiting_.at(0).getStart() < time)
                 {
+                    cout << "bb" << endl;
                     currTime=waiting_.at(0).getStart();
                     setOn(waiting_.at(0));
                 }
@@ -115,11 +119,13 @@ string Scheduler::setTime(Time &time)
             if(waiting_.empty()){
                 while (!running_.empty() && running_.at(0).getFinish() < time)
                 {
+                    cout << "bc" << endl;
                     currTime=running_.at(0).getFinish();
                     setOff(running_.at(0));
                 }
             }
         }else{
+            cout << "cc" << endl;
             if(waiting_.at(0).getStart()<running_.at(0).getFinish()){
                 currTime=waiting_.at(0).getStart();
                 setOn(waiting_.at(0));
