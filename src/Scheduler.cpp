@@ -95,7 +95,7 @@ string Scheduler::setTime(Time &time)
     // fino a che non sono entrambi < time
     string log = "";
     //cout << waiting_.at(0).getName() << endl;
-    while ((currTime < time))
+    while (!(currTime > time))
     {
         cout << "a" << endl;
         if ((running_.empty() && waiting_.empty()) /*(running_.at(0).getFinish() > time || waiting_.at(0).getStart() > time)*/) // controllo di fine (entrambe liste vuote)
@@ -145,11 +145,13 @@ string Scheduler::setTime(Time &time)
             cout << "cc" << endl;
             if (waiting_.at(0).getStart() < running_.at(0).getFinish())
             {
+                cout << "cd" << endl;
                 currTime = waiting_.at(0).getStart();
                 setOn(waiting_.at(0));
             }
             else
             {
+                cout << "ce" << endl;
                 currTime = running_.at(0).getFinish();
                 setOff(running_.at(0));
             }
