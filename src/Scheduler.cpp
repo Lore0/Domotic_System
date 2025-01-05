@@ -14,10 +14,6 @@ Scheduler::Scheduler(int maxPower)
 string Scheduler::setOn(Device &device) //se è già in waiting bisogna cercarlo e toglierlo
 {
     string log = "";
-    int targetIndex=searchDevice(waiting_,device);
-    if(targetIndex!=-1){
-        waiting_.erase(waiting_.begin() + targetIndex);
-    }
     if (running_.empty())
     {
         running_.push_back(device);
@@ -40,6 +36,10 @@ string Scheduler::setOn(Device &device) //se è già in waiting bisogna cercarlo
             log = "\n" + getStringCurrTime() + " Il dispositivo " + device.getName() + " si è acceso"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è acceso
         }
         // cosa fare in caso non c'è abbastanza potenza
+    }
+    int targetIndex=searchDevice(waiting_,device);
+    if(targetIndex!=-1){
+        waiting_.erase(waiting_.begin() + targetIndex);
     }
     return log;
 }
