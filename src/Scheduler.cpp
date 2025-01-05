@@ -18,6 +18,8 @@ string Scheduler::setOn(Device &device) //se è già in waiting bisogna cercarlo
     {
         device.turnOn(); // ste tre istruzioni sono da mettere alla fine
         device.setStart(currTime);
+        Time t("14:51"); // da cancellare
+        device.setFinish(t);
         inUsePower += device.getPowerConsumption();
         running_.push_back(device);
         if(running_.at(0).getStatus())
