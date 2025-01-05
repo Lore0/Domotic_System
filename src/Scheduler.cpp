@@ -20,7 +20,8 @@ string Scheduler::setOn(Device &device) //se è già in waiting bisogna cercarlo
         device.setStart(currTime);
         inUsePower += device.getPowerConsumption();
         running_.push_back(device);
-        cout<<running_.at(0).getName()<<endl;
+        if(running_.at(0).getStatus())
+            cout<<running_.at(0).getName()<<endl;
         log = "\n" + getStringCurrTime() + " Il dispositivo " + device.getName() + " si è acceso"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è acceso
     }
     else
