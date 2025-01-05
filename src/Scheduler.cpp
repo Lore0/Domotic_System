@@ -11,9 +11,13 @@ Scheduler::Scheduler(int maxPower)
     // nothing
 }
 
-string Scheduler::setOn(Device &device)
+string Scheduler::setOn(Device &device) //se è già in waiting bisogna cercarlo e toglierlo
 {
     string log = "";
+    int targetIndex=searchDevice(waiting_,device);
+    if(targetIndex!=-1){
+        waiting_.erase(waiting_.begin() + targetIndex);
+    }
     if (running_.empty())
     {
         running_.push_back(device);
@@ -121,6 +125,7 @@ string Scheduler::setTime(Time &time)
                     cout << "bb" << endl;
                     currTime = waiting_.at(0).getStart();
                     setOn(waiting_.at(0));
+                    //waiting_.erase(waiting_.begin()); ->se non lo faccio su seton
                 }
             }
             if (waiting_.empty())
