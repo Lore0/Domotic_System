@@ -126,7 +126,7 @@ string Scheduler::setTime(Time &time)
                     cout << "bb" << endl;
                     currTime = waiting_.at(0).getStart();
                     //cout<<waiting_.at(0).getName()<<endl;
-                    setOn(waiting_.at(0));
+                    log+=setOn(waiting_.at(0));
                     //waiting_.erase(waiting_.begin()); ->se non lo faccio su seton
                 }
             }
@@ -143,7 +143,7 @@ string Scheduler::setTime(Time &time)
                 {
                     cout << "bc" << endl;
                     currTime = running_.at(0).getFinish();
-                    setOff(running_.at(0));
+                    log+=setOff(running_.at(0));
                 }
             }
         }
@@ -155,13 +155,13 @@ string Scheduler::setTime(Time &time)
             {
                 cout << "cd" << endl;
                 currTime = waiting_.at(0).getStart();
-                setOn(waiting_.at(0));
+                log+=setOn(waiting_.at(0));
             }
             else
             {
                 cout << "ce" << endl;
                 currTime = running_.at(0).getFinish();
-                setOff(running_.at(0));
+                log+=setOff(running_.at(0));
             }
         }
     }
