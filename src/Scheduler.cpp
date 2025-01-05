@@ -20,6 +20,7 @@ string Scheduler::setOn(Device &device) //se è già in waiting bisogna cercarlo
         device.turnOn(); // ste tre istruzioni sono da mettere alla fine
         device.setStart(currTime);
         inUsePower += device.getPowerConsumption();
+        cout<<"ok"<<endl;
         log = "\n" + getStringCurrTime() + " Il dispositivo " + device.getName() + " si è acceso"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è acceso
     }
     else
@@ -124,7 +125,7 @@ string Scheduler::setTime(Time &time)
                 {
                     cout << "bb" << endl;
                     currTime = waiting_.at(0).getStart();
-                    cout<<waiting_.at(0).getName()<<endl;
+                    //cout<<waiting_.at(0).getName()<<endl;
                     setOn(waiting_.at(0));
                     //waiting_.erase(waiting_.begin()); ->se non lo faccio su seton
                 }
