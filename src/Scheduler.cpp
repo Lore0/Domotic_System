@@ -94,79 +94,79 @@ string Scheduler::removeTimerFromRunning(Device* device)
 // showdevice;
 string Scheduler::setTime(Time &time)
 {
-    // if (currTime > time) // ora non valida
-    //     return getStringCurrTime() + " Errore: ora minore a quella attuale";
-    // // controllare se lista vuota
-    // // controllaere qual'è minore
-    // // se sono uguali tolgo prima da running
-    // // fino a che non sono entrambi < time
-     string log = "";
-    // //cout << waiting_.at(0).getName() << endl;
-    // while (!(currTime > time))
-    // {
-    //     cout << "a" << endl;
-    //     if ((running_.empty() && waiting_.empty()) /*(running_.at(0).getFinish() > time || waiting_.at(0).getStart() > time)*/) // controllo di fine (entrambe liste vuote)
-    //     {
-    //         cout << "stopvuote" << endl;
-    //         currTime = time;
-    //         break;
-    //     }
-    //     if (running_.empty() || waiting_.empty())
-    //     {
-    //         cout << "ba" << endl;
-    //         if (running_.empty())
-    //         {
-    //             if (waiting_.at(0).getStart() > time)
-    //             {
-    //                 cout << "stopwaitalta" << endl;
-    //                 currTime = time;
-    //                 break;
-    //             }
-    //             cout << "aaa" << endl;
-    //             if (!waiting_.empty() && waiting_.at(0).getStart() < time)
-    //             {
-    //                 cout << "bb" << endl;
-    //                 currTime = waiting_.at(0).getStart();
-    //                 //cout<<waiting_.at(0).getName()<<endl;
-    //                 log+=setOn(waiting_.at(0));
-    //                 //waiting_.erase(waiting_.begin()); ->se non lo faccio su seton
-    //             }
-    //         }
-    //         if (waiting_.empty())
-    //         {
-    //             if (running_.at(0).getFinish() > time)
-    //             {
-    //                 cout << "stoprunalta" << endl;
-    //                 currTime = time;
-    //                 break;
-    //             }
-    //             cout << "aab" << endl;
-    //             if (!running_.empty() && running_.at(0).getFinish() < time)
-    //             {
-    //                 cout << "bc" << endl;
-    //                 currTime = running_.at(0).getFinish();
-    //                 log+=setOff(running_.at(0));
-    //             }
-    //         }
-    //     }
-    //     else
-    //     {
-    //         cout << "cc" << endl;
-    //         cout<<waiting_.at(0).getName()<<endl;
-    //         if (waiting_.at(0).getStart() < running_.at(0).getFinish())
-    //         {
-    //             cout << "cd" << endl;
-    //             currTime = waiting_.at(0).getStart();
-    //             log+=setOn(waiting_.at(0));
-    //         }
-    //         else
-    //         {
-    //             cout << "ce" << endl;
-    //             currTime = running_.at(0).getFinish();
-    //             log+=setOff(running_.at(0));
-    //         }
-    //     }
-    // }
+    if (currTime > time) // ora non valida
+        return getStringCurrTime() + " Errore: ora minore a quella attuale";
+    // controllare se lista vuota
+    // controllaere qual'è minore
+    // se sono uguali tolgo prima da running
+    // fino a che non sono entrambi < time
+    string log = "";
+    //cout << waiting_.at(0).getName() << endl;
+    while (!(currTime > time))
+    {
+        cout << "a" << endl;
+        if ((running_.empty() && waiting_.empty()) /*(running_.at(0).getFinish() > time || waiting_.at(0).getStart() > time)*/) // controllo di fine (entrambe liste vuote)
+        {
+            cout << "stopvuote" << endl;
+            currTime = time;
+            break;
+        }
+        if (running_.empty() || waiting_.empty())
+        {
+            cout << "ba" << endl;
+            if (running_.empty())
+            {
+                if (waiting_.at(0)->getStart() > time)
+                {
+                    cout << "stopwaitalta" << endl;
+                    currTime = time;
+                    break;
+                }
+                cout << "aaa" << endl;
+                if (!waiting_.empty() && waiting_.at(0)->getStart() < time)
+                {
+                    cout << "bb" << endl;
+                    currTime = waiting_.at(0)->getStart();
+                    //cout<<waiting_.at(0).getName()<<endl;
+                    log+=setOn(waiting_.at(0));
+                    //waiting_.erase(waiting_.begin()); ->se non lo faccio su seton
+                }
+            }
+            if (waiting_.empty())
+            {
+                if (running_.at(0)->getFinish() > time)
+                {
+                    cout << "stoprunalta" << endl;
+                    currTime = time;
+                    break;
+                }
+                cout << "aab" << endl;
+                if (!running_.empty() && running_.at(0)->getFinish() < time)
+                {
+                    cout << "bc" << endl;
+                    currTime = running_.at(0)->getFinish();
+                    log+=setOff(running_.at(0));
+                }
+            }
+        }
+        else
+        {
+            cout << "cc" << endl;
+            cout<<waiting_.at(0)->getName()<<endl;
+            if (waiting_.at(0)->getStart() < running_.at(0)->getFinish())
+            {
+                cout << "cd" << endl;
+                currTime = waiting_.at(0)->getStart();
+                log+=setOn(waiting_.at(0));
+            }
+            else
+            {
+                cout << "ce" << endl;
+                currTime = running_.at(0)->getFinish();
+                log+=setOff(running_.at(0));
+            }
+        }
+    }
     /*while ((!running_.empty() || !waiting_.empty()) && (!(running_.at(0).getFinish() > time) || !(waiting_.at(0).getStart() > time)))
     {
         cout << "a" << endl;
