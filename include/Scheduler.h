@@ -12,9 +12,9 @@ class Scheduler {
     std::string setOn(Device* device_); //così
     std::string setOff(Device* device_);
     std::string setDeviceTimer(Device* device_);
-    std::string removeTimerFromRunning(Device& device_);
-    std::string removeTimerFromWaiting(Device& device_);
-    std::string showDevice(Device& device_);
+    std::string removeTimerFromRunning(Device* device_);
+    std::string removeTimerFromWaiting(Device* device_);
+    std::string showDevice(Device* device_);
     std::string showAll();
     std::string setTime(Time& time_);
     std::string resetTime();
