@@ -2,7 +2,7 @@
 #include "../include/Manual.h"
 #include "../include/PrefixCycle.h"
 
-#include <iostream> //tutti include vanno su .h
+#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -20,37 +20,43 @@ DomoticSystem::DomoticSystem()
 string DomoticSystem::setOn(Device &device_)
 {
   string time = logTime() + "\n";
-  return time + scheduler_.setOn(device_);
+  Device* device = &device_;
+  return time + scheduler_.setOn(device);
 }
 
 string DomoticSystem::setOff(Device &device_)
 {
   string time = logTime() + "\n";
-  return time + scheduler_.setOff(device_);
+  Device* device = &device_;
+  return time + scheduler_.setOff(device);
 }
 
 string DomoticSystem::setDeviceTimer(Device &device_)
 {
   string time = logTime() + "\n";
-  return time + scheduler_.setDeviceTimer(device_);
+  Device* device = &device_;
+  return time + scheduler_.setDeviceTimer(device);
 }
 
 string DomoticSystem::removeFromRunning(Device &device_)
 {
   string time = logTime() + "\n";
-  return time + setOff(device_);
+  Device* device = &device_;
+  return time + setOff(device);
 }
 
 string DomoticSystem::removeFromWaiting(Device &device_)
 {
   string time = logTime() + "\n";
-  return time + scheduler_.removeTimerFromWaiting(device_);
+  Device* device = &device_;
+  return time + scheduler_.removeTimerFromWaiting(device);
 }
 
 string DomoticSystem::showDevice(Device &device_)
 {
   string time = logTime() + "\n";
-  return time + scheduler_.showDevice(device_);
+  Device* device = &device_;
+  return time + scheduler_.showDevice(device);
 }
 
 string DomoticSystem::showAll()
