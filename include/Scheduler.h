@@ -9,9 +9,9 @@ class Scheduler {
     Scheduler(int maxPower);
     Time getCurrTime();
     std::string getStringCurrTime();
-    std::string setOn(Device& device_);
-    std::string setOff(Device& device_);
-    std::string setDeviceTimer(Device& device_);
+    std::string setOn(Device* device_); //così
+    std::string setOff(Device* device_);
+    std::string setDeviceTimer(Device* device_);
     std::string removeTimerFromRunning(Device& device_);
     std::string removeTimerFromWaiting(Device& device_);
     std::string showDevice(Device& device_);
