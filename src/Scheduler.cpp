@@ -224,7 +224,7 @@ string Scheduler::showAll()
     return "";
 }
 
-string Scheduler::showDevice(Device &device)
+string Scheduler::showDevice(Device* device)
 {
     return "";
 }
