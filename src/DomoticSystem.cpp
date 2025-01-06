@@ -2,7 +2,7 @@
 #include "../include/Manual.h"
 #include "../include/PrefixCycle.h"
 
-#include <iostream>
+#include <iostream> //tutti include vanno su .h
 #include <fstream>
 #include <sstream>
 #include <string>
