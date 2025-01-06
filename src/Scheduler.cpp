@@ -67,17 +67,17 @@ string Scheduler::setDeviceTimer(Device* device)
     return getStringCurrTime() + " Impostato un timer per il dispositivo " + device->getName() + " dalle " + device->getStart().to_string() + " alle " + device->getFinish().to_string(); //[13:00] Impostatountimerper ildispositivo‘${DEVICENAME}’dalleXX:YYalleZZ:WW
 }
 
-string Scheduler::removeTimerFromWaiting(Device &device)
+string Scheduler::removeTimerFromWaiting(Device* device)
 { // toglie il timer da waiting
 /*
     int targetIndex = searchDevice(waiting_, device);
     if (targetIndex == -1)
         return getStringCurrTime() + " Errore: dispositivo non in attesa";
     waiting_.erase(waiting_.begin() + targetIndex);
-*/    return getStringCurrTime() + " Rimosso il timer dal dispositivo " + device.getName(); // [13:00]Rimossoil timerdaldispositivo‘${DEVICENAME}’
+*/    return getStringCurrTime() + " Rimosso il timer dal dispositivo " + device->getName(); // [13:00]Rimossoil timerdaldispositivo‘${DEVICENAME}’
 }
 
-string Scheduler::removeTimerFromRunning(Device &device)
+string Scheduler::removeTimerFromRunning(Device* device)
 { // toglie il timer da running --> va all'infinito
     // int targetIndex = searchDevice(running_, device);
     // if (targetIndex == -1)
@@ -88,7 +88,7 @@ string Scheduler::removeTimerFromRunning(Device &device)
     // Device temp = running_[targetIndex];
     // running_[targetIndex] = running_[i];
     // running_[i] = temp;
-     return getStringCurrTime() + " Rimosso il timer dal dispositivo " + device.getName(); // [13:00]Rimossoil timerdaldispositivo‘${DEVICENAME}’
+     return getStringCurrTime() + " Rimosso il timer dal dispositivo " + device->getName(); // [13:00]Rimossoil timerdaldispositivo‘${DEVICENAME}’
 }
 // show
 // showdevice;
