@@ -38,9 +38,9 @@ class Device {
     //spengo il device
     void turnOff();
 
-    //Device(const Device&) = delete;
+    Device(const Device&) = delete;
 
-    //Device& operator=(const Device&) = delete;
+    Device& operator=(const Device&) = delete;
 
     virtual ~Device() = default;
 };
