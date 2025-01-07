@@ -218,7 +218,12 @@ string DomoticSystem::handleInput(const string &input_)
       {
         if (action == "on")
         {
-          log = m->getStatus() ? logError(m->getName() + " è già acceso") : setOn(*m);
+          if (m->getStatus()) {
+            logError(m->getName() + " è già acceso");
+          } else {
+            m->setFinish(Time("25:00"));
+            log = setOn(*m);
+          }
           cout << log << endl;
           return log;
         }
@@ -254,7 +259,12 @@ string DomoticSystem::handleInput(const string &input_)
       {
         if (action == "on")
         {
-          log = p->getStatus() ? logError(p->getName() + " è già acceso") : setOn(*p);
+          if (p->getStatus()) {
+            logError(p->getName() + " è già acceso");
+          } else {
+            p->setFinish(p->getDuration());
+            log = setOn(*p);
+          }
           cout << log << endl; // Stampa il risultato
           return log;
         }
