@@ -130,7 +130,7 @@ string Scheduler::setTime(Time &time)
                 {
                     cout << "bb" << endl;
                     currTime = waiting_.at(0)->getStart();
-                    cout<<waiting_.at(0)->getName()+""+waiting_.at(0)->getStart().to_string()<<endl;
+                    cout<<waiting_.at(0)->getName()+""+waiting_.at(0)->getFinish().to_string()<<endl;
                     log += setOn(waiting_.at(0));
                     // waiting_.erase(waiting_.begin()); ->se non lo faccio su seton
                 }
