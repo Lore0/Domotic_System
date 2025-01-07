@@ -57,6 +57,7 @@ string Scheduler::setOff(Device *device)
     cout << "3" << endl;
     device->setFinish(currTime);
     cout << "4" << endl;
+    cout<<device->getName()<<endl;
     string log = log + "\n" + getStringCurrTime() + " Il dispositivo " + device->getName() + " si è spento"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è spendo                                                                                                      // Device temp{device->getId(), device->getName(), device->getPowerConsumption(), device->getStart(), device->getFinish()};
     cout << "5" << endl;
     finished_.push_back(device);
