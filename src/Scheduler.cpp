@@ -11,7 +11,7 @@ Scheduler::Scheduler(int maxPower)
     // nothing
 }
 
-string Scheduler::setOn(Device* device) //se è già in waiting bisogna cercarlo e toglierlo
+string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarlo e toglierlo
 {
     string log = "";
     if (running_.empty())
@@ -20,8 +20,8 @@ string Scheduler::setOn(Device* device) //se è già in waiting bisogna cercarlo
         device->setStart(currTime);
         inUsePower += device->getPowerConsumption();
         running_.push_back(device);
-        if(running_.at(0)->getStatus())
-            cout<<running_.at(0)->getName()<<endl;
+        if (running_.at(0)->getStatus())
+            cout << running_.at(0)->getName() << endl;
         log = "\n" + getStringCurrTime() + " Il dispositivo " + device->getName() + " si è acceso"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è acceso
     }
     else
@@ -39,26 +39,31 @@ string Scheduler::setOn(Device* device) //se è già in waiting bisogna cercarlo
         }
         // cosa fare in caso non c'è abbastanza potenza
     }
-    int targetIndex=searchDevice(waiting_,device);
-    if(targetIndex!=-1){
+    int targetIndex = searchDevice(waiting_, device);
+    if (targetIndex != -1)
+    {
         waiting_.erase(waiting_.begin() + targetIndex);
     }
     return log;
 }
 
-string Scheduler::setOff(Device* device)
+string Scheduler::setOff(Device *device)
 {
+    cout << "1" << endl;
     int targetIndex = searchDevice(running_, device);
+    cout << "2" << endl;
     running_.erase(running_.begin() + targetIndex);
     device->turnOff();
+    cout << "3" << endl;
     device->setFinish(currTime);
-    string log = log + "\n" + getStringCurrTime() + " Il dispositivo " + device->getName() + " si è spento"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è spendo
-    //Device temp{device->getId(), device->getName(), device->getPowerConsumption(), device->getStart(), device->getFinish()};
+    cout << "4" << endl;
+    string log = log + "\n" + getStringCurrTime() + " Il dispositivo " + device->getName() + " si è spento"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è spendo                                                                                                      // Device temp{device->getId(), device->getName(), device->getPowerConsumption(), device->getStart(), device->getFinish()};
+    cout << "5" << endl;
     finished_.push_back(device);
     return log;
 }
 
-string Scheduler::setDeviceTimer(Device* device)
+string Scheduler::setDeviceTimer(Device *device)
 {
     int i;
     while (i < waiting_.size() && waiting_[i]->getFinish() < device->getFinish())
@@ -67,28 +72,28 @@ string Scheduler::setDeviceTimer(Device* device)
     return getStringCurrTime() + " Impostato un timer per il dispositivo " + device->getName() + " dalle " + device->getStart().to_string() + " alle " + device->getFinish().to_string(); //[13:00] Impostatountimerper ildispositivo‘${DEVICENAME}’dalleXX:YYalleZZ:WW
 }
 
-string Scheduler::removeTimerFromWaiting(Device* device)
-{ // toglie il timer da waiting
-/*
-    int targetIndex = searchDevice(waiting_, device);
-    if (targetIndex == -1)
-        return getStringCurrTime() + " Errore: dispositivo non in attesa";
-    waiting_.erase(waiting_.begin() + targetIndex);
-*/    return getStringCurrTime() + " Rimosso il timer dal dispositivo " + device->getName(); // [13:00]Rimossoil timerdaldispositivo‘${DEVICENAME}’
+string Scheduler::removeTimerFromWaiting(Device *device)
+{                                                                                             // toglie il timer da waiting
+                                                                                              /*
+                                                                                                  int targetIndex = searchDevice(waiting_, device);
+                                                                                                  if (targetIndex == -1)
+                                                                                                      return getStringCurrTime() + " Errore: dispositivo non in attesa";
+                                                                                                  waiting_.erase(waiting_.begin() + targetIndex);
+                                                                                              */ return getStringCurrTime() + " Rimosso il timer dal dispositivo " + device->getName(); // [13:00]Rimossoil timerdaldispositivo‘${DEVICENAME}’
 }
 
-string Scheduler::removeTimerFromRunning(Device* device)
-{ // toglie il timer da running --> va all'infinito
-    // int targetIndex = searchDevice(running_, device);
-    // if (targetIndex == -1)
-    //     return getStringCurrTime() + " Errore: dispositivo non in funzione";
-    // int i = running_.size();
-    // while (i >= 0 && running_.at(i).getFinish() > Time("24:00"))
-    //     i--;
-    // Device temp = running_[targetIndex];
-    // running_[targetIndex] = running_[i];
-    // running_[i] = temp;
-     return getStringCurrTime() + " Rimosso il timer dal dispositivo " + device->getName(); // [13:00]Rimossoil timerdaldispositivo‘${DEVICENAME}’
+string Scheduler::removeTimerFromRunning(Device *device)
+{                                                                                          // toglie il timer da running --> va all'infinito
+                                                                                           // int targetIndex = searchDevice(running_, device);
+                                                                                           // if (targetIndex == -1)
+                                                                                           //     return getStringCurrTime() + " Errore: dispositivo non in funzione";
+                                                                                           // int i = running_.size();
+                                                                                           // while (i >= 0 && running_.at(i).getFinish() > Time("24:00"))
+                                                                                           //     i--;
+                                                                                           // Device temp = running_[targetIndex];
+                                                                                           // running_[targetIndex] = running_[i];
+                                                                                           // running_[i] = temp;
+    return getStringCurrTime() + " Rimosso il timer dal dispositivo " + device->getName(); // [13:00]Rimossoil timerdaldispositivo‘${DEVICENAME}’
 }
 // show
 // showdevice;
@@ -101,7 +106,7 @@ string Scheduler::setTime(Time &time)
     // se sono uguali tolgo prima da running
     // fino a che non sono entrambi < time
     string log = "";
-    //cout << waiting_.at(0).getName() << endl;
+    // cout << waiting_.at(0).getName() << endl;
     while (!(currTime > time))
     {
         cout << "a" << endl;
@@ -127,9 +132,9 @@ string Scheduler::setTime(Time &time)
                 {
                     cout << "bb" << endl;
                     currTime = waiting_.at(0)->getStart();
-                    //cout<<waiting_.at(0).getName()<<endl;
-                    log+=setOn(waiting_.at(0));
-                    //waiting_.erase(waiting_.begin()); ->se non lo faccio su seton
+                    // cout<<waiting_.at(0).getName()<<endl;
+                    log += setOn(waiting_.at(0));
+                    // waiting_.erase(waiting_.begin()); ->se non lo faccio su seton
                 }
             }
             if (waiting_.empty())
@@ -145,25 +150,25 @@ string Scheduler::setTime(Time &time)
                 {
                     currTime = running_.at(0)->getFinish();
                     cout << "bc" << endl;
-                    log+=setOff(running_.at(0));
+                    log += setOff(running_.at(0));
                 }
             }
         }
         else
         {
             cout << "cc" << endl;
-            cout<<waiting_.at(0)->getName()<<endl;
+            cout << waiting_.at(0)->getName() << endl;
             if (waiting_.at(0)->getStart() < running_.at(0)->getFinish())
             {
                 cout << "cd" << endl;
                 currTime = waiting_.at(0)->getStart();
-                log+=setOn(waiting_.at(0));
+                log += setOn(waiting_.at(0));
             }
             else
             {
                 cout << "ce" << endl;
                 currTime = running_.at(0)->getFinish();
-                log+=setOff(running_.at(0));
+                log += setOff(running_.at(0));
             }
         }
     }
@@ -224,12 +229,12 @@ string Scheduler::showAll()
     return "";
 }
 
-string Scheduler::showDevice(Device* device)
+string Scheduler::showDevice(Device *device)
 {
     return "";
 }
 
-int searchDevice(vector<Device*> list, Device* target)
+int searchDevice(vector<Device *> list, Device *target)
 {
     // Usa std::find per cercare il dispositivo
     auto iter = find(list.begin(), list.end(), target);
