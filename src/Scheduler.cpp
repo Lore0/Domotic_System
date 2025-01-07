@@ -16,7 +16,6 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
     string log = "";
     if (running_.empty())
     {
-        cout<<"vuoto"<<endl;
         device->turnOn(); // ste tre istruzioni sono da mettere alla fine
         device->setStart(currTime);
         Time temp=currTime;
@@ -27,10 +26,9 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
             cout << running_.at(0)->getName()+running_.at(0)->getStart().to_string() << endl;
         log = "\n" + getStringCurrTime() + " Il dispositivo " + device->getName() + " si è acceso"+device->getFinish().to_string()/*da cancellare getfinish*/; 
     }
-    else
+    else    //da aggiungere i setfinish
     {
         int i = 0;
-        cout<<"NOvuoto"<<endl;
         if (inUsePower + device->getPowerConsumption() <= MAX_POWER)
         {
             while (i < running_.size() && running_[i]->getFinish() < device->getFinish())
@@ -132,7 +130,7 @@ string Scheduler::setTime(Time &time)
                 {
                     cout << "bb" << endl;
                     currTime = waiting_.at(0)->getStart();
-                    // cout<<waiting_.at(0).getName()<<endl;
+                    cout<<waiting_.at(0)->getName()+""+waiting_.at(0)->getStart().to_string()<<endl;
                     log += setOn(waiting_.at(0));
                     // waiting_.erase(waiting_.begin()); ->se non lo faccio su seton
                 }
