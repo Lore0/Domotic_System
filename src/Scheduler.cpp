@@ -15,34 +15,20 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
 {
     string log = "";
     int targetIndex = searchDevice(waiting_, device);
-    if (running_.empty())
+    int i = 0;
+    if (inUsePower + device->getPowerConsumption() <= MAX_POWER)
     {
-        device->turnOn(); // ste tre istruzioni sono da mettere alla fine
+        while (i < running_.size() && running_[i]->getFinish() < device->getFinish())
+            i++;
+        device->turnOn();
         device->setStart(currTime);
-        Time temp=currTime;
-        if(targetIndex==-1)
+        Time temp = currTime;
+        if (targetIndex == -1)
             device->setFinish(temp.addTime(device->getFinish()));
         inUsePower += device->getPowerConsumption();
-        running_.push_back(device);
-        if (running_.at(0)->getStatus())    //controllo da cancellare
-            cout << running_.at(0)->getName()+running_.at(0)->getStart().to_string() << endl;
-        log = "\n" + getStringCurrTime() + " Il dispositivo " + device->getName() + " si è acceso"+device->getFinish().to_string()/*da cancellare getfinish*/; 
-    }
-    else    //da aggiungere i setfinish
-    {
-        int i = 0;
-        if (inUsePower + device->getPowerConsumption() <= MAX_POWER)
-        {
-            while (i < running_.size() && running_[i]->getFinish() < device->getFinish())
-                i++;
-            running_.insert(running_.begin() + i, device);
-            device->turnOn();
-            device->setStart(currTime);
-            inUsePower += device->getPowerConsumption();
-            log = "\n" + getStringCurrTime() + " Il dispositivo " + device->getName() + " si è acceso"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è acceso
-        }
-        // cosa fare in caso non c'è abbastanza potenza
-    }
+        running_.insert(running_.begin() + i, device);
+        log = "\n" + getStringCurrTime() + " Il dispositivo " + device->getName() + " si è acceso"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è acceso
+    } // cosa fare in caso non c'è abbastanza potenza
     if (targetIndex != -1)
     {
         waiting_.erase(waiting_.begin() + targetIndex);
@@ -56,15 +42,16 @@ string Scheduler::setOff(Device *device)
     running_.erase(running_.begin() + targetIndex);
     device->turnOff();
     device->setFinish(currTime);
-    string log = "\n" + getStringCurrTime() + " Il dispositivo " + device->getName() + " si è spento"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è spendo                                                                                                      
-    // Device temp{device->getId(), device->getName(), device->getPowerConsumption(), device->getStart(), device->getFinish()};
-    finished_.push_back(device);    //sbagliato
+    inUsePower -= device->getPowerConsumption();
+    string log = "\n" + getStringCurrTime() + " Il dispositivo " + device->getName() + " si è spento"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è spendo
+    Device temp{device->getId(), device->getName(), device->getPowerConsumption(), device->getStart(), device->getFinish()};
+    finished_.push_back(temp); // da fare con pane
     return log;
 }
 
 string Scheduler::setDeviceTimer(Device *device)
 {
-    int i=0;
+    int i = 0;
     while (i < waiting_.size() && waiting_[i]->getFinish() < device->getFinish())
         i++;
     waiting_.insert(waiting_.begin() + i, device);
@@ -72,26 +59,29 @@ string Scheduler::setDeviceTimer(Device *device)
 }
 
 string Scheduler::removeTimerFromWaiting(Device *device)
-{                                                                                             // toglie il timer da waiting
-                                                                                              /*
-                                                                                                  int targetIndex = searchDevice(waiting_, device);
-                                                                                                  if (targetIndex == -1)
-                                                                                                      return getStringCurrTime() + " Errore: dispositivo non in attesa";
-                                                                                                  waiting_.erase(waiting_.begin() + targetIndex);
-                                                                                              */ return getStringCurrTime() + " Rimosso il timer dal dispositivo " + device->getName(); // [13:00]Rimossoil timerdaldispositivo‘${DEVICENAME}’
+{ // toglie il timer da waiting
+    int targetIndex = searchDevice(waiting_, device);
+    if (targetIndex == -1)
+        return getStringCurrTime() + " Errore: dispositivo non in attesa";
+    waiting_.erase(waiting_.begin() + targetIndex);
+    return getStringCurrTime() + " Rimosso il timer dal dispositivo " + device->getName(); // [13:00]Rimossoil timerdaldispositivo‘${DEVICENAME}’
 }
 
-string Scheduler::removeTimerFromRunning(Device *device)
-{                                                                                          // toglie il timer da running --> va all'infinito
-                                                                                           // int targetIndex = searchDevice(running_, device);
-                                                                                           // if (targetIndex == -1)
-                                                                                           //     return getStringCurrTime() + " Errore: dispositivo non in funzione";
-                                                                                           // int i = running_.size();
-                                                                                           // while (i >= 0 && running_.at(i).getFinish() > Time("24:00"))
-                                                                                           //     i--;
-                                                                                           // Device temp = running_[targetIndex];
-                                                                                           // running_[targetIndex] = running_[i];
-                                                                                           // running_[i] = temp;
+string Scheduler::removeTimerFromRunning(Device *device)    //toglie il timer da running-- > va all'infinito 
+{
+    int targetIndex = searchDevice(running_, device);   //cerco il dispositivo in running    
+    if (targetIndex == -1)  //se non c'è do errore
+        return getStringCurrTime() + " Errore: dispositivo non in funzione";
+    device->setFinish(Time("25:00"));
+    running_.erase(running_.begin()+targetIndex);
+    running_.push_back(device);
+    //non so perchè avevo fatto la roba sotto
+    //int i = running_.size()-1;    //setto i all'ultimo elemento
+    // while (i >= 0 && running_.at(i)->getFinish() > Time("24:00"))   //finchè i non punta al primo elemento e 
+    //     i--;
+    // Device* temp = running_[targetIndex];
+    // running_[targetIndex] = running_[i];
+    // running_[i] = temp;
     return getStringCurrTime() + " Rimosso il timer dal dispositivo " + device->getName(); // [13:00]Rimossoil timerdaldispositivo‘${DEVICENAME}’
 }
 // show
@@ -131,7 +121,7 @@ string Scheduler::setTime(Time &time)
                 {
                     cout << "bb" << endl;
                     currTime = waiting_.at(0)->getStart();
-                    //cout<<waiting_.at(0)->getName()+""+waiting_.at(0)->getFinish().to_string()<<endl;
+                    // cout<<waiting_.at(0)->getName()+""+waiting_.at(0)->getFinish().to_string()<<endl;
                     log += setOn(waiting_.at(0));
                     // waiting_.erase(waiting_.begin()); ->se non lo faccio su seton
                 }
@@ -215,11 +205,11 @@ string Scheduler::resetTime()
 string Scheduler::resetTimers()
 {
     string log = "";
-    // waiting_.clear();
-    // for (auto &device : running_)
-    // {
-    //     log += removeTimerFromRunning(device);
-    // }
+    waiting_.clear();
+    for (auto &device : running_)
+    {
+         log += removeTimerFromRunning(device);
+    }
     return log;
 }
 

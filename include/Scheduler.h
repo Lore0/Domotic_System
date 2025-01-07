@@ -26,7 +26,7 @@ class Scheduler {
     Time currTime;
     std::vector<Device*> running_;
     std::vector<Device*> waiting_;
-    std::vector<Device*> finished_;
+    std::vector<Device> finished_;
 };
 int searchDevice(std::vector<Device*> list, Device* target);
 

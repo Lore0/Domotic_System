@@ -42,7 +42,7 @@ string DomoticSystem::removeFromRunning(Device &device_)
 {
   string time = logTime() + "\n";
   Device* device = &device_;
-  return time + scheduler_.setOff(device);
+  return time + scheduler_.removeTimerFromRunning(device);  
 }
 
 string DomoticSystem::removeFromWaiting(Device &device_)
