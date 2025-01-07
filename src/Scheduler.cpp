@@ -137,7 +137,7 @@ string Scheduler::setTime(Time &time)
                     // waiting_.erase(waiting_.begin()); ->se non lo faccio su seton
                 }
             }
-            if (waiting_.empty())
+            else if (waiting_.empty())
             {
                 if (running_.at(0)->getFinish() > time)
                 {
