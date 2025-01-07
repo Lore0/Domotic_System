@@ -16,6 +16,7 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
     string log = "";
     if (running_.empty())
     {
+        cout<<"vuoto"<<endl;
         device->turnOn(); // ste tre istruzioni sono da mettere alla fine
         device->setStart(currTime);
         Time temp=currTime;
@@ -29,6 +30,7 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
     else
     {
         int i = 0;
+        cout<<"NOvuoto"<<endl;
         if (inUsePower + device->getPowerConsumption() <= MAX_POWER)
         {
             while (i < running_.size() && running_[i]->getFinish() < device->getFinish())
