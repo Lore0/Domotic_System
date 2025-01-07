@@ -143,8 +143,8 @@ string Scheduler::setTime(Time &time)
                 cout << "aab" << endl;
                 if (!running_.empty() && running_.at(0)->getFinish() < time)
                 {
-                    cout << "bc" << endl;
                     currTime = running_.at(0)->getFinish();
+                    cout << "bc" << endl;
                     log+=setOff(running_.at(0));
                 }
             }
