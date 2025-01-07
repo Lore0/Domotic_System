@@ -22,7 +22,7 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
         running_.push_back(device);
         if (running_.at(0)->getStatus())
             cout << running_.at(0)->getName() << endl;
-        log = "\n" + getStringCurrTime() + " Il dispositivo " + device->getName() + " si è acceso"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è acceso
+        log = "\n" + getStringCurrTime() + " Il dispositivo " + device->getName() + " si è acceso"+device->getFinish().to_string()/*da cancellare getfinish*/; 
     }
     else
     {
