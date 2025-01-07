@@ -14,12 +14,14 @@ Scheduler::Scheduler(int maxPower)
 string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarlo e toglierlo
 {
     string log = "";
+    int targetIndex = searchDevice(waiting_, device);
     if (running_.empty())
     {
         device->turnOn(); // ste tre istruzioni sono da mettere alla fine
         device->setStart(currTime);
         Time temp=currTime;
-        device->setFinish(temp.addTime(device->getFinish()));
+        if(targetIndex==-1)
+            device->setFinish(temp.addTime(device->getFinish()));
         inUsePower += device->getPowerConsumption();
         running_.push_back(device);
         if (running_.at(0)->getStatus())    //controllo da cancellare
@@ -41,7 +43,6 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
         }
         // cosa fare in caso non c'è abbastanza potenza
     }
-    int targetIndex = searchDevice(waiting_, device);
     if (targetIndex != -1)
     {
         waiting_.erase(waiting_.begin() + targetIndex);
@@ -130,7 +131,7 @@ string Scheduler::setTime(Time &time)
                 {
                     cout << "bb" << endl;
                     currTime = waiting_.at(0)->getStart();
-                    cout<<waiting_.at(0)->getName()+""+waiting_.at(0)->getFinish().to_string()<<endl;
+                    //cout<<waiting_.at(0)->getName()+""+waiting_.at(0)->getFinish().to_string()<<endl;
                     log += setOn(waiting_.at(0));
                     // waiting_.erase(waiting_.begin()); ->se non lo faccio su seton
                 }
