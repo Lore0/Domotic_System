@@ -5,37 +5,41 @@
 
 class Device {
   protected:
+
     std::string name_;
+
     std::string id_;
+
     double power_;
+
     bool status_; //on = true , off = false
+
     Time start_;
+    
     Time finish_;
 
   public:
-    //costruttore
+    
     Device(const std::string& id, const std::string& name, double power, Time start, Time finish);
     
-    //get
     bool getStatus() const;
 
     const std::string& getName() const;
 
     const std::string& getId() const;
 
-    Time getStart();
+    Time getStart() const;
 
-    Time getFinish();
+    Time getFinish() const;
 
     double getPowerConsumption() const;
 
-    void setStart(Time start);
-    void setFinish(Time finish);
+    virtual void setStart(Time start);
 
-    //accendo il device
+    virtual void setFinish(Time finish);
+
     void turnOn();
 
-    //spengo il device
     void turnOff();
 
     Device(const Device&) = delete;
@@ -45,6 +49,6 @@ class Device {
     virtual ~Device() = default;
 };
 
-bool operator==(Device d1, Device d2);
+bool operator==(const Device& d1, const Device& d2);
 
-#endif
+#endif // DEVICE_H

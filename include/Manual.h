@@ -5,11 +5,11 @@
 
 class Manual : public Device{
   private:
-  //nothing
+    //nothing
+
   public:
+
     Manual(const std::string& id, const std::string& name, double power, Time start, Time finish);
-    void setStart(Time start);
-    void setFinish(Time finish);
 };
 
-#endif
+#endif // MANUAL_H
