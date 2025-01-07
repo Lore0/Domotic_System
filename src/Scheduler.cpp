@@ -65,10 +65,10 @@ string Scheduler::setOff(Device *device)
 string Scheduler::setDeviceTimer(Device *device)
 {
     int i;
-    cout<<"w s"+waiting_.size()<<endl;
+    cout<<"w s"<<waiting_.size()<<endl;
     while (i < waiting_.size() && waiting_[i]->getFinish() < device->getFinish())
         i++;
-    cout<<"i"+i<<endl;
+    cout<<"i"<<i<<endl;
     waiting_.insert(waiting_.begin() + i, device);
     return getStringCurrTime() + " Impostato un timer per il dispositivo " + device->getName() + " dalle " + device->getStart().to_string() + " alle " + device->getFinish().to_string(); //[13:00] Impostatountimerper ildispositivo‘${DEVICENAME}’dalleXX:YYalleZZ:WW
 }
