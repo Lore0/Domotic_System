@@ -22,7 +22,7 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
         inUsePower += device->getPowerConsumption();
         running_.push_back(device);
         if (running_.at(0)->getStatus())    //controllo da cancellare
-            cout << running_.at(0)->getName() << endl;
+            cout << running_.at(0)->getName()+running_.at(0)->getStart().to_string() << endl;
         log = "\n" + getStringCurrTime() + " Il dispositivo " + device->getName() + " si è acceso"+device->getFinish().to_string()/*da cancellare getfinish*/; 
     }
     else
