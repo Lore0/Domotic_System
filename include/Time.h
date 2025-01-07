@@ -17,6 +17,7 @@ class Time {
     int getHours();
     int getMinutes();
     std::string to_string();
+    Time& operator=(const Time &time);
 };
 
 bool operator>(Time t1, Time t2);

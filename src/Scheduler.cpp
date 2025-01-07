@@ -18,6 +18,7 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
     {
         device->turnOn(); // ste tre istruzioni sono da mettere alla fine
         device->setStart(currTime);
+        
         device->setFinish(currTime.addTime(device->getFinish()));
         inUsePower += device->getPowerConsumption();
         running_.push_back(device);

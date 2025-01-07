@@ -53,6 +53,13 @@ string Time::to_string(){ //TODO
   return std::to_string(getHours())+":"+std::to_string(getMinutes());
 }
 
+Time& Time::operator=(const Time &time){
+  hours_=time.hours_;
+  minutes_=time.minutes_;
+  return *this;
+}
+
+
 bool operator>(Time t1, Time t2){
   if(t1.getHours() == t2.getHours()){
     if(t1.getMinutes() > t2.getMinutes()){
