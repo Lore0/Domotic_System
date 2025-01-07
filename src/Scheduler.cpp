@@ -18,8 +18,8 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
     {
         device->turnOn(); // ste tre istruzioni sono da mettere alla fine
         device->setStart(currTime);
-        
-        device->setFinish(currTime.addTime(device->getFinish()));
+        Time temp=currTime;
+        device->setFinish(temp.addTime(device->getFinish()));
         inUsePower += device->getPowerConsumption();
         running_.push_back(device);
         if (running_.at(0)->getStatus())    //controllo da cancellare
