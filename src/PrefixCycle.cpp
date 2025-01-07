@@ -1,7 +1,7 @@
 #include "../include/PrefixCycle.h"
 
 PrefixCycle::PrefixCycle(const std::string& id, const std::string& name, double power, Time start, Time cycleDuration)
-    :   Device(id, name, power, start, start.addTime(cycleDuration)),
+    :   Device(id, name, power, start, start),
         cycleDuration_(cycleDuration)
 
 {
