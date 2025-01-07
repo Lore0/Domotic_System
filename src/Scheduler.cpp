@@ -49,18 +49,13 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
 
 string Scheduler::setOff(Device *device)
 {
-    cout << "1" << endl;
     int targetIndex = searchDevice(running_, device);
-    cout << "2" << endl;
     running_.erase(running_.begin() + targetIndex);
     device->turnOff();
-    cout << "3" << endl;
     device->setFinish(currTime);
-    cout << "4" << endl;
-    //cout<<getStringCurrTime()<<endl;
-    string log = "\n" + getStringCurrTime() + " Il dispositivo " + device->getName() + " si è spento"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è spendo                                                                                                      // Device temp{device->getId(), device->getName(), device->getPowerConsumption(), device->getStart(), device->getFinish()};
-    cout << "5" << endl;
-    finished_.push_back(device);
+    string log = "\n" + getStringCurrTime() + " Il dispositivo " + device->getName() + " si è spento"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è spendo                                                                                                      
+    // Device temp{device->getId(), device->getName(), device->getPowerConsumption(), device->getStart(), device->getFinish()};
+    finished_.push_back(device);    //sbagliato
     return log;
 }
 
