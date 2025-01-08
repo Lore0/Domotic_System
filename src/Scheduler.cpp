@@ -72,7 +72,7 @@ string Scheduler::removeTimerFromRunning(Device *device)    //toglie il timer da
     int targetIndex = searchDevice(running_, device);   //cerco il dispositivo in running    
     if (targetIndex == -1)  //se non c'è do errore
         return getStringCurrTime() + " Errore: dispositivo non in funzione";
-    device->setFinish(Time("25:00"));
+    device->setFinish(Time("24:00"));
     running_.erase(running_.begin()+targetIndex);
     running_.push_back(device);
     //non so perchè avevo fatto la roba sotto
