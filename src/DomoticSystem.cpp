@@ -288,7 +288,7 @@ string DomoticSystem::handleInput(const string &input_)
           {
             return logError("Formato orario non valido");
           }
-          p->setStartFinish(Time(startTime));
+          p->setStart(Time(startTime));
           log = setDeviceTimer(*p);
           cout << log << endl; // Stampa il risultato
           return log;

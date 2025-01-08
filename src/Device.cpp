@@ -22,11 +22,11 @@ const string& Device::getName() const{
     return name_;
 }
 
-Time Device::getStart(){
+Time Device::getStart() const{
     return start_;
 }
 
-Time Device::getFinish(){
+Time Device::getFinish() const{
     return finish_;
 }
 
@@ -62,7 +62,7 @@ void Device::turnOff(){
     status_ = false;
 }
 
-bool operator==(Device d1, Device d2){
+bool operator==(const Device& d1, const Device& d2){
     if(d1.getId().compare(d2.getId()) != 0){
         return false;
     }else{

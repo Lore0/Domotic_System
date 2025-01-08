@@ -6,22 +6,33 @@
 class Time {
   private:
     int hours_;
+
     int minutes_;
-    void StringToTime(std::string time);
+
+    void StringToTime(const std::string& time);
+
   public:
     class Invalid{};
-    Time(std::string time);
+
+    explicit Time(const std::string time);
+
     Time();
-    Time addTime(Time time);
-    void setTime(std::string time);
-    int getHours();
-    int getMinutes();
-    std::string to_string();
+
+    Time addTime(const Time& time);
+
+    void setTime(const std::string& time);
+
+    int getHours() const;
+
+    int getMinutes() const;
+
+    std::string to_string() const;
+
     Time& operator=(const Time &time);
 };
 
-bool operator>(Time t1, Time t2);
-bool operator<(Time t1, Time t2);
-bool operator==(Time t1, Time t2);
+bool operator>(const Time& t1, const Time& t2);
+bool operator<(const Time& t1, const Time& t2);
+bool operator==(const Time& t1, const Time& t2);
 
-#endif // !#ifndef TIME_H TIME_H
+#endif // TIME_H
