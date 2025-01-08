@@ -250,6 +250,9 @@ string DomoticSystem::handleInput(const string &input_)
           {
             m->setFinish(Time("24:00")); // andare avanti all'infinito
           }
+          if (m->getStatus()) {
+            return logError(m->getName() + " è già acceso");
+          }
           log = setDeviceTimer(*m);
           cout << log << endl;
           return log;
@@ -288,7 +291,10 @@ string DomoticSystem::handleInput(const string &input_)
           {
             return logError("Formato orario non valido");
           }
-          p->setStart(Time(startTime));
+          p->setStart(Time(startTime)); //need to check
+          if (p->getStatus()) {
+            return logError(p->getName() + " è già acceso");
+          }
           log = setDeviceTimer(*p);
           cout << log << endl; // Stampa il risultato
           return log;
