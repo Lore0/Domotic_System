@@ -70,9 +70,9 @@ string Scheduler::removeTimerFromWaiting(Device *device)
     return getStringCurrTime() + " Rimosso il timer dal dispositivo " + device->getName(); // [13:00]Rimossoil timerdaldispositivo‘${DEVICENAME}’
 }
 
-string Scheduler::removeTimerFromRunning(Device *device)    //toglie il timer da running-- > va all'infinito 
+string Scheduler::removeTimerFromRunning(Device *device)    //toglie il timer da running-- > va all'infinito
 {
-    int targetIndex = searchDevice(running_, device);   //cerco il dispositivo in running    
+    int targetIndex = searchDevice(running_, device);   //cerco il dispositivo in running
     if (targetIndex == -1)  //se non c'è do errore
         return getStringCurrTime() + " Errore: dispositivo non in funzione";
     device->setFinish(Time("24:00"));
@@ -80,7 +80,7 @@ string Scheduler::removeTimerFromRunning(Device *device)    //toglie il timer da
     running_.push_back(device);
     //non so perchè avevo fatto la roba sotto
     //int i = running_.size()-1;    //setto i all'ultimo elemento
-    // while (i >= 0 && running_.at(i)->getFinish() > Time("24:00"))   //finchè i non punta al primo elemento e 
+    // while (i >= 0 && running_.at(i)->getFinish() > Time("24:00"))   //finchè i non punta al primo elemento e
     //     i--;
     // Device* temp = running_[targetIndex];
     // running_[targetIndex] = running_[i];
