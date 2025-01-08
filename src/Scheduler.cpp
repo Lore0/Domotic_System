@@ -5,7 +5,7 @@ using namespace std;
 
 // cout in setdevice time
 
-Scheduler::Scheduler(int maxPower)
+Scheduler::Scheduler(double maxPower)
     : MAX_POWER(maxPower), inUsePower(0), currTime("00:00")
 {
     // nothing
