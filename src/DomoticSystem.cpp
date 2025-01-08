@@ -42,7 +42,7 @@ string DomoticSystem::removeFromRunning(Device &device_)
 {
   string time = logTime() + "\n";
   Device* device = &device_;
-  return time + scheduler_.removeTimerFromRunning(device);  
+  return time + scheduler_.removeTimerFromRunning(device);
 }
 
 string DomoticSystem::removeFromWaiting(Device &device_)
@@ -221,7 +221,7 @@ string DomoticSystem::handleInput(const string &input_)
           if (m->getStatus()) {
             logError(m->getName() + " è già acceso");
           } else {
-            m->setFinish(Time("25:00"));
+            m->setFinish(Time("24:00"));
             log = setOn(*m);
           }
           cout << log << endl;
@@ -248,7 +248,7 @@ string DomoticSystem::handleInput(const string &input_)
           }
           else
           {
-            m->setFinish(Time("25:00")); // andare avanti all'infinito
+            m->setFinish(Time("24:00")); // andare avanti all'infinito
           }
           log = setDeviceTimer(*m);
           cout << log << endl;
