@@ -28,7 +28,9 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
         inUsePower += device->getPowerConsumption();
         running_.insert(running_.begin() + i, device);
         log = "\n" + getStringCurrTime() + " Il dispositivo " + device->getName() + " si è acceso"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è acceso
-    } // cosa fare in caso non c'è abbastanza potenza
+    } else{
+        cout<<"no ghe xe corente"<<endl;
+    }// cosa fare in caso non c'è abbastanza potenza
     if (targetIndex != -1)
     {
         waiting_.erase(waiting_.begin() + targetIndex);
@@ -188,17 +190,14 @@ string Scheduler::setTime(Time &time)
 
 string Scheduler::resetTime()
 {
-    // currTime.setTime("0:0");
-    // for (Device &d : running_)
-    // {
-    //     setDeviceTimer(d);
-    // }
-    // for (Device &d : waiting_)
-    // {
-    //     setDeviceTimer(d);
-    // } // controllare se il dispositivo è stato acceso più di una volta
-    // running_.clear();
-    // finished_.clear();
+    currTime.setTime("0:0");
+    for (Device* d : running_)
+    {
+        if(d->hasTimer())
+            setDeviceTimer(d);
+    }
+    running_.clear();
+    finished_.clear();
     return getStringCurrTime() + " L'orario attuale è 00:00"; //[00:00]L’orarioattualeè00:00
 }
 
