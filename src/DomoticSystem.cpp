@@ -12,7 +12,7 @@
 using namespace std;
 
 DomoticSystem::DomoticSystem()
-    : scheduler_(kMaxPower)
+    : scheduler_(3.5) // da sistemare brutto value
 {
   buildDevices();
 }
