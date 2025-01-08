@@ -21,7 +21,7 @@ class Scheduler {
     std::string resetTimers();
     //void resetAll(); //fa pane con reset
   private:
-    const int MAX_POWER;
+    const double MAX_POWER;
     int inUsePower;
     Time currTime;
     std::vector<Device*> running_;
