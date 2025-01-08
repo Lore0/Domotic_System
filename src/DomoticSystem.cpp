@@ -253,7 +253,11 @@ string DomoticSystem::handleInput(const string &input_)
           if (m->getStatus()) {
             return logError(m->getName() + " è già acceso");
           }
+          if (m->hasTimer()) {
+            return logError(m->getName() + " ha già un timer");
+          }
           log = setDeviceTimer(*m);
+          m->setHasTimer(true);
           cout << log << endl;
           return log;
         }
@@ -295,7 +299,11 @@ string DomoticSystem::handleInput(const string &input_)
           if (p->getStatus()) {
             return logError(p->getName() + " è già acceso");
           }
+          if (p->hasTimer()) {
+            return logError(p->getName() + " ha già un timer");
+          }
           log = setDeviceTimer(*p);
+          p->setHasTimer(true);
           cout << log << endl; // Stampa il risultato
           return log;
         }

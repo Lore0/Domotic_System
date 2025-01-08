@@ -14,6 +14,8 @@ class Device {
 
     bool status_; //on = true , off = false
 
+    bool hasTimer_;
+
     Time start_;
 
     Time finish_;
@@ -23,6 +25,10 @@ class Device {
     Device(const std::string& id, const std::string& name, double power, Time start, Time finish);
 
     bool getStatus() const;
+
+    bool hasTimer() const;
+
+    void setHasTimer(bool status);
 
     const std::string& getName() const;
 
