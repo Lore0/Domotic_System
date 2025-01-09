@@ -17,8 +17,6 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
     string log = "";
     int targetIndex = searchDevice(waiting_, device);
     int i = 0;
-    cout<< MAX_POWER<<endl;
-    cout<<inUsePower + device->getPowerConsumption() + MAX_POWER<<endl;
     if (inUsePower + device->getPowerConsumption() + MAX_POWER>=0)
     {
         while (i < running_.size() && running_[i]->getFinish() < device->getFinish())
@@ -46,6 +44,7 @@ string Scheduler::setOff(Device *device)
     int targetIndex = searchDevice(running_, device);
     running_.erase(running_.begin() + targetIndex);
     device->turnOff();
+    device->setHasTimer(false);
     device->setFinish(currTime);
     inUsePower -= device->getPowerConsumption();
     string log = "\n" + getStringCurrTime() + " Il dispositivo " + device->getName() + " si è spento"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è spendo
@@ -57,6 +56,7 @@ string Scheduler::setOff(Device *device)
 string Scheduler::setDeviceTimer(Device *device)
 {
     int i = 0;
+    device->setHasTimer(true);
     while (i < waiting_.size() && waiting_[i]->getFinish() < device->getFinish())
         i++;
     waiting_.insert(waiting_.begin() + i, device);
@@ -66,6 +66,7 @@ string Scheduler::setDeviceTimer(Device *device)
 string Scheduler::removeTimerFromWaiting(Device *device)
 { // toglie il timer da waiting
     int targetIndex = searchDevice(waiting_, device);
+    device->setHasTimer(false);
     if (targetIndex == -1)
         return getStringCurrTime() + " Errore: dispositivo non in attesa";
     waiting_.erase(waiting_.begin() + targetIndex);
