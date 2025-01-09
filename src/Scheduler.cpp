@@ -215,14 +215,16 @@ double Scheduler::showDevice(Device *device)
     if (targetIndex != -1)
     {
         tothour += currTime.getDistance(running_.at(targetIndex)->getStart());
+        cout << to_string(tothour) << endl;
     }
     int i = 0;
+    cout<<finished_.at(i).getName()<<endl;
     while (i < finished_.size())
     {
         if (device->getId() == finished_.at(i).getId())
             tothour += finished_.at(i).getFinish().getDistance(finished_.at(i).getStart());
     }
-    cout<<to_string(tothour)<<endl;
+    cout << to_string(tothour) << endl;
     return tothour * device->getPowerConsumption();
 }
 
