@@ -66,18 +66,16 @@ string DomoticSystem::showAll()
   double tot = 0;
   string eachDevice = "";
   for (Device d : manual_) {
-    cout << d.getName() << endl;
     double consumpt = scheduler_.showDevice(&d);
     eachDevice += "\n  - Il dispositivo " + d.getName() + " ha consumato " + to_string(consumpt) + " kWh";
     tot += consumpt;
   }
   for (Device d : prefixCycle_) {
-    cout << d.getName() << endl;
     double consumpt = scheduler_.showDevice(&d);
     eachDevice += "\n  - Il dispositivo " + d.getName() + " ha consumato " + to_string(consumpt) + " kWh";
     tot += consumpt;
   }
-  return time + "Attualmente il sistema ha prodotto " + to_string(tot) + " kWh. Nello specifico:" + eachDevice;
+  return time + scheduler_.getStringCurrTime() + "Attualmente il sistema ha prodotto " + to_string(tot) + " kWh. Nello specifico:" + eachDevice;
 }
 
 string DomoticSystem::setTime(Time &time_)
