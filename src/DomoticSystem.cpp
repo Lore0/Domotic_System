@@ -38,6 +38,13 @@ string DomoticSystem::removeFromWaiting(Device &device_)
   return time + scheduler_.removeTimerFromWaiting(&device_);
 }
 
+/**
+ * @brief Displays the current energy consumption or production of a device.
+ *
+ * @param device_ Reference to the Device object whose energy data is to be displayed.
+ * @return A string containing the log time, current time, device name, and the amount of energy 
+ *         consumed or produced by the device.
+ */
 string DomoticSystem::showDevice(Device &device_)
 {
   string time = logTime() + "\n";
@@ -51,6 +58,17 @@ string DomoticSystem::showDevice(Device &device_)
   }
 }
 
+/**
+ * @brief Generates a summary of the energy consumption and production of all devices in the system.
+ *
+ * This function iterates through all devices in the `manual_` and `prefixCycle_` lists, calculates their
+ * energy consumption or production using the `scheduler_`, and accumulates the total energy consumption
+ * or production. It then generates a detailed string report of each device's energy usage and the total
+ * energy status of the system.
+ *
+ * @return A string containing the current time, total energy produced or consumed by the system, and
+ *         detailed information about each device's energy usage.
+ */
 string DomoticSystem::showAll()
 {
   string time = logTime() + "\n";
@@ -116,6 +134,16 @@ string DomoticSystem::logTime()
   return scheduler_.getStringCurrTime() + " L'orario attuale è " + scheduler_.getCurrTime().to_string();
 }
 
+/**
+ * @brief Checks if the given time string is in a valid format (HH:MM).
+ *
+ * This function uses a regular expression to validate that the input string
+ * follows the 24-hour time format, where hours range from 00 to 23 and minutes
+ * range from 00 to 59.
+ *
+ * @param time The time string to validate.
+ * @return true if the time string is in a valid 24-hour format, false otherwise.
+ */
 bool DomoticSystem::isValidTimeFormat(const string &time)
 {
   regex timeFormat("^([0-1][0-9]|2[0-3]):([0-5][0-9])$");
@@ -133,6 +161,15 @@ void DomoticSystem::log(const string &message, ofstream &logFile)
   }
 }
 
+/**
+ * @brief Reads device information from a device.txt file and builds the device objects.
+ *
+ * This function opens the file "../docs/device.txt" and reads its content line by line.
+ * Each line is expected to contain device information like this: id,name,type,power. 
+ * Depending on the type of the device, it creates either a Manual or PrefixCycle
+ * object and adds it to the respective vector.
+ *
+ */
 void DomoticSystem::buildDevices()
 {
   ifstream file("../docs/device.txt");
@@ -173,6 +210,15 @@ void DomoticSystem::buildDevices()
   file.close();
 }
 
+/**
+ * @brief Searches for a Manual object by its name.
+ *
+ * This function iterates through the list of Manual objects and returns a pointer
+ * to the Manual object that matches the given name. If no match is found, it returns nullptr.
+ *
+ * @param name The name of the Manual object to search for.
+ * @return Manual* pointer to the Manual object if found, otherwise nullptr.
+ */
 Manual *DomoticSystem::searchManual(const string &name)
 {
   for (auto &m : manual_)
@@ -182,6 +228,15 @@ Manual *DomoticSystem::searchManual(const string &name)
   return nullptr;
 }
 
+/**
+ * @brief Searches for a PrefixCycle object by its name.
+ * 
+ * This function iterates through the list of PrefixCycle objects and returns a pointer
+ * to the PrefixCycle object that matches the given name. If no match is found, it returns nullptr.
+ *
+ * @param name The name of the PrefixCycle object to search for.
+ * @return PrefixCycle* pointer to the PrefixCycle object if found, otherwise nullptr.
+ */
 PrefixCycle *DomoticSystem::searchPrefixCycle(const string &name)
 {
   for (auto &p : prefixCycle_)
