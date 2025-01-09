@@ -8,7 +8,7 @@ using namespace std;
 Scheduler::Scheduler(double maxPower)
     : MAX_POWER(maxPower), inUsePower(0), currTime("00:00")
 {
-    cout<<maxPower<<endl;
+    cout << maxPower << endl;
     // nothing
 }
 
@@ -17,7 +17,7 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
     string log = "";
     int targetIndex = searchDevice(waiting_, device);
     int i = 0;
-    if (inUsePower + device->getPowerConsumption() + MAX_POWER>=0)
+    if (inUsePower + device->getPowerConsumption() + MAX_POWER >= 0)
     {
         while (i < running_.size() && running_[i]->getFinish() < device->getFinish())
             i++;
@@ -29,9 +29,11 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
         inUsePower += device->getPowerConsumption();
         running_.insert(running_.begin() + i, device);
         log = "\n" + getStringCurrTime() + " Il dispositivo " + device->getName() + " si è acceso"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è acceso
-    } else{
-        cout<<"no ghe xe corente"<<endl;
-    }// cosa fare in caso non c'è abbastanza potenza
+    }
+    else
+    {
+        cout << "no ghe xe corente" << endl;
+    } // cosa fare in caso non c'è abbastanza potenza
     if (targetIndex != -1)
     {
         waiting_.erase(waiting_.begin() + targetIndex);
@@ -73,22 +75,22 @@ string Scheduler::removeTimerFromWaiting(Device *device)
     return getStringCurrTime() + " Rimosso il timer dal dispositivo " + device->getName(); // [13:00]Rimossoil timerdaldispositivo‘${DEVICENAME}’
 }
 
-string Scheduler::removeTimerFromRunning(Device *device)    //toglie il timer da running-- > va all'infinito
+string Scheduler::removeTimerFromRunning(Device *device) // toglie il timer da running-- > va all'infinito
 {
-    int targetIndex = searchDevice(running_, device);   //cerco il dispositivo in running
-    if (targetIndex == -1)  //se non c'è do errore
+    int targetIndex = searchDevice(running_, device); // cerco il dispositivo in running
+    if (targetIndex == -1)                            // se non c'è do errore
         return getStringCurrTime() + " Errore: dispositivo non in funzione";
     device->setFinish(Time("24:00"));
     device->setHasTimer(false);
-    running_.erase(running_.begin()+targetIndex);
+    running_.erase(running_.begin() + targetIndex);
     running_.push_back(device);
-    //non so perchè avevo fatto la roba sotto
-    //int i = running_.size()-1;    //setto i all'ultimo elemento
-    // while (i >= 0 && running_.at(i)->getFinish() > Time("24:00"))   //finchè i non punta al primo elemento e
-    //     i--;
-    // Device* temp = running_[targetIndex];
-    // running_[targetIndex] = running_[i];
-    // running_[i] = temp;
+    // non so perchè avevo fatto la roba sotto
+    // int i = running_.size()-1;    //setto i all'ultimo elemento
+    //  while (i >= 0 && running_.at(i)->getFinish() > Time("24:00"))   //finchè i non punta al primo elemento e
+    //      i--;
+    //  Device* temp = running_[targetIndex];
+    //  running_[targetIndex] = running_[i];
+    //  running_[i] = temp;
     return getStringCurrTime() + " Rimosso il timer dal dispositivo " + device->getName(); // [13:00]Rimossoil timerdaldispositivo‘${DEVICENAME}’
 }
 // show
@@ -103,7 +105,7 @@ string Scheduler::setTime(Time &time)
     // fino a che non sono entrambi < time
     string log = "";
     // cout << waiting_.at(0).getName() << endl;
-    while (!(currTime > time))  //
+    while (!(currTime > time)) //
     {
         cout << "a" << endl;
         if ((running_.empty() && waiting_.empty())) // controllo di fine (entrambe liste vuote)
@@ -112,18 +114,18 @@ string Scheduler::setTime(Time &time)
             currTime = time;
             break;
         }
-        else if (running_.empty() || waiting_.empty())   //se una delle due è vuote
+        else if (running_.empty() || waiting_.empty()) // se una delle due è vuote
         {
             cout << "ba" << endl;
-            if (running_.empty())   //se running è vuota
+            if (running_.empty()) // se running è vuota
             {
-                if (waiting_.at(0)->getStart() > time)  //se primo waiting è già pèiù grande
+                if (waiting_.at(0)->getStart() > time) // se primo waiting è già pèiù grande
                 {
                     cout << "stopwaitalta" << endl;
                     currTime = time;
                     break;
                 }
-                else    //waiting no vuota e un dispositivo si deve avviare
+                else // waiting no vuota e un dispositivo si deve avviare
                 {
                     cout << "bb" << endl;
                     currTime = waiting_.at(0)->getStart();
@@ -132,15 +134,15 @@ string Scheduler::setTime(Time &time)
                     // waiting_.erase(waiting_.begin()); ->se non lo faccio su seton
                 }
             }
-            else //waiting vuota
+            else // waiting vuota
             {
-                if (running_.at(0)->getFinish() > time) //se primo running è già pèiù grande
+                if (running_.at(0)->getFinish() > time) // se primo running è già pèiù grande
                 {
                     cout << "stoprunalta" << endl;
                     currTime = time;
                     break;
                 }
-                else //running no vuota e un dispositivo si deve avviare
+                else // running no vuota e un dispositivo si deve avviare
                 {
                     currTime = running_.at(0)->getFinish();
                     cout << "bc" << endl;
@@ -148,16 +150,16 @@ string Scheduler::setTime(Time &time)
                 }
             }
         }
-        else    //entrambe running waiting NO vuote
+        else // entrambe running waiting NO vuote
         {
             cout << "cc" << endl;
-            if (waiting_.at(0)->getStart() < running_.at(0)->getFinish())   //waiting<running
+            if (waiting_.at(0)->getStart() < running_.at(0)->getFinish()) // waiting<running
             {
                 cout << "cd" << endl;
                 currTime = waiting_.at(0)->getStart();
                 log += setOn(waiting_.at(0));
             }
-            else    //waiting>=running
+            else // waiting>=running
             {
                 cout << "ce" << endl;
                 currTime = running_.at(0)->getFinish();
@@ -171,11 +173,12 @@ string Scheduler::setTime(Time &time)
 string Scheduler::resetTime()
 {
     currTime.setTime("00:00");
-    for (Device* d : running_)
+    for (Device *d : running_)
     {
-        if(d->hasTimer())
+        if (d->hasTimer())
             setDeviceTimer(d);
-        else{
+        else
+        {
             d->setHasTimer(false);
             d->turnOff();
         }
@@ -185,16 +188,16 @@ string Scheduler::resetTime()
     return getStringCurrTime() + " L'orario attuale è 00:00"; //[00:00]L’orarioattualeè00:00
 }
 
-string Scheduler::resetTimers() //da rivedere
+string Scheduler::resetTimers() // da rivedere
 {
     string log = "";
     for (auto &device : waiting_)
     {
-         log += removeTimerFromWaiting(device);
+        log += removeTimerFromWaiting(device);
     }
     for (auto &device : running_)
     {
-         log += removeTimerFromRunning(device);
+        log += removeTimerFromRunning(device);
     }
     return log;
 }
@@ -207,16 +210,20 @@ string Scheduler::showAll()
 
 double Scheduler::showDevice(Device *device)
 {
-    double tothour=0;
-    int targetIndex=searchDevice(running_,device);
-    if(targetIndex!=-1)
-        tothour+=currTime.getDistance(running_.at(targetIndex)->getStart());
-    int i=0;
-    while(i<finished_.size()){
-        if(device->getId()==finished_.at(i).getId())
-            tothour+=finished_.at(i).getFinish().getDistance(finished_.at(i).getStart());
+    double tothour = 0;
+    int targetIndex = searchDevice(running_, device);
+    if (targetIndex != -1)
+    {
+        tothour += currTime.getDistance(running_.at(targetIndex)->getStart());
     }
-    return tothour*device->getPowerConsumption();
+    int i = 0;
+    while (i < finished_.size())
+    {
+        if (device->getId() == finished_.at(i).getId())
+            tothour += finished_.at(i).getFinish().getDistance(finished_.at(i).getStart());
+    }
+    cout<<to_string(tothour)<<endl;
+    return tothour * device->getPowerConsumption();
 }
 
 int searchDevice(vector<Device *> list, Device *target)
