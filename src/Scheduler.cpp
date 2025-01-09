@@ -22,10 +22,10 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
         while (i < running_.size() && running_[i]->getFinish() < device->getFinish())
             i++;
         device->turnOn();
-        device->setStart(currTime);
+        //device->setStart(currTime);
         Time temp = currTime;
-        if (PrefixCycle* p =dynamic_cast<PrefixCycle*>(device))
-            device->setFinish(temp.addTime(device->getFinish()));
+        // if (PrefixCycle* p =dynamic_cast<PrefixCycle*>(device))
+        //     device->setFinish(temp.addTime(device->getFinish()));
         inUsePower += device->getPowerConsumption();
         running_.insert(running_.begin() + i, device);
         log = "\n" + getStringCurrTime() + " Il dispositivo " + device->getName() + " si è acceso"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è acceso
