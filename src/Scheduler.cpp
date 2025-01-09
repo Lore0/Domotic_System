@@ -211,7 +211,7 @@ double Scheduler::showDevice(Device *device)
             tothour += finished_.at(i).getFinish().getDistance(finished_.at(i).getStart());
         i++;
     }
-    return abs(tothour * device->getPowerConsumption());
+    return tothour * device->getPowerConsumption();
 }
 
 int searchDevice(vector<Device *> list, Device *target)
