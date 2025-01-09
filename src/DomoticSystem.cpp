@@ -257,7 +257,6 @@ string DomoticSystem::handleInput(const string &input_)
             return logError(m->getName() + " è già acceso");
           }
           log = setDeviceTimer(*m);
-          m->setHasTimer(true);
           cout << log << endl;
           return log;
         }
@@ -305,7 +304,6 @@ string DomoticSystem::handleInput(const string &input_)
           }
 
           log = setDeviceTimer(*p);
-          p->setHasTimer(true);
           cout << log << endl; // Stampa il risultato
           return log;
         }
