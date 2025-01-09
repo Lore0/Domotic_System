@@ -185,6 +185,7 @@ string DomoticSystem::handleInput(const string &input_)
   iss >> command;
   string log;
 
+  // da togliere auto
   auto logError = [this](const string &error)
   {
     string logM = scheduler_.getStringCurrTime() + " Errore : " + error;
