@@ -66,6 +66,18 @@ string Time::to_string() const{ //TODO
   return clock;
 }
 
+double Time::getDistance(const Time& time) const{
+  if(*this < time){
+      throw Invalid();
+  }
+  double thisMinutes = hours_ * 60 + minutes_;
+  double timeMinutes = time.getHours() * 60 + time.getMinutes();
+
+  double difference = thisMinutes - timeMinutes;
+
+  return difference / 60;
+}
+
 Time& Time::operator=(const Time &time){
   hours_=time.hours_;
   minutes_=time.minutes_;

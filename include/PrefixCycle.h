@@ -12,10 +12,11 @@ class PrefixCycle : public Device{
 
     PrefixCycle(const std::string& id, const std::string& name, double power, Time start, Time cycleDuration);
 
-    void setStart(Time start) override;
+    void setStart(Time start);
 
     Time getDuration() const;
 
+    //void setStart(Time start) = delete;
     //void setFinish(Time finish) = delete
 };
 

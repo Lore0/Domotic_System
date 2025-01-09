@@ -28,6 +28,8 @@ class Time {
 
     std::string to_string() const;
 
+    double getDistance(const Time& time) const;
+
     Time& operator=(const Time &time);
 };
 
