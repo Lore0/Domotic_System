@@ -58,7 +58,12 @@ string DomoticSystem::showDevice(Device &device_)
   string time = logTime() + "\n";
   Device* device = &device_;
   double tot = scheduler_.showDevice(device);
-  return time + scheduler_.getStringCurrTime() + " Il dispositivo " + device->getName() + " ha attualmente consumato " + to_string(tot) + " kWh";
+  if (device->getPowerConsumption() < 0) {
+    tot *= (-1);
+    return time + scheduler_.getStringCurrTime() + " Il dispositivo " + device->getName() + " ha attualmente consumato " + to_string(tot) + " kWh";
+  } else {
+    return time + scheduler_.getStringCurrTime() + " Il dispositivo " + device->getName() + " ha attualmente prodotto " + to_string(tot) + " kWh";
+  }
 }
 
 string DomoticSystem::showAll()
@@ -68,15 +73,30 @@ string DomoticSystem::showAll()
   string eachDevice = "";
   for (Device d : manual_) {
     double consumpt = scheduler_.showDevice(&d);
-    eachDevice += "\n  - Il dispositivo " + d.getName() + " ha consumato " + to_string(consumpt) + " kWh";
     tot += consumpt;
+    if (d.getPowerConsumption() < 0) {
+      consumpt *= (-1);
+      eachDevice += "\n  - Il dispositivo " + d.getName() + " ha consumato " + to_string(consumpt) + " kWh";
+    } else {
+      eachDevice += "\n  - Il dispositivo " + d.getName() + " ha prodotto " + to_string(consumpt) + " kWh";
+    }
   }
   for (Device d : prefixCycle_) {
     double consumpt = scheduler_.showDevice(&d);
-    eachDevice += "\n  - Il dispositivo " + d.getName() + " ha consumato " + to_string(consumpt) + " kWh";
     tot += consumpt;
+    if (d.getPowerConsumption() < 0) {
+      consumpt *= (-1);
+      eachDevice += "\n  - Il dispositivo " + d.getName() + " ha consumato " + to_string(consumpt) + " kWh";
+    } else {
+      eachDevice += "\n  - Il dispositivo " + d.getName() + " ha prodotto " + to_string(consumpt) + " kWh";
+    }
   }
-  return time + scheduler_.getStringCurrTime() + "Attualmente il sistema ha prodotto " + to_string(tot) + " kWh. Nello specifico:" + eachDevice;
+  if (tot >= 0) {
+    return time + scheduler_.getStringCurrTime() + "Attualmente il sistema ha prodotto " + to_string(tot) + " kWh. Nello specifico:" + eachDevice;
+  } else {
+    tot *= (-1);
+    return time + scheduler_.getStringCurrTime() + "Attualmente il sistema ha consumato " + to_string(tot) + " kWh. Nello specifico:" + eachDevice;
+  }
 }
 
 string DomoticSystem::setTime(Time &time_)
