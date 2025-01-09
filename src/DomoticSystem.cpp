@@ -256,6 +256,7 @@ string DomoticSystem::handleInput(const string &input_)
           if (m->getStatus()) {
             logError(m->getName() + " è già acceso");
           } else {
+            m->setStart(scheduler_.getCurrTime());
             m->setFinish(Time("24:00"));
             log = setOn(*m);
           }
@@ -303,7 +304,8 @@ string DomoticSystem::handleInput(const string &input_)
           if (p->getStatus()) {
             logError(p->getName() + " è già acceso");
           } else {
-            p->setFinish(p->getDuration());
+            p->setStart(scheduler_.getCurrTime());
+            p->setFinish(scheduler_.getCurrTime().addTime(p->getDuration()));
             log = setOn(*p);
           }
           cout << log << endl; // Stampa il risultato
@@ -333,11 +335,12 @@ string DomoticSystem::handleInput(const string &input_)
           {
             return logError("Formato orario non valido");
           }
-          p->setStart(Time(startTime)); //need to check
+          Time start(startTime);
+          p->setStart(start);
+          p->setFinish(start.addTime(p->getDuration()));
           if (p->getStatus()) {
             return logError(p->getName() + " è già acceso");
           }
-
           log = setDeviceTimer(*p);
           cout << log << endl; // Stampa il risultato
           return log;
