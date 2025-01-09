@@ -1,14 +1,4 @@
 #include "../include/DomoticSystem.h"
-#include "../include/Manual.h"
-#include "../include/PrefixCycle.h"
-
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
-#include <vector>
-#include <regex>
-#include <cmath>
 
 using namespace std;
 

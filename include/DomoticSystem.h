@@ -5,8 +5,14 @@
 #include "PrefixCycle.h"
 #include "Scheduler.h"
 #include "Time.h"
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
 #include <string>
 #include <vector>
+#include <regex>
+#include <cmath>
 
 class DomoticSystem {
   public:
