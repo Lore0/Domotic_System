@@ -11,36 +11,31 @@ DomoticSystem::DomoticSystem()
 string DomoticSystem::setOn(Device &device_)
 {
   string time = logTime() + "\n";
-  Device* device = &device_;
-  return time + scheduler_.setOn(device);
+  return time + scheduler_.setOn(&device_);
 }
 
 string DomoticSystem::setOff(Device &device_)
 {
   string time = logTime() + "\n";
-  Device* device = &device_;
-  return time + scheduler_.setOff(device);
+  return time + scheduler_.setOff(&device_);
 }
 
 string DomoticSystem::setDeviceTimer(Device &device_)
 {
   string time = logTime() + "\n";
-  Device* device = &device_;
-  return time + scheduler_.setDeviceTimer(device);
+  return time + scheduler_.setDeviceTimer(&device_);
 }
 
 string DomoticSystem::removeFromRunning(Device &device_)
 {
   string time = logTime() + "\n";
-  Device* device = &device_;
-  return time + scheduler_.removeTimerFromRunning(device);
+  return time + scheduler_.removeTimerFromRunning(&device_);
 }
 
 string DomoticSystem::removeFromWaiting(Device &device_)
 {
   string time = logTime() + "\n";
-  Device* device = &device_;
-  return time + scheduler_.removeTimerFromWaiting(device);
+  return time + scheduler_.removeTimerFromWaiting(&device_);
 }
 
 string DomoticSystem::showDevice(Device &device_)
@@ -114,7 +109,6 @@ string DomoticSystem::resetAll()
   string time = logTime() + "\n";
   string log = time + scheduler_.getStringCurrTime() + " Comando resetAll() eseguito con successo";
   return log;
-  // bisogna fare il log (perché non chiamo riccardo)
 }
 
 string DomoticSystem::logTime()
@@ -128,6 +122,7 @@ bool DomoticSystem::isValidTimeFormat(const string &time)
   return regex_match(time, timeFormat);
 }
 
+// TODO: da vedere se aprire e chiudere il file ogni volta
 void DomoticSystem::log(const string &message, ofstream &logFile)
 {
   // ofstream logFile("log.txt", ios::app); da fare nel main
@@ -182,10 +177,7 @@ Manual *DomoticSystem::searchManual(const string &name)
 {
   for (auto &m : manual_)
   {
-    if (m.getName() == name)
-    {
-      return &m;
-    }
+    if (m.getName() == name) return &m;
   }
   return nullptr;
 }
@@ -194,10 +186,7 @@ PrefixCycle *DomoticSystem::searchPrefixCycle(const string &name)
 {
   for (auto &p : prefixCycle_)
   {
-    if (p.getName() == name)
-    {
-      return &p;
-    }
+    if (p.getName() == name) return &p;
   }
   return nullptr;
 }
