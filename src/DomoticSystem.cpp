@@ -12,7 +12,7 @@
 using namespace std;
 
 DomoticSystem::DomoticSystem()
-    : scheduler_(kMaxPower)
+    : scheduler_(3.5) // da sistemare brutto value
 {
   buildDevices();
 }
@@ -42,7 +42,7 @@ string DomoticSystem::removeFromRunning(Device &device_)
 {
   string time = logTime() + "\n";
   Device* device = &device_;
-  return time + scheduler_.removeTimerFromRunning(device);  
+  return time + scheduler_.removeTimerFromRunning(device);
 }
 
 string DomoticSystem::removeFromWaiting(Device &device_)
@@ -185,6 +185,7 @@ string DomoticSystem::handleInput(const string &input_)
   iss >> command;
   string log;
 
+  // da togliere auto
   auto logError = [this](const string &error)
   {
     string logM = scheduler_.getStringCurrTime() + " Errore : " + error;
@@ -221,7 +222,7 @@ string DomoticSystem::handleInput(const string &input_)
           if (m->getStatus()) {
             logError(m->getName() + " è già acceso");
           } else {
-            m->setFinish(Time("25:00"));
+            m->setFinish(Time("24:00"));
             log = setOn(*m);
           }
           cout << log << endl;
@@ -237,6 +238,9 @@ string DomoticSystem::handleInput(const string &input_)
         {
           string startTime = action, endTime;
           iss >> endTime;
+          if (m->hasTimer()) {
+            return logError(m->getName() + " ha già un timer");
+          }
           if (!isValidTimeFormat(startTime) || (!endTime.empty() && !isValidTimeFormat(endTime)))
           {
             return logError("Formato orario non valido");
@@ -248,7 +252,10 @@ string DomoticSystem::handleInput(const string &input_)
           }
           else
           {
-            m->setFinish(Time("25:00")); // andare avanti all'infinito
+            m->setFinish(Time("24:00")); // andare avanti all'infinito
+          }
+          if (m->getStatus()) {
+            return logError(m->getName() + " è già acceso");
           }
           log = setDeviceTimer(*m);
           cout << log << endl;
@@ -279,6 +286,10 @@ string DomoticSystem::handleInput(const string &input_)
           string startTime = action;
           string endTime;
 
+          if (p->hasTimer()) {
+            return logError(p->getName() + " ha già un timer");
+          }
+
           if (iss >> endTime)
           {
             return logError("Dispositivo CP non supporta orario di fine. Devi specificare solo l'orario di inizio");
@@ -288,7 +299,11 @@ string DomoticSystem::handleInput(const string &input_)
           {
             return logError("Formato orario non valido");
           }
-          p->setStart(Time(startTime)); //setStartFinish
+          p->setStart(Time(startTime)); //need to check
+          if (p->getStatus()) {
+            return logError(p->getName() + " è già acceso");
+          }
+
           log = setDeviceTimer(*p);
           cout << log << endl; // Stampa il risultato
           return log;

@@ -9,7 +9,7 @@ Time::Time(std::string time){
 }
 
 Time::Time()
-  : hours_(0), 
+  : hours_(0),
     minutes_(0)
 {
     //left intentionally blank
@@ -20,7 +20,7 @@ void Time::StringToTime(const string& time){
   int hours, minutes;
   istringstream stream(time); //stream di time
 
-  if (!(stream >> hours >> div >> minutes) || div != ':' || hours < 0 || hours >= 24 || minutes < 0 || minutes >= 60) {
+  if (!(stream >> hours >> div >> minutes) || div != ':' || hours < 0 || hours > 24 || minutes < 0 || minutes >= 60) {
       throw Invalid();
   }
 

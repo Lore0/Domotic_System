@@ -8,6 +8,7 @@ Device::Device(const string& id, const string& name, double power, Time start, T
         name_(name),
         power_(power),
         status_(false),
+        hasTimer_(false),
         start_(start),
         finish_(finish)
 {
@@ -36,6 +37,14 @@ double Device::getPowerConsumption() const{
 
 bool Device::getStatus() const{
     return status_;
+}
+
+bool Device::hasTimer() const{
+  return hasTimer_;
+}
+
+void Device::setHasTimer(bool status) {
+  hasTimer_ = status;
 }
 
 void Device::setStart(Time start){

@@ -14,15 +14,21 @@ class Device {
 
     bool status_; //on = true , off = false
 
+    bool hasTimer_;
+
     Time start_;
-    
+
     Time finish_;
 
   public:
-    
+
     Device(const std::string& id, const std::string& name, double power, Time start, Time finish);
-    
+
     bool getStatus() const;
+
+    bool hasTimer() const;
+
+    void setHasTimer(bool status);
 
     const std::string& getName() const;
 
@@ -42,9 +48,9 @@ class Device {
 
     void turnOff();
 
-    Device(const Device&) = delete;
+    //Device(const Device&) = delete;
 
-    Device& operator=(const Device&) = delete;
+    //Device& operator=(const Device&) = delete;
 
     virtual ~Device() = default;
 };

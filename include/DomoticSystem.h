@@ -18,7 +18,7 @@ class DomoticSystem {
     void log(const std::string& message_, std::ofstream& logFile);
   private:
     Scheduler scheduler_;
-    double kMaxPower = 3.5;
+    const double kMaxPower = 3.5;
     bool isValidTimeFormat(const std::string& time);
     void buildDevices();
     Manual* searchManual(const std::string& name_);

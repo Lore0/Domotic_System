@@ -6,7 +6,7 @@
 
 class Scheduler {
   public:
-    Scheduler(int maxPower);
+    Scheduler(double maxPower);
     Time getCurrTime();
     std::string getStringCurrTime();
     std::string setOn(Device* device_); //così
@@ -21,8 +21,8 @@ class Scheduler {
     std::string resetTimers();
     //void resetAll(); //fa pane con reset
   private:
-    const int MAX_POWER;
-    int inUsePower;
+    const double MAX_POWER;
+    double inUsePower;
     Time currTime;
     std::vector<Device*> running_;
     std::vector<Device*> waiting_;
