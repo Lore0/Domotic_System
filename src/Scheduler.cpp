@@ -107,61 +107,49 @@ string Scheduler::setTime(Time &time)
     // cout << waiting_.at(0).getName() << endl;
     while (!(currTime > time)) //
     {
-        cout << "a" << endl;
         if ((running_.empty() && waiting_.empty())) // controllo di fine (entrambe liste vuote)
         {
-            cout << "stopvuote" << endl;
             currTime = time;
             break;
         }
         else if (running_.empty() || waiting_.empty()) // se una delle due è vuote
         {
-            cout << "ba" << endl;
             if (running_.empty()) // se running è vuota
             {
                 if (waiting_.at(0)->getStart() > time) // se primo waiting è già pèiù grande
                 {
-                    cout << "stopwaitalta" << endl;
                     currTime = time;
                     break;
                 }
                 else // waiting no vuota e un dispositivo si deve avviare
                 {
-                    cout << "bb" << endl;
                     currTime = waiting_.at(0)->getStart();
-                    // cout<<waiting_.at(0)->getName()+""+waiting_.at(0)->getFinish().to_string()<<endl;
                     log += setOn(waiting_.at(0));
-                    // waiting_.erase(waiting_.begin()); ->se non lo faccio su seton
                 }
             }
             else // waiting vuota
             {
                 if (running_.at(0)->getFinish() > time) // se primo running è già pèiù grande
                 {
-                    cout << "stoprunalta" << endl;
                     currTime = time;
                     break;
                 }
                 else // running no vuota e un dispositivo si deve avviare
                 {
                     currTime = running_.at(0)->getFinish();
-                    cout << "bc" << endl;
                     log += setOff(running_.at(0));
                 }
             }
         }
         else // entrambe running waiting NO vuote
         {
-            cout << "cc" << endl;
             if (waiting_.at(0)->getStart() < running_.at(0)->getFinish()) // waiting<running
             {
-                cout << "cd" << endl;
                 currTime = waiting_.at(0)->getStart();
                 log += setOn(waiting_.at(0));
             }
             else // waiting>=running
             {
-                cout << "ce" << endl;
                 currTime = running_.at(0)->getFinish();
                 log += setOff(running_.at(0));
             }
