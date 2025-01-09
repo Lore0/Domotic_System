@@ -57,7 +57,7 @@ string DomoticSystem::showDevice(Device &device_)
   string time = logTime() + "\n";
   Device* device = &device_;
   double tot = scheduler_.showDevice(device);
-  return time + scheduler_.getStringCurrTime() + " Il dispositivo " + device->getName() + " ha attualmente consumato " + to_string(tot) + " kWh";
+  return time + scheduler_.getStringCurrTime() + " Il dispositivo " + device->getName() + " ha attualmente consumato " + to_string(truncate(tot)) + " kWh";
 }
 
 string DomoticSystem::showAll()
@@ -67,15 +67,15 @@ string DomoticSystem::showAll()
   string eachDevice = "";
   for (Device d : manual_) {
     double consumpt = scheduler_.showDevice(&d);
-    eachDevice += "\n  - Il dispositivo " + d.getName() + " ha consumato " + to_string(consumpt) + " kWh";
+    eachDevice += "\n  - Il dispositivo " + d.getName() + " ha consumato " + to_string(truncate(consumpt)) + " kWh";
     tot += consumpt;
   }
   for (Device d : prefixCycle_) {
     double consumpt = scheduler_.showDevice(&d);
-    eachDevice += "\n  - Il dispositivo " + d.getName() + " ha consumato " + to_string(consumpt) + " kWh";
+    eachDevice += "\n  - Il dispositivo " + d.getName() + " ha consumato " + to_string(truncate(consumpt)) + " kWh";
     tot += consumpt;
   }
-  return time + scheduler_.getStringCurrTime() + "Attualmente il sistema ha prodotto " + to_string(tot) + " kWh. Nello specifico:" + eachDevice;
+  return time + scheduler_.getStringCurrTime() + "Attualmente il sistema ha prodotto " + to_string(truncate(tot)) + " kWh. Nello specifico:" + eachDevice;
 }
 
 string DomoticSystem::setTime(Time &time_)
@@ -125,6 +125,11 @@ void DomoticSystem::log(const string &message, ofstream &logFile)
     logFile << message << endl;
     // logFile.close(); da fare nel main
   }
+}
+
+double DomoticSystem::truncate(double value)
+{
+  return trunc(value * 1000.0) / 1000.0;
 }
 
 void DomoticSystem::buildDevices()
