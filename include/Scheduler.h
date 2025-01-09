@@ -14,7 +14,7 @@ class Scheduler {
     std::string setDeviceTimer(Device* device_);
     std::string removeTimerFromRunning(Device* device_);
     std::string removeTimerFromWaiting(Device* device_);
-    std::string showDevice(Device* device_);
+    double showDevice(Device* device_);
     std::string showAll();
     std::string setTime(Time& time_);
     std::string resetTime();

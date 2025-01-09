@@ -79,6 +79,7 @@ string Scheduler::removeTimerFromRunning(Device *device)    //toglie il timer da
     if (targetIndex == -1)  //se non c'è do errore
         return getStringCurrTime() + " Errore: dispositivo non in funzione";
     device->setFinish(Time("24:00"));
+    device->setHasTimer(false);
     running_.erase(running_.begin()+targetIndex);
     running_.push_back(device);
     //non so perchè avevo fatto la roba sotto
@@ -169,11 +170,15 @@ string Scheduler::setTime(Time &time)
 
 string Scheduler::resetTime()
 {
-    currTime.setTime("0:0");
+    currTime.setTime("00:00");
     for (Device* d : running_)
     {
         if(d->hasTimer())
             setDeviceTimer(d);
+        else{
+            d->setHasTimer(false);
+            d->turnOff();
+        }
     }
     running_.clear();
     finished_.clear();
@@ -183,7 +188,10 @@ string Scheduler::resetTime()
 string Scheduler::resetTimers() //da rivedere
 {
     string log = "";
-    waiting_.clear();
+    for (auto &device : waiting_)
+    {
+         log += removeTimerFromWaiting(device);
+    }
     for (auto &device : running_)
     {
          log += removeTimerFromRunning(device);
@@ -193,12 +201,22 @@ string Scheduler::resetTimers() //da rivedere
 
 string Scheduler::showAll()
 {
+
     return "";
 }
 
-string Scheduler::showDevice(Device *device)
+double Scheduler::showDevice(Device *device)
 {
-    return "";
+    double tothour=0;
+    int targetIndex=searchDevice(running_,device);
+    if(targetIndex!=-1)
+        tothour+=currTime.getDistance(running_.at(targetIndex)->getStart());
+    int i=0;
+    while(i<finished_.size()){
+        if(device->getId()==finished_.at(i).getId())
+            tothour+=finished_.at(i).getFinish().getDistance(finished_.at(i).getStart());
+    }
+    return tothour*device->getPowerConsumption();
 }
 
 int searchDevice(vector<Device *> list, Device *target)
