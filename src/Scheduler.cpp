@@ -218,7 +218,7 @@ double Scheduler::showDevice(Device *device)
         cout << to_string(tothour) << endl;
     }
     int i = 0;
-    cout<<finished_.at(i).getName()<<endl;
+    cout<<finished_.at(i).getName()<<finished_.at(i).getFinish().getDistance(finished_.at(i).getStart())<<endl;
     while (i < finished_.size())
     {
         if (device->getId() == finished_.at(i).getId())
