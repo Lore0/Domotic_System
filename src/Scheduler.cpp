@@ -101,28 +101,27 @@ string Scheduler::setTime(Time &time)
     // fino a che non sono entrambi < time
     string log = "";
     // cout << waiting_.at(0).getName() << endl;
-    while (!(currTime > time))
+    while (!(currTime > time))  //
     {
         cout << "a" << endl;
-        if ((running_.empty() && waiting_.empty()) /*(running_.at(0).getFinish() > time || waiting_.at(0).getStart() > time)*/) // controllo di fine (entrambe liste vuote)
+        if ((running_.empty() && waiting_.empty())) // controllo di fine (entrambe liste vuote)
         {
             cout << "stopvuote" << endl;
             currTime = time;
             break;
         }
-        if (running_.empty() || waiting_.empty())
+        else if (running_.empty() || waiting_.empty())   //se una delle due è vuote
         {
             cout << "ba" << endl;
-            if (running_.empty())
+            if (running_.empty())   //se running è vuota
             {
-                if (waiting_.at(0)->getStart() > time)
+                if (waiting_.at(0)->getStart() > time)  //se primo waiting è già pèiù grande
                 {
                     cout << "stopwaitalta" << endl;
                     currTime = time;
                     break;
                 }
-                cout << "aaa" << endl;
-                if (!waiting_.empty() && waiting_.at(0)->getStart() < time)
+                else    //waiting no vuota e un dispositivo si deve avviare
                 {
                     cout << "bb" << endl;
                     currTime = waiting_.at(0)->getStart();
@@ -131,16 +130,15 @@ string Scheduler::setTime(Time &time)
                     // waiting_.erase(waiting_.begin()); ->se non lo faccio su seton
                 }
             }
-            else if (waiting_.empty())
+            else //waiting vuota
             {
-                if (running_.at(0)->getFinish() > time)
+                if (running_.at(0)->getFinish() > time) //se primo running è già pèiù grande
                 {
                     cout << "stoprunalta" << endl;
                     currTime = time;
                     break;
                 }
-                cout << "aab" << endl;
-                if (!running_.empty() && running_.at(0)->getFinish() < time)
+                else //running no vuota e un dispositivo si deve avviare
                 {
                     currTime = running_.at(0)->getFinish();
                     cout << "bc" << endl;
@@ -148,17 +146,16 @@ string Scheduler::setTime(Time &time)
                 }
             }
         }
-        else
+        else    //entrambe running waiting NO vuote
         {
             cout << "cc" << endl;
-            cout << waiting_.at(0)->getName() << endl;
-            if (waiting_.at(0)->getStart() < running_.at(0)->getFinish())
+            if (waiting_.at(0)->getStart() < running_.at(0)->getFinish())   //waiting<running
             {
                 cout << "cd" << endl;
                 currTime = waiting_.at(0)->getStart();
                 log += setOn(waiting_.at(0));
             }
-            else
+            else    //waiting>=running
             {
                 cout << "ce" << endl;
                 currTime = running_.at(0)->getFinish();
@@ -166,28 +163,6 @@ string Scheduler::setTime(Time &time)
             }
         }
     }
-    /*while ((!running_.empty() || !waiting_.empty()) && (!(running_.at(0).getFinish() > time) || !(waiting_.at(0).getStart() > time)))
-    {
-        cout << "a" << endl;
-        if (!running_.empty())
-        {
-            while (!(running_.at(0).getFinish() > time) && (waiting_.empty() || !(running_.at(0).getFinish() > waiting_.at(0).getStart())))
-            {
-                cout << "b" << endl;
-                currTime = running_.at(0).getFinish();
-                log += setOn(running_.at(0));
-            }
-        }
-        if (!waiting_.empty())
-        {
-            while (!(waiting_.at(0).getStart() > time) && (running_.empty() || !(waiting_.at(0).getStart() > running_.at(0).getFinish())))
-            {
-                cout<<"c"<<endl;
-                currTime = waiting_.at(0).getStart();
-                log += setOff(waiting_.at(0));
-            }
-        }
-    }*/
     return log + "\n" + getStringCurrTime() + "L'orario attuale è " + getCurrTime().to_string();
 }
 
@@ -204,7 +179,7 @@ string Scheduler::resetTime()
     return getStringCurrTime() + " L'orario attuale è 00:00"; //[00:00]L’orarioattualeè00:00
 }
 
-string Scheduler::resetTimers()
+string Scheduler::resetTimers() //da rivedere
 {
     string log = "";
     waiting_.clear();
