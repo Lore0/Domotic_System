@@ -191,20 +191,19 @@ PrefixCycle *DomoticSystem::searchPrefixCycle(const string &name)
   return nullptr;
 }
 
+string DomoticSystem::logError(const string &error)
+{
+  string logM = scheduler_.getStringCurrTime() + " Errore : " + error;
+  cout << logM << endl;
+  return logM;
+}
+
 string DomoticSystem::handleInput(const string &input_)
 {
   istringstream iss(input_);
   string command, deviceName, target;
   iss >> command;
   string log;
-
-  // da togliere auto
-  auto logError = [this](const string &error)
-  {
-    string logM = scheduler_.getStringCurrTime() + " Errore : " + error;
-    cout << logM << endl;
-    return logM;
-  };
 
   if (command == "set")
   {

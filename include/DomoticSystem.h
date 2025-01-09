@@ -30,6 +30,7 @@ class DomoticSystem {
     Manual* searchManual(const std::string& name_);
     PrefixCycle* searchPrefixCycle(const std::string& name_);
     std::string logTime();
+    std::string logError(const std::string& error);
     std::string setOn(Device& device_);
     std::string setOff(Device& device_);
     std::string setDeviceTimer(Device& device_);
