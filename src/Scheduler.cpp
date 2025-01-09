@@ -1,4 +1,5 @@
 #include "../include/Scheduler.h"
+#include "../include/PrefixCycle.h"
 #include <algorithm>
 #include <iostream>
 using namespace std;
@@ -23,7 +24,7 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
         device->turnOn();
         device->setStart(currTime);
         Time temp = currTime;
-        if (targetIndex == -1)
+        if (PrefixCycle* p =dynamic_cast<PrefixCycle*>(device))
             device->setFinish(temp.addTime(device->getFinish()));
         inUsePower += device->getPowerConsumption();
         running_.insert(running_.begin() + i, device);
