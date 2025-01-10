@@ -32,7 +32,7 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
     }
     else
     {
-        cout << "no ghe xe corente" << endl;
+        log="\n"+getStringCurrTime()+" ERRORE: non c'è corrente sufficiente per accendere: "+device->getName();
     } // cosa fare in caso non c'è abbastanza potenza
     if (targetIndex != -1)
     {
