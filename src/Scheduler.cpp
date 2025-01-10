@@ -23,7 +23,7 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
             i++;
         device->turnOn();
         // device->setStart(currTime);
-        Time temp = currTime;
+        Clock temp = currTime;
         // if (PrefixCycle* p =dynamic_cast<PrefixCycle*>(device))
         //     device->setFinish(temp.addTime(device->getFinish()));
         inUsePower += device->getPowerConsumption();
@@ -90,7 +90,7 @@ string Scheduler::removeTimerFromRunning(Device *device) // toglie il timer da r
     int targetIndex = searchDevice(running_, device); // cerco il dispositivo in running
     if (targetIndex == -1)                            // se non c'è do errore
         return getStringCurrTime() + " Errore: dispositivo non in funzione";
-    device->setFinish(Time("24:00"));
+    device->setFinish(Clock("24:00"));
     device->setHasTimer(false);
     running_.erase(running_.begin() + targetIndex);
     running_.push_back(device);
@@ -104,7 +104,7 @@ string Scheduler::removeTimerFromRunning(Device *device) // toglie il timer da r
     return getStringCurrTime() + " Rimosso il timer dal dispositivo " + device->getName(); // [13:00]Rimossoil timerdaldispositivo‘${DEVICENAME}’
 }
 
-string Scheduler::setTime(Time &time)
+string Scheduler::setTime(Clock &time)
 {
     if (currTime > time) // ora non valida
         return getStringCurrTime() + " Errore: ora minore a quella attuale";
@@ -241,7 +241,7 @@ string Scheduler::getStringCurrTime()
 {
     return "[" + currTime.to_string() + "]";
 }
-Time Scheduler::getCurrTime()
+Clock Scheduler::getCurrTime()
 {
     return currTime;
 }

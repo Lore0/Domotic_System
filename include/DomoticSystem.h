@@ -41,7 +41,7 @@ class DomoticSystem {
     std::string removeFromWaiting(Device& device_);
     std::string showDevice(Device& device_);
     std::string showAll();
-    std::string setTime(Time& time_);
+    std::string setTime(Clock& time_);
     std::string resetTime();
     std::string resetTimers();
     std::string resetAll();

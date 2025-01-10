@@ -102,7 +102,7 @@ string DomoticSystem::showAll()
   }
 }
 
-string DomoticSystem::setTime(Time &time_)
+string DomoticSystem::setTime(Clock &time_)
 {
   string time = logTime() + "\n";
   return time + scheduler_.setTime(time_);
@@ -193,7 +193,7 @@ void DomoticSystem::buildDevices()
 
     double power = stod(pow);
 
-    Time null("00:00");
+    Clock null("00:00");
 
     // gestione di M o CP
     if (type == "Manuale")
@@ -202,7 +202,7 @@ void DomoticSystem::buildDevices()
     }
     else
     {
-      Time cycleDuration(type);
+      Clock cycleDuration(type);
       prefixCycle_.push_back(PrefixCycle(id, name, power, null, cycleDuration));
     }
   }
@@ -271,9 +271,9 @@ string DomoticSystem::handleInput(const string &input_)
       {
         return logError("Formato orario non valido");
       }
-      Time t(time);
+      Clock t(time);
       if (t < scheduler_.getCurrTime()) {
-        Time end("24:00");
+        Clock end("24:00");
         log = setTime(end);
         log += "\n [24:00] FINE";
         cout << log << endl;
@@ -298,7 +298,7 @@ string DomoticSystem::handleInput(const string &input_)
             logError(m->getName() + " è già acceso");
           } else {
             m->setStart(scheduler_.getCurrTime());
-            m->setFinish(Time("24:00"));
+            m->setFinish(Clock("24:00"));
             log = setOn(*m);
           }
           cout << log << endl;
@@ -321,21 +321,21 @@ string DomoticSystem::handleInput(const string &input_)
           {
             return logError("Formato orario non valido");
           }
-          if (Time(startTime) < scheduler_.getCurrTime()) {
+          if (Clock(startTime) < scheduler_.getCurrTime()) {
             return logError("Orario non valido");
           }
           if (!endTime.empty())
           {
-            if (Time(startTime) > Time(endTime)) {
+            if (Clock(startTime) > Clock(endTime)) {
               return logError("Orario non valido");
             }
-            m->setFinish(Time(endTime));
+            m->setFinish(Clock(endTime));
           }
           else
           {
-            m->setFinish(Time("24:00")); // andare avanti all'infinito
+            m->setFinish(Clock("24:00")); // andare avanti all'infinito
           }
-          m->setStart(Time(startTime));
+          m->setStart(Clock(startTime));
           if (m->getStatus()) {
             return logError(m->getName() + " è già acceso");
           }
@@ -373,7 +373,7 @@ string DomoticSystem::handleInput(const string &input_)
             return logError(p->getName() + " ha già un timer");
           }
 
-          if (Time(startTime) < scheduler_.getCurrTime()) {
+          if (Clock(startTime) < scheduler_.getCurrTime()) {
             return logError("Orario non valido");
           }
 
@@ -386,7 +386,7 @@ string DomoticSystem::handleInput(const string &input_)
           {
             return logError("Formato orario non valido");
           }
-          Time start(startTime);
+          Clock start(startTime);
           p->setStart(start);
           p->setFinish(start.addTime(p->getDuration()));
           if (p->getStatus()) {
