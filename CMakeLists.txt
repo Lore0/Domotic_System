@@ -15,7 +15,7 @@ add_library(${PROJECT_NAME} SHARED
     src/Scheduler.cpp
     src/DomoticSystem.cpp)
 
-add_executable(DomoticSystem
+add_executable(main
     src/main.cpp)
 
 target_link_libraries(main ${PROJECT_NAME})
