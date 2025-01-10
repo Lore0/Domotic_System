@@ -17,6 +17,7 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
     string log = "";
     int targetIndex = searchDevice(waiting_, device);
     int i = 0;
+    cout<<inUsePower<<"e"<<MAX_POWER<<endl;
     if (inUsePower + device->getPowerConsumption() + MAX_POWER >= 0)
     {
         while (i < running_.size() && !(running_[i]->getFinish() > device->getFinish()))
