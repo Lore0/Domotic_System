@@ -17,10 +17,9 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
     string log = "";
     int targetIndex = searchDevice(waiting_, device);
     int i = 0;
-    cout<<inUsePower<<"e"<<MAX_POWER<<endl;
     if (inUsePower + device->getPowerConsumption() + MAX_POWER >= 0)
     {
-        while (i < running_.size() && !(running_[i]->getFinish() > device->getFinish()))
+        while (i < running_.size() && device->getFinish() > running_[i]->getFinish())
             i++;
         device->turnOn();
         Clock temp = currTime;
@@ -67,7 +66,7 @@ string Scheduler::setDeviceTimer(Device *device)
 {
     int i = 0;
     device->setHasTimer(true);
-    while (i < waiting_.size() && !(waiting_[i]->getFinish() > device->getFinish()))
+    while (i < waiting_.size() && device->getStart() > waiting_[i]->getStart())    
         i++;
     waiting_.insert(waiting_.begin() + i, device);
     return getStringCurrTime() + " Impostato un timer per il dispositivo " + device->getName() + " dalle " + device->getStart().to_string() + " alle " + device->getFinish().to_string(); //[13:00] Impostatountimerper ildispositivo‘${DEVICENAME}’dalleXX:YYalleZZ:WW
