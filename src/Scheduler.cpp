@@ -29,7 +29,7 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
     }
     else
     {
-        log="\n"+getStringCurrTime()+" ERRORE: non c'è corrente sufficiente per accendere: "+device->getName();
+        log = "\n" + getStringCurrTime() + " ERRORE: non c'è corrente sufficiente per accendere: " + device->getName();
     } // cosa fare in caso non c'è abbastanza potenza
     if (targetIndex != -1)
     {
@@ -57,7 +57,7 @@ string Scheduler::setOff(Device *device)
             if (running_.at(i)->getStart() > running_.at(indexMaxStartTime)->getStart())
                 indexMaxStartTime = i;
         }
-        log += setOff(running_.at(indexMaxStartTime))+"corrente";
+        log += setOff(running_.at(indexMaxStartTime)) + "corrente";
     }
     return log;
 }
@@ -66,9 +66,8 @@ string Scheduler::setDeviceTimer(Device *device)
 {
     int i = 0;
     device->setHasTimer(true);
-    while (i < waiting_.size() && device->getStart() > waiting_[i]->getStart())    
+    while (i < waiting_.size() && waiting_[i]->getStart() < device->getStart())
         i++;
-    cout<<i<<endl;
     waiting_.insert(waiting_.begin() + i, device);
     return getStringCurrTime() + " Impostato un timer per il dispositivo " + device->getName() + " dalle " + device->getStart().to_string() + " alle " + device->getFinish().to_string(); //[13:00] Impostatountimerper ildispositivo‘${DEVICENAME}’dalleXX:YYalleZZ:WW
 }
