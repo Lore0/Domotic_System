@@ -3,7 +3,7 @@
 using namespace std;
 
 DomoticSystem::DomoticSystem()
-    : scheduler_(3.5) // da sistemare brutto value
+    : scheduler_(3.5), status_(true) // da sistemare brutto value
 {
   buildDevices();
 }
@@ -273,7 +273,12 @@ string DomoticSystem::handleInput(const string &input_)
       }
       Time t(time);
       if (t < scheduler_.getCurrTime()) {
-        return logError("Orario inserito è minore di quello attuale");
+        Time end("24:00");
+        log = setTime(end);
+        log += "\n [24:00] FINE";
+        cout << log << endl;
+        setSystemState(false);
+        return log;
       }
       log = setTime(t);
       cout << log << endl;
@@ -468,6 +473,12 @@ string DomoticSystem::handleInput(const string &input_)
     }
     return logError("Dispositivo non trovato");
   }
+  else if (command == "exit") {
+    setSystemState(false);
+    log = scheduler_.getStringCurrTime() + " FINE";
+    cout << log << endl;
+    return log;
+  }
   else
   {
     return logError("Comando non riconosciuto");
@@ -481,4 +492,12 @@ string DomoticSystem::getCustomInput()
   string input;
   getline(cin, input);
   return input;
+}
+
+void DomoticSystem::setSystemState(bool state) {
+  status_ = state;
+}
+
+bool DomoticSystem::getSystemState() const {
+  return status_;
 }
