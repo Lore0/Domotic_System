@@ -60,7 +60,7 @@ string Scheduler::setOff(Device *device)
             if (running_.at(i)->getStart() > running_.at(indexMaxStartTime)->getStart())
                 indexMaxStartTime = i;
         }
-        log += setOff(running_.at(indexMaxStartTime));
+        log += setOff(running_.at(indexMaxStartTime))+" per sovraccarico";
     }
     return log;
 }
@@ -113,7 +113,6 @@ string Scheduler::setTime(Time &time)
     // se sono uguali tolgo prima da running
     // fino a che non sono entrambi < time
     string log = "";
-    // cout << waiting_.at(0).getName() << endl;
     while (!(currTime > time)) //
     {
         if ((running_.empty() && waiting_.empty())) // controllo di fine (entrambe liste vuote)
