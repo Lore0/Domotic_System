@@ -22,7 +22,7 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
         while (i < running_.size() && running_[i]->getFinish() < device->getFinish())
             i++;
         device->turnOn();
-        //device->setStart(currTime);
+        // device->setStart(currTime);
         Time temp = currTime;
         // if (PrefixCycle* p =dynamic_cast<PrefixCycle*>(device))
         //     device->setFinish(temp.addTime(device->getFinish()));
@@ -51,7 +51,17 @@ string Scheduler::setOff(Device *device)
     inUsePower -= device->getPowerConsumption();
     string log = "\n" + getStringCurrTime() + " Il dispositivo " + device->getName() + " si è spento"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è spendo
     Device temp{device->getId(), device->getName(), device->getPowerConsumption(), device->getStart(), device->getFinish()};
-    finished_.push_back(temp); // da fare con pane
+    finished_.push_back(temp);
+    if (inUsePower + MAX_POWER < 0)
+    {
+        int indexMaxStartTime = 0;
+        for (int i = 0; i < running_.size(); i++)
+        {
+            if (running_.at(i)->getStart() > running_.at(indexMaxStartTime)->getStart())
+                indexMaxStartTime = i;
+        }
+        log += setOff(running_.at(indexMaxStartTime));
+    }
     return log;
 }
 
@@ -93,8 +103,7 @@ string Scheduler::removeTimerFromRunning(Device *device) // toglie il timer da r
     //  running_[i] = temp;
     return getStringCurrTime() + " Rimosso il timer dal dispositivo " + device->getName(); // [13:00]Rimossoil timerdaldispositivo‘${DEVICENAME}’
 }
-// show
-// showdevice;
+
 string Scheduler::setTime(Time &time)
 {
     if (currTime > time) // ora non valida
@@ -173,6 +182,7 @@ string Scheduler::resetTime()
     }
     running_.clear();
     finished_.clear();
+    inUsePower = 0;
     return getStringCurrTime() + " L'orario attuale è 00:00"; //[00:00]L’orarioattualeè00:00
 }
 
