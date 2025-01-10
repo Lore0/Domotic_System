@@ -1,7 +1,7 @@
 #ifndef DEVICE_H
 #define DEVICE_H
 #include <string>
-#include "Time.h"
+#include "Clock.h"
 
 class Device {
   protected:
@@ -16,13 +16,13 @@ class Device {
 
     bool hasTimer_;
 
-    Time start_;
+    Clock start_;
 
-    Time finish_;
+    Clock finish_;
 
   public:
 
-    Device(const std::string& id, const std::string& name, double power, Time start, Time finish);
+    Device(const std::string& id, const std::string& name, double power, Clock start, Clock finish);
 
     bool getStatus() const;
 
@@ -34,15 +34,15 @@ class Device {
 
     const std::string& getId() const;
 
-    Time getStart() const;
+    Clock getStart() const;
 
-    Time getFinish() const;
+    Clock getFinish() const;
 
     double getPowerConsumption() const;
 
-    virtual void setStart(Time start);
+    virtual void setStart(Clock start);
 
-    virtual void setFinish(Time finish);
+    virtual void setFinish(Clock finish);
 
     void turnOn();
 

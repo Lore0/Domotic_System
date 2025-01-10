@@ -1,21 +1,21 @@
-#include "../include/Time.h"
+#include "../include/Clock.h"
 #include <string>
 #include <sstream>
 
 using namespace std;
 
-Time::Time(std::string time){
+Clock::Clock(std::string time){
   StringToTime(time);
 }
 
-Time::Time()
+Clock::Clock()
   : hours_(0),
     minutes_(0)
 {
     //left intentionally blank
 }
 
-void Time::StringToTime(const string& time){
+void Clock::StringToTime(const string& time){
   char div;
   int hours, minutes;
   istringstream stream(time); //stream di time
@@ -28,7 +28,7 @@ void Time::StringToTime(const string& time){
   minutes_ = minutes;
 }
 
-Time Time::addTime(const Time& time){
+Clock Clock::addTime(const Clock& time){
   if(time.getHours()==-1) return *this;
   minutes_ += time.minutes_;
   hours_ += time.hours_ + (minutes_/60);
@@ -37,19 +37,19 @@ Time Time::addTime(const Time& time){
   return *this;
 }
 
-int Time::getHours() const{
+int Clock::getHours() const{
   return hours_;
 }
 
-int Time::getMinutes() const{
+int Clock::getMinutes() const{
   return minutes_;
 }
 
-void Time::setTime(const string& time){
+void Clock::setTime(const string& time){
   StringToTime(time);
 }
 
-string Time::to_string() const{ //TODO
+string Clock::to_string() const{ //TODO
   string hours, minutes, clock = "";
 
   if(hours_ < 10){
@@ -66,7 +66,7 @@ string Time::to_string() const{ //TODO
   return clock;
 }
 
-double Time::getDistance(const Time& time) const{
+double Clock::getDistance(const Clock& time) const{
   if(*this < time){
       throw Invalid();
   }
@@ -78,14 +78,14 @@ double Time::getDistance(const Time& time) const{
   return difference / 60;
 }
 
-Time& Time::operator=(const Time &time){
+Clock& Clock::operator=(const Clock &time){
   hours_=time.hours_;
   minutes_=time.minutes_;
   return *this;
 }
 
 
-bool operator>(const Time& t1, const Time& t2){
+bool operator>(const Clock& t1, const Clock& t2){
   if(t1.getHours() == t2.getHours()){
     if(t1.getMinutes() > t2.getMinutes()){
       return true;
@@ -100,7 +100,7 @@ bool operator>(const Time& t1, const Time& t2){
   }
 }
 
-bool operator<(const Time& t1, const Time& t2){
+bool operator<(const Clock& t1, const Clock& t2){
   if(t1.getHours() == t2.getHours()){
     if(t1.getMinutes() < t2.getMinutes()){
       return true;
@@ -115,7 +115,7 @@ bool operator<(const Time& t1, const Time& t2){
   }
 }
 
-bool operator==(const Time& t1, const Time& t2){
+bool operator==(const Clock& t1, const Clock& t2){
   if(t1.getHours() == t2.getHours() && t1.getMinutes() == t2.getMinutes()){
     return true;
   }else{
