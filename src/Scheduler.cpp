@@ -54,13 +54,14 @@ string Scheduler::setOff(Device *device)
     finished_.push_back(temp);
     if (inUsePower + MAX_POWER < 0)
     {
+        log+=" per sovraccarico";
         int indexMaxStartTime = 0;
         for (int i = 0; i < running_.size(); i++)
         {
             if (running_.at(i)->getStart() > running_.at(indexMaxStartTime)->getStart())
                 indexMaxStartTime = i;
         }
-        log += setOff(running_.at(indexMaxStartTime))+" per sovraccarico";
+        log += setOff(running_.at(indexMaxStartTime));
     }
     return log;
 }
