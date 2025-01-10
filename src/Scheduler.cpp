@@ -60,7 +60,7 @@ string Scheduler::setOff(Device *device)
             if (running_.at(i)->getStart() > running_.at(indexMaxStartTime)->getStart())
                 indexMaxStartTime = i;
         }
-        log += setOff(running_.at(indexMaxStartTime));
+        log += "SOVRACCARICO: "+setOff(running_.at(indexMaxStartTime));
     }
     return log;
 }
