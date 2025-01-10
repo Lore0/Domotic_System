@@ -11,7 +11,7 @@ add_library(${PROJECT_NAME} SHARED
     src/Device.cpp
     src/Manual.cpp
     src/PrefixCycle.cpp
-    src/Time.cpp
+    src/Clock.cpp
     src/Scheduler.cpp
     src/DomoticSystem.cpp)
 

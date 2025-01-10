@@ -4,7 +4,7 @@
 #include "Manual.h"
 #include "PrefixCycle.h"
 #include "Scheduler.h"
-#include "Time.h"
+#include "Clock.h"
 
 #include <iostream>
 #include <fstream>
