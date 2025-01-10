@@ -21,10 +21,13 @@ class DomoticSystem {
     std::vector<PrefixCycle> prefixCycle_;
     std::string handleInput(const std::string& input_);
     std::string getCustomInput();
+    bool getSystemState() const;
     void log(const std::string& message_, std::ofstream& logFile);
   private:
     Scheduler scheduler_;
     const double kMaxPower = 3.5;
+    bool status_ = false;
+    void setSystemState(bool state);
     bool isValidTimeFormat(const std::string& time);
     void buildDevices();
     Manual* searchManual(const std::string& name_);
