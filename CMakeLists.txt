@@ -3,6 +3,8 @@ project(Domotic_System)
 
 set(CMAKE_CXX_STANDARD 11)
 
+set(CMAKE_CXX_FLAGS "-O2")
+
 include_directories(include)
 
 add_library(${PROJECT_NAME} SHARED
@@ -13,7 +15,7 @@ add_library(${PROJECT_NAME} SHARED
     src/Scheduler.cpp
     src/DomoticSystem.cpp)
 
-add_executable(main
+add_executable(DomoticSystem
     src/main.cpp)
 
 target_link_libraries(main ${PROJECT_NAME})
