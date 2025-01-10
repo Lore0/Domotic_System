@@ -3,6 +3,8 @@ project(Domotic_System)
 
 set(CMAKE_CXX_STANDARD 11)
 
+set(CMAKE_CXX_FLAGS "-O2")
+
 include_directories(include)
 
 add_library(${PROJECT_NAME} SHARED

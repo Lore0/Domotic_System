@@ -272,6 +272,9 @@ string DomoticSystem::handleInput(const string &input_)
         return logError("Formato orario non valido");
       }
       Time t(time);
+      if (t < scheduler_.getCurrTime()) {
+        return logError("Orario inserito è minore di quello attuale");
+      }
       log = setTime(t);
       cout << log << endl;
       return log;
@@ -313,15 +316,21 @@ string DomoticSystem::handleInput(const string &input_)
           {
             return logError("Formato orario non valido");
           }
-          m->setStart(Time(startTime));
+          if (Time(startTime) < scheduler_.getCurrTime()) {
+            return logError("Orario non valido");
+          }
           if (!endTime.empty())
           {
+            if (Time(startTime) > Time(endTime)) {
+              return logError("Orario non valido");
+            }
             m->setFinish(Time(endTime));
           }
           else
           {
             m->setFinish(Time("24:00")); // andare avanti all'infinito
           }
+          m->setStart(Time(startTime));
           if (m->getStatus()) {
             return logError(m->getName() + " è già acceso");
           }
@@ -357,6 +366,10 @@ string DomoticSystem::handleInput(const string &input_)
 
           if (p->hasTimer()) {
             return logError(p->getName() + " ha già un timer");
+          }
+
+          if (Time(startTime) < scheduler_.getCurrTime()) {
+            return logError("Orario non valido");
           }
 
           if (iss >> endTime)
