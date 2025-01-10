@@ -19,13 +19,10 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
     int i = 0;
     if (inUsePower + device->getPowerConsumption() + MAX_POWER >= 0)
     {
-        while (i < running_.size() && running_[i]->getFinish() < device->getFinish())
+        while (i < running_.size() && !(running_[i]->getFinish() > device->getFinish()))
             i++;
         device->turnOn();
-        // device->setStart(currTime);
         Clock temp = currTime;
-        // if (PrefixCycle* p =dynamic_cast<PrefixCycle*>(device))
-        //     device->setFinish(temp.addTime(device->getFinish()));
         inUsePower += device->getPowerConsumption();
         running_.insert(running_.begin() + i, device);
         log = "\n" + getStringCurrTime() + " Il dispositivo " + device->getName() + " si è acceso"; //[13:00] Il dispositivo ‘${DEVICENAME}’ si è acceso
@@ -60,7 +57,7 @@ string Scheduler::setOff(Device *device)
             if (running_.at(i)->getStart() > running_.at(indexMaxStartTime)->getStart())
                 indexMaxStartTime = i;
         }
-        log += setOff(running_.at(indexMaxStartTime));
+        log += setOff(running_.at(indexMaxStartTime))+"corrente";
     }
     return log;
 }
@@ -69,7 +66,7 @@ string Scheduler::setDeviceTimer(Device *device)
 {
     int i = 0;
     device->setHasTimer(true);
-    while (i < waiting_.size() && waiting_[i]->getFinish() < device->getFinish())
+    while (i < waiting_.size() && !(waiting_[i]->getFinish() > device->getFinish()))
         i++;
     waiting_.insert(waiting_.begin() + i, device);
     return getStringCurrTime() + " Impostato un timer per il dispositivo " + device->getName() + " dalle " + device->getStart().to_string() + " alle " + device->getFinish().to_string(); //[13:00] Impostatountimerper ildispositivo‘${DEVICENAME}’dalleXX:YYalleZZ:WW
