@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Device::Device(const string& id, const string& name, double power, Time start, Time finish)
+Device::Device(const string& id, const string& name, double power, Clock start, Clock finish)
     :   id_(id),
         name_(name),
         power_(power),
@@ -23,11 +23,11 @@ const string& Device::getName() const{
     return name_;
 }
 
-Time Device::getStart() const{
+Clock Device::getStart() const{
     return start_;
 }
 
-Time Device::getFinish() const{
+Clock Device::getFinish() const{
     return finish_;
 }
 
@@ -47,11 +47,11 @@ void Device::setHasTimer(bool status) {
   hasTimer_ = status;
 }
 
-void Device::setStart(Time start){
+void Device::setStart(Clock start){
     start_ = start;
 }
 
-void Device::setFinish(Time finish){
+void Device::setFinish(Clock finish){
     finish_ = finish;
 }
 

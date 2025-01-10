@@ -6,15 +6,15 @@
 class PrefixCycle : public Device{
   private:
   
-    Time cycleDuration_;
+    Clock cycleDuration_;
 
   public:
 
-    PrefixCycle(const std::string& id, const std::string& name, double power, Time start, Time cycleDuration);
+    PrefixCycle(const std::string& id, const std::string& name, double power, Clock start, Clock cycleDuration);
 
-    void setStart(Time start);
+    void setStart(Clock start);
 
-    Time getDuration() const;
+    Clock getDuration() const;
 
     //void setStart(Time start) = delete;
     //void setFinish(Time finish) = delete

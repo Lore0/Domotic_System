@@ -1,6 +1,6 @@
 #include "../include/PrefixCycle.h"
 
-PrefixCycle::PrefixCycle(const std::string& id, const std::string& name, double power, Time start, Time cycleDuration)
+PrefixCycle::PrefixCycle(const std::string& id, const std::string& name, double power, Clock start, Clock cycleDuration)
     :   Device(id, name, power, start, start),
         cycleDuration_(cycleDuration)
 
@@ -8,12 +8,12 @@ PrefixCycle::PrefixCycle(const std::string& id, const std::string& name, double 
   // left intentionally blank
 }
 
-void PrefixCycle::setStart(Time start){
+void PrefixCycle::setStart(Clock start){
     start_ = start;
     finish_ = start.addTime(getDuration());
 }
 
-Time PrefixCycle::getDuration() const{
+Clock PrefixCycle::getDuration() const{
     return cycleDuration_;
 }
 
