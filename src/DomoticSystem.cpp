@@ -42,7 +42,7 @@ string DomoticSystem::removeFromWaiting(Device &device_)
  * @brief Displays the current energy consumption or production of a device.
  *
  * @param device_ Reference to the Device object whose energy data is to be displayed.
- * @return A string containing the log time, current time, device name, and the amount of energy 
+ * @return A string containing the log time, current time, device name, and the amount of energy
  *         consumed or produced by the device.
  */
 string DomoticSystem::showDevice(Device &device_)
@@ -165,7 +165,7 @@ void DomoticSystem::log(const string &message, ofstream &logFile)
  * @brief Reads device information from a device.txt file and builds the device objects.
  *
  * This function opens the file "../docs/device.txt" and reads its content line by line.
- * Each line is expected to contain device information like this: id,name,type,power. 
+ * Each line is expected to contain device information like this: id,name,type,power.
  * Depending on the type of the device, it creates either a Manual or PrefixCycle
  * object and adds it to the respective vector.
  *
@@ -230,7 +230,7 @@ Manual *DomoticSystem::searchManual(const string &name)
 
 /**
  * @brief Searches for a PrefixCycle object by its name.
- * 
+ *
  * This function iterates through the list of PrefixCycle objects and returns a pointer
  * to the PrefixCycle object that matches the given name. If no match is found, it returns nullptr.
  *
@@ -439,7 +439,7 @@ string DomoticSystem::handleInput(const string &input_)
     }
   }
   else if (command == "rm")
-  { // NO, DEVE RIMUOVERE IL TIMER NO IL DISPOSITIVO
+  {
     iss >> deviceName;
     if (Manual *m = searchManual(deviceName))
     {
