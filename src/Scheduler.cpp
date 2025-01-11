@@ -153,6 +153,8 @@ string Scheduler::setTime(Clock &time)
             }
         }
     }
+    if(currTime==Clock("24:00"))
+        currTime=Clock("00:00");
     return log + getStringCurrTime() + " L'orario attuale è " + getCurrTime().to_string()+"\n";
 }
 
