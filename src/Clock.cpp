@@ -13,7 +13,7 @@ void Clock::StringToTime(const string& time) {
   int hours, minutes;
   istringstream stream(time);  // stream di time
 
-  if (!(stream >> hours >> div >> minutes) || div != ':' || hours < 0 ||hours > 24 || minutes < 0 || minutes >= 60) {
+  if (!(stream >> hours >> div >> minutes) || div != ':' || hours < 0 ||hours > 24 || minutes < 0 || minutes >= 60 || time.length() != 5) {
     throw InvalidTimeFormat("ERRORE: l'orario deve essere esplicitato come hh:mm.");
   }
 
