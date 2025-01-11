@@ -19,7 +19,7 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
     int i = 0;
     if (inUsePower + device->getPowerConsumption() + MAX_POWER >= 0)
     {
-        while (i < running_.size() && !(device->getFinish() > running_.at(i)->getFinish()))   
+        while (i < running_.size() && !(device->getFinish() > running_.at(i)->getFinish()))
             i++;
         device->turnOn();
         Clock temp = currTime;
@@ -29,7 +29,7 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
     }
     else
     {
-        log = "\n" + getStringCurrTime() + " ERRORE: non c'è corrente sufficiente per accendere: " + device->getName();
+        log = "\n" + getStringCurrTime() + " ERRORE: non c'è corrente sufficiente per accendere-> " + device->getName();
     } // cosa fare in caso non c'è abbastanza potenza
     if (targetIndex != -1)
     {
