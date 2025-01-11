@@ -131,7 +131,7 @@ string DomoticSystem::resetAll()
 
 string DomoticSystem::logTime()
 {
-  return scheduler_.getStringCurrTime() + " L'orario attuale è " + scheduler_.getCurrTime().to_string();
+  return scheduler_.getStringCurrTime() + " L'orario attuale è " + scheduler_.getCurrTime().to_string() + "\n";
 }
 
 /**
@@ -475,7 +475,7 @@ string DomoticSystem::handleInput(const string &input_)
   }
   else if (command == "exit") {
     setSystemState(false);
-    log = scheduler_.getStringCurrTime() + " FINE";
+    log = "\n" + scheduler_.getStringCurrTime() + " FINE";
     cout << log << endl;
     return log;
   }
