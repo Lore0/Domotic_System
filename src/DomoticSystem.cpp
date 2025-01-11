@@ -224,7 +224,7 @@ PrefixCycle *DomoticSystem::searchPrefixCycle(const string &name) {
 }
 
 string DomoticSystem::logError(const string &error) {
-  string logM = scheduler_.getStringCurrTime() + " Errore : " + error;
+  string logM = scheduler_.getStringCurrTime() + " Errore : " + error + "\n";
   cout << logM << endl;
   return logM;
 }
@@ -341,7 +341,7 @@ string DomoticSystem::handleInput(const string &input_) {
             p->setStart(start);
             p->setFinish(start.addTime(p->getDuration()));
             log = setDeviceTimer(*p);
-            cout << log << endl;  
+            cout << log << endl;
             return log;
           }
         } else {
