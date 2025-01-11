@@ -19,7 +19,7 @@ string Scheduler::setOn(Device *device) // se è già in waiting bisogna cercarl
     int i = 0;
     if (inUsePower + device->getPowerConsumption() + MAX_POWER >= 0)
     {
-        while (i < running_.size() && !(device->getFinish() > running_.at(i)->getFinish()))
+        while (i < running_.size() && !(device->getFinish() < running_.at(i)->getFinish()))
             i++;
         device->turnOn();
         Clock temp = currTime;
@@ -153,7 +153,7 @@ string Scheduler::setTime(Clock &time)
             }
         }
     }
-    return log + "\n" + getStringCurrTime() + "L'orario attuale è " + getCurrTime().to_string();
+    return log + "\n" + getStringCurrTime() + " L'orario attuale è " + getCurrTime().to_string();
 }
 
 string Scheduler::resetTime()
