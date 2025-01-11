@@ -40,7 +40,7 @@ string DomoticSystem::removeFromWaiting(Device &device_) {
  * amount of energy consumed or produced by the device.
  */
 string DomoticSystem::showDevice(Device &device_) {
-  string time = logTime() + "\n";
+  string time = logTime();
   Device *device = &device_;
   double tot = scheduler_.showDevice(device);
   if (tot <= 0) {
@@ -70,7 +70,7 @@ string DomoticSystem::showDevice(Device &device_) {
  * usage.
  */
 string DomoticSystem::showAll() {
-  string time = logTime() + "\n";
+  string time = logTime();
   double tot = 0;
   string eachDevice = "";
   for (Device d : manual_) {
@@ -99,12 +99,12 @@ string DomoticSystem::showAll() {
   }
   if (tot >= 0) {
     return time + scheduler_.getStringCurrTime() +
-           "Attualmente il sistema ha prodotto " + to_string(tot) +
+           " Attualmente il sistema ha prodotto " + to_string(tot) +
            " kWh. Nello specifico:" + eachDevice;
   } else {
     tot *= (-1);
     return time + scheduler_.getStringCurrTime() +
-           "Attualmente il sistema ha consumato " + to_string(tot) +
+           " Attualmente il sistema ha consumato " + to_string(tot) +
            " kWh. Nello specifico:" + eachDevice;
   }
 }
