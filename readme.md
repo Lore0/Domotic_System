@@ -1,10 +1,8 @@
 ### ToDo
 
-- ~~su `DomoticSystem.cpp` ricordati di deallocare puntatori~~
 - fare vari `handle()`su `handleInput()` per evitare tutti gli `if-else` annidati
 - rindondanza di check
-- log
-- `setTime()` non worka
+- `try-catch` di Time (ogni volta che metto un ora)
 
 ### Struttura progetto
 
@@ -20,14 +18,14 @@ Domotic System:
 │   ├── Manual.h
 │   ├── PrefixCycle.h
 │   ├── Scheduler.h
-│   └── Time.h
+│   └── Clock.h
 └── src
     ├── Device.cpp
     ├── DomoticSystem.cpp
     ├── Manual.cpp
     ├── PrefixCycle.cpp
     ├── Scheduler.cpp
-    └── Time.cpp
+    └── Clock.cpp
 ```
 
 ### Dispositivi (tabella con caratteristiche)
