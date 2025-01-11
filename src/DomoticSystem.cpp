@@ -47,11 +47,11 @@ string DomoticSystem::showDevice(Device &device_) {
     tot *= (-1);
     return time + scheduler_.getStringCurrTime() + " Il dispositivo " +
            device->getName() + " ha attualmente consumato " + to_string(tot) +
-           " kWh";
+           " kWh\n";
   } else {
     return time + scheduler_.getStringCurrTime() + " Il dispositivo " +
            device->getName() + " ha attualmente prodotto " + to_string(tot) +
-           " kWh";
+           " kWh\n";
   }
 }
 
@@ -100,12 +100,12 @@ string DomoticSystem::showAll() {
   if (tot >= 0) {
     return time + scheduler_.getStringCurrTime() +
            " Attualmente il sistema ha prodotto " + to_string(tot) +
-           " kWh. Nello specifico:" + eachDevice;
+           " kWh. Nello specifico:" + eachDevice+"\n";
   } else {
     tot *= (-1);
     return time + scheduler_.getStringCurrTime() +
            " Attualmente il sistema ha consumato " + to_string(tot) +
-           " kWh. Nello specifico:" + eachDevice;
+           " kWh. Nello specifico:" + eachDevice+"\n";
   }
 }
 
