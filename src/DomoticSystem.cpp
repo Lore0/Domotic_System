@@ -138,16 +138,11 @@ string DomoticSystem::logTime() {
          scheduler_.getCurrTime().to_string() + "\n";
 }
 
-/*bool DomoticSystem::isValidTimeFormat(const string &time) {
-  regex timeFormat("^([0-1][0-9]|2[0-3]):([0-5][0-9])$");
-  return regex_match(time, timeFormat);
-}
-
 void DomoticSystem::log(const string &message, ofstream &logFile) {
   if (logFile.is_open()) {
     logFile << message << endl;
   }
-}*/
+}
 
 /**
  * @brief Reads device information from a device.txt file and builds the device
