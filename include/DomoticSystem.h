@@ -14,26 +14,53 @@
 #include <regex>
 #include <cmath>
 
+// DomoticSystem: Class for managing the domotic system.
 class DomoticSystem {
   public:
     DomoticSystem();
-    std::vector<Manual> manual_;
-    std::vector<PrefixCycle> prefixCycle_;
+
+    // Handles user input commands
     std::string handleInput(const std::string& input_);
+
+    // Retrieve custom input from
     std::string getCustomInput();
+
+    // Gets the current system state
     bool getSystemState() const;
+
+    // Logs a message to the provided log file
     void log(const std::string& message_, std::ofstream& logFile);
+
   private:
     Scheduler scheduler_;
-    const double kMaxPower = 3.5;
+    std::vector<Manual> manual_;
+    std::vector<PrefixCycle> prefixCycle_;
+
+    static constexpr double kMaxPower = 3.5;
     bool status_ = false;
+
+    // Set the system state
     void setSystemState(bool state);
+
+    // Validates if the given time string is in a valid 24-hour format (HH:MM)
     bool isValidTimeFormat(const std::string& time);
+
+    // Builds the initial list of devices (manual and prefix_cycle)
     void buildDevices();
+
+    // Searches for a Manual device by its name
     Manual* searchManual(const std::string& name_);
+
+    // Searches for a PrefixCycle device by its name
     PrefixCycle* searchPrefixCycle(const std::string& name_);
+
+    // Logs the current time as a string
     std::string logTime();
+
+    // Logs an error message
     std::string logError(const std::string& error);
+
+    // Device management functions
     std::string setOn(Device& device_);
     std::string setOff(Device& device_);
     std::string setDeviceTimer(Device& device_);
@@ -41,6 +68,8 @@ class DomoticSystem {
     std::string removeFromWaiting(Device& device_);
     std::string showDevice(Device& device_);
     std::string showAll();
+
+    // Time management functions
     std::string setTime(Clock& time_);
     std::string resetTime();
     std::string resetTimers();
