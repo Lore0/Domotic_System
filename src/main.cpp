@@ -10,7 +10,7 @@ int main() {
   ofstream logFile("log.txt");
   while (domoticSystem.getSystemState()) {
     string command = domoticSystem.getCustomInput();
-    log += ">> " + command + "\n";
+    log += "\n>> " + command + "\n";
     log += domoticSystem.handleInput(command);
   }
   domoticSystem.log(log, logFile);
