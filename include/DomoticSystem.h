@@ -42,9 +42,6 @@ class DomoticSystem {
   // Set the system state
   void setSystemState(bool state);
 
-  // Validates if the given time string is in a valid 24-hour format (HH:MM)
-  bool isValidTimeFormat(const std::string& time);
-
   // Builds the initial list of devices (manual and prefix_cycle)
   void buildDevices();
 
