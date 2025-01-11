@@ -10,31 +10,31 @@ DomoticSystem::DomoticSystem()
 
 string DomoticSystem::setOn(Device &device_)
 {
-  string time = logTime() + "\n";
+  string time = logTime();
   return time + scheduler_.setOn(&device_);
 }
 
 string DomoticSystem::setOff(Device &device_)
 {
-  string time = logTime() + "\n";
+  string time = logTime();
   return time + scheduler_.setOff(&device_);
 }
 
 string DomoticSystem::setDeviceTimer(Device &device_)
 {
-  string time = logTime() + "\n";
+  string time = logTime();
   return time + scheduler_.setDeviceTimer(&device_);
 }
 
 string DomoticSystem::removeFromRunning(Device &device_)
 {
-  string time = logTime() + "\n";
+  string time = logTime();
   return time + scheduler_.removeTimerFromRunning(&device_);
 }
 
 string DomoticSystem::removeFromWaiting(Device &device_)
 {
-  string time = logTime() + "\n";
+  string time = logTime();
   return time + scheduler_.removeTimerFromWaiting(&device_);
 }
 
@@ -104,19 +104,19 @@ string DomoticSystem::showAll()
 
 string DomoticSystem::setTime(Clock &time_)
 {
-  string time = logTime() + "\n";
+  string time = logTime();
   return time + scheduler_.setTime(time_);
 }
 
 string DomoticSystem::resetTime()
 {
-  string time = logTime() + "\n";
+  string time = logTime();
   return time + scheduler_.resetTime();
 }
 
 string DomoticSystem::resetTimers()
 {
-  string time = logTime() + "\n";
+  string time = logTime();
   return time + scheduler_.resetTimers();
 }
 
@@ -125,7 +125,7 @@ string DomoticSystem::resetAll()
   resetTimers();
   resetTime();
   string time = logTime() + "\n";
-  string log = time + scheduler_.getStringCurrTime() + " Comando resetAll() eseguito con successo";
+  string log = time + scheduler_.getStringCurrTime() + " Comando reset all eseguito con successo";
   return log;
 }
 
