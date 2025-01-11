@@ -150,14 +150,11 @@ bool DomoticSystem::isValidTimeFormat(const string &time)
   return regex_match(time, timeFormat);
 }
 
-// TODO: da vedere se aprire e chiudere il file ogni volta
 void DomoticSystem::log(const string &message, ofstream &logFile)
 {
-  // ofstream logFile("log.txt", ios::app); da fare nel main
   if (logFile.is_open())
   {
     logFile << message << endl;
-    // logFile.close(); da fare nel main
   }
 }
 
@@ -275,7 +272,7 @@ string DomoticSystem::handleInput(const string &input_)
       if (t < scheduler_.getCurrTime()) {
         Clock end("24:00");
         log = setTime(end);
-        log += "\n [24:00] FINE";
+        log += "[00:00] FINE";
         cout << log << endl;
         setSystemState(false);
         return log;
