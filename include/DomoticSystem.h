@@ -1,79 +1,79 @@
 #ifndef DOMOTICSYSTEM_H
 #define DOMOTICSYSTEM_H
 
-#include "Manual.h"
-#include "PrefixCycle.h"
-#include "Scheduler.h"
-#include "Clock.h"
-
-#include <iostream>
+#include <cmath>
 #include <fstream>
+#include <iostream>
+#include <regex>
 #include <sstream>
 #include <string>
 #include <vector>
-#include <regex>
-#include <cmath>
+
+#include "Clock.h"
+#include "Manual.h"
+#include "PrefixCycle.h"
+#include "Scheduler.h"
 
 // DomoticSystem: Class for managing the domotic system.
 class DomoticSystem {
-  public:
-    DomoticSystem();
+ public:
+  DomoticSystem();
 
-    // Handles user input commands
-    std::string handleInput(const std::string& input_);
+  // Handles user input commands
+  std::string handleInput(const std::string& input_);
 
-    // Retrieve custom input from
-    std::string getCustomInput();
+  // Retrieve custom input from
+  std::string getCustomInput();
 
-    // Gets the current system state
-    bool getSystemState() const;
+  // Gets the current system state
+  bool getSystemState() const;
 
-    // Logs a message to the provided log file
-    void log(const std::string& message_, std::ofstream& logFile);
+  // Logs a message to the provided log file
+  void log(const std::string& message_, std::ofstream& logFile);
 
-  private:
-    Scheduler scheduler_;
-    std::vector<Manual> manual_;
-    std::vector<PrefixCycle> prefixCycle_;
+ private:
+  Scheduler scheduler_;
+  std::vector<Manual> manual_;
+  std::vector<PrefixCycle> prefixCycle_;
 
-    static constexpr double kMaxPower = 3.5;
-    bool status_ = false;
+  static constexpr double kMaxPower = 3.5;
+  bool status_ = false;
 
-    // Set the system state
-    void setSystemState(bool state);
+  // Set the system state
+  void setSystemState(bool state);
 
-    // Validates if the given time string is in a valid 24-hour format (HH:MM)
-    bool isValidTimeFormat(const std::string& time);
+  // Validates if the given time string is in a valid 24-hour format (HH:MM)
+  bool isValidTimeFormat(const std::string& time);
 
-    // Builds the initial list of devices (manual and prefix_cycle)
-    void buildDevices();
+  // Builds the initial list of devices (manual and prefix_cycle)
+  void buildDevices();
 
-    // Searches for a Manual device by its name
-    Manual* searchManual(const std::string& name_);
+  // Searches for a Manual device by its name
+  Manual* searchManual(const std::string& name_);
 
-    // Searches for a PrefixCycle device by its name
-    PrefixCycle* searchPrefixCycle(const std::string& name_);
+  // Searches for a PrefixCycle device by its name
+  PrefixCycle* searchPrefixCycle(const std::string& name_);
 
-    // Logs the current time as a string
-    std::string logTime();
+  // Logs the current time as a string
+  std::string logTime();
 
-    // Logs an error message
-    std::string logError(const std::string& error);
+  // Logs an error message
+  std::string logError(const std::string& error);
 
-    // Device management functions
-    std::string setOn(Device& device_);
-    std::string setOff(Device& device_);
-    std::string setDeviceTimer(Device& device_);
-    std::string removeFromRunning(Device& device_);
-    std::string removeFromWaiting(Device& device_);
-    std::string showDevice(Device& device_);
-    std::string showAll();
+  // Device management functions
+  std::string setOn(Device& device_);
+  std::string setOff(Device& device_);
+  std::string setDeviceTimer(Device& device_);
+  std::string removeFromRunning(Device& device_);
+  std::string removeFromWaiting(Device& device_);
+  std::string showDevice(Device& device_);
+  std::string showAll();
 
-    // Time management functions
-    std::string setTime(Clock& time_);
-    std::string resetTime();
-    std::string resetTimers();
-    std::string resetAll();
+  // Time management functions
+  std::string setTime(Clock& time_);
+  std::string resetTime();
+  std::string resetTimers();
+  std::string resetAll();
 };
 
-#endif // DOMOTICSYSTEM_H
+#endif  // DOMOTICSYSTEM_H
