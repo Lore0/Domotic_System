@@ -1,7 +1,10 @@
 #ifndef CLOCK_H
 #define CLOCK_H
 
+#include <stdexcept>
 #include <string>
+#include <sstream>
+#include "InvalidTimeFormat.h"
 
 class Clock {
   private:
@@ -12,7 +15,6 @@ class Clock {
     void StringToTime(const std::string& time);
 
   public:
-    class Invalid{};
 
     explicit Clock(const std::string time);
 

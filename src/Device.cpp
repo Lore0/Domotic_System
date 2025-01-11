@@ -1,5 +1,4 @@
 #include "../include/Device.h"
-#include <iostream>
 
 using namespace std;
 
@@ -57,7 +56,7 @@ void Device::setFinish(Clock finish){
 
 void Device::turnOn(){
     if(status_ == true){
-        cout<<"The device is already ON. \n";
+        cout<<"Il dispositivo è già ACCESO. \n";
         return;
     }
     status_ = true;
@@ -65,7 +64,7 @@ void Device::turnOn(){
 
 void Device::turnOff(){
     if(status_ == false){
-        cout<<"The device is already OFF. \n";
+        cout<<"Il dispositivo è già SPENTO. \n";
         return;
     }
     status_ = false;

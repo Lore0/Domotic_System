@@ -1,6 +1,4 @@
 #include "../include/Clock.h"
-#include <string>
-#include <sstream>
 
 using namespace std;
 
@@ -21,7 +19,7 @@ void Clock::StringToTime(const string& time){
   istringstream stream(time); //stream di time
 
   if (!(stream >> hours >> div >> minutes) || div != ':' || hours < 0 || hours > 24 || minutes < 0 || minutes >= 60) {
-      throw Invalid();
+      throw InvalidTimeFormat("ERRORE: l'orario deve essere esplicitato come hh:mm.");
   }
 
   hours_ = hours;
@@ -68,7 +66,7 @@ string Clock::to_string() const{ //TODO
 
 double Clock::getDistance(const Clock& time) const{
   if(*this < time){
-      throw Invalid();
+      throw invalid_argument("ERRORE: il parametro passato deve essere maggiore.");
   }
   double thisMinutes = hours_ * 60 + minutes_;
   double timeMinutes = time.getHours() * 60 + time.getMinutes();
