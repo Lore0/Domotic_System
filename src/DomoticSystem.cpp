@@ -147,7 +147,7 @@ void DomoticSystem::log(const string &message, ofstream &logFile) {
 void DomoticSystem::buildDevices() {
   ifstream file("../docs/device.txt");
   if (!file.is_open()) {
-    cout << "Errore: impossibile aprire il file device.txt" << endl;
+    cout << "ERRORE: impossibile aprire il file device.txt" << endl;
     return;
   }
 
@@ -209,7 +209,7 @@ PrefixCycle *DomoticSystem::searchPrefixCycle(const string &name) {
  * @return A string containing the logged error message.
  */
 string DomoticSystem::logError(const string &error) {
-  string logM = scheduler_.getStringCurrTime() + " Errore : " + error + "\n";
+  string logM = scheduler_.getStringCurrTime() + " ERRORE : " + error + "\n";
   cout << logM << endl;
   return logM;
 }
