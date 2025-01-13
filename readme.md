@@ -1,7 +1,7 @@
 ### ToDo
 
-- fare vari `handle()`su `handleInput()` per evitare tutti gli `if-else` annidati
 - rindondanza di check
+- check su metodi e struttura codice
 
 ### Struttura progetto
 
