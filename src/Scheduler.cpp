@@ -191,7 +191,7 @@ string Scheduler::showAll() { return ""; }
 double Scheduler::showDevice(Device *device) {
   double tothour = 0;
   int targetIndex = searchDevice(running_, device);
-  cout<<device->getName()<<targetIndex<<endl;
+  cout<<device->getName()<<targetIndex<<"---"<<running_.at(0)<<endl;
   if (targetIndex != -1) {
     tothour += currTime.getDistance(running_.at(targetIndex)->getStart());
     cout<<tothour<<endl;
