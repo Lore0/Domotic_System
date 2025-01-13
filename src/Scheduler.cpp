@@ -149,8 +149,6 @@ string Scheduler::setTime(Clock &time) {
       }
     }
   }
-  if (currTime == Clock("24:00"))  // non vogliamo che venga scritto 24:00
-    currTime = Clock("00:00");
   return log + getStringCurrTime() + " L'orario attuale è " +
          getCurrTime().to_string() + "\n";
 }
@@ -221,6 +219,8 @@ int searchDevice(vector<Device *> list, Device *target) {
 // }
 
 string Scheduler::getStringCurrTime() {
+  if (currTime == Clock("24:00"))  // non vogliamo che venga scritto 24:00
+    currTime = Clock("00:00");
   return "[" + currTime.to_string() + "]";
 }
 Clock Scheduler::getCurrTime() { return currTime; }
