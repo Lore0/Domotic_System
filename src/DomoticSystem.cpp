@@ -126,7 +126,7 @@ string DomoticSystem::logTime() {
  * @param value The double value to be rounded and converted.
  * @return A string representation of the value rounded to 2 decimal places.
  */
-static string roundTo2(double value) {
+string DomoticSystem::roundTo2(double value) {
   ostringstream oss;
   oss << fixed << setprecision(2) << value;
   return oss.str();

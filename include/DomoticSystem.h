@@ -8,6 +8,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <iomanip>
 
 #include "Clock.h"
 #include "Manual.h"
@@ -50,6 +51,9 @@ class DomoticSystem {
 
   // Searches for a PrefixCycle device by its name
   PrefixCycle* searchPrefixCycle(const std::string& name_);
+
+  // Round double at 2 decimal digits, return as a string
+  std::string roundTo2(double val);
 
   // Logs the current time as a string
   std::string logTime();
