@@ -3,18 +3,15 @@
 #include <algorithm>
 #include <iostream>
 
-//#include "../include/PrefixCycle.h"
+// #include "../include/PrefixCycle.h"
 using namespace std;
-
-
 
 Scheduler::Scheduler(double maxPower)
     : MAX_POWER(maxPower), inUsePower(0), currTime("00:00") {
   // nothing
 }
 
-string Scheduler::setOn(Device *device)  
-{
+string Scheduler::setOn(Device *device) {
   string log = "";
   int targetIndex = searchDevice(waiting_, device);
   int i = 0;
@@ -48,7 +45,7 @@ string Scheduler::setOff(Device *device) {
   device->setFinish(currTime);
   inUsePower -= device->getPowerConsumption();
   string log = getStringCurrTime() + " Il dispositivo " + device->getName() +
-               " si è spento" + "\n";  
+               " si è spento" + "\n";
   Device temp{device->getId(), device->getName(), device->getPowerConsumption(),
               device->getStart(), device->getFinish()};
   finished_.push_back(temp);
@@ -73,24 +70,24 @@ string Scheduler::setDeviceTimer(Device *device) {
   waiting_.insert(waiting_.begin() + i, device);
   return getStringCurrTime() + " Impostato un timer per il dispositivo " +
          device->getName() + " dalle " + device->getStart().to_string() +
-         " alle " + device->getFinish().to_string() + "\n";  
+         " alle " + device->getFinish().to_string() + "\n";
 }
 
 // toglie il timer da waiting
-string Scheduler::removeTimerFromWaiting(Device *device) {  
+string Scheduler::removeTimerFromWaiting(Device *device) {
   int targetIndex = searchDevice(waiting_, device);
   device->setHasTimer(false);
   if (targetIndex == -1)
     return getStringCurrTime() + " Errore: dispositivo non in attesa" + "\n";
   waiting_.erase(waiting_.begin() + targetIndex);
   return getStringCurrTime() + " Rimosso il timer dal dispositivo " +
-         device->getName() + "\n";  
+         device->getName() + "\n";
 }
 
 // toglie il timer da running-- > va all'infinito
-string Scheduler::removeTimerFromRunning(Device *device)  
-{
-  int targetIndex = searchDevice(running_, device);  // cerco il dispositivo in running
+string Scheduler::removeTimerFromRunning(Device *device) {
+  int targetIndex =
+      searchDevice(running_, device);  // cerco il dispositivo in running
   if (targetIndex == -1)               // se non c'è do errore
     return getStringCurrTime() + " Errore: dispositivo non in funzione" + "\n";
   device->setFinish(Clock("24:00"));
@@ -98,7 +95,7 @@ string Scheduler::removeTimerFromRunning(Device *device)
   running_.erase(running_.begin() + targetIndex);
   running_.push_back(device);
   return getStringCurrTime() + " Rimosso il timer dal dispositivo " +
-         device->getName() + "\n";  
+         device->getName() + "\n";
 }
 
 string Scheduler::setTime(Clock &time) {
@@ -191,31 +188,39 @@ string Scheduler::showAll() { return ""; }
 double Scheduler::showDevice(Device *device) {
   double tothour = 0;
   int targetIndex = searchDevice(running_, device);
-  cout<<device<<" -- "<<running_.at(0)<<endl;
+  cout << device << " -- " << running_.at(0) << endl;
   if (targetIndex != -1) {
     tothour += currTime.getDistance(running_.at(targetIndex)->getStart());
-    cout<<tothour<<endl;
+    cout << tothour << endl;
   }
   int i = 0;
   while (i < finished_.size()) {
     if (device->getId() == finished_.at(i).getId())
-      tothour += finished_.at(i).getFinish().getDistance(finished_.at(i).getStart());
+      tothour +=
+          finished_.at(i).getFinish().getDistance(finished_.at(i).getStart());
     i++;
   }
   return tothour * device->getPowerConsumption();
 }
 
 int searchDevice(vector<Device *> list, Device *target) {
-  // Usa std::find per cercare il dispositivo
-  auto iter = find(list.begin(), list.end(), target);
-
-  if (iter != list.end()) {
-    // Calcola e restituisci l'indice
-    return distance(list.begin(), iter);
+  for (int i = 0; i < list.size(); i++) {
+    if(list.at(i)->getId()==target->getId())
+      return i;
   }
-  // Se non trovato, restituisce -1
   return -1;
 }
+// int searchDevice(vector<Device *> list, Device *target) {
+//   // Usa std::find per cercare il dispositivo
+//   auto iter = find(list.begin(), list.end(), target);
+
+//   if (iter != list.end()) {
+//     // Calcola e restituisci l'indice
+//     return distance(list.begin(), iter);
+//   }
+//   // Se non trovato, restituisce -1
+//   return -1;
+// }
 
 string Scheduler::getStringCurrTime() {
   return "[" + currTime.to_string() + "]";
