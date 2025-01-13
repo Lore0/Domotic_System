@@ -29,7 +29,7 @@ string Scheduler::setOn(Device *device) {
   }  
   if (targetIndex != -1) {
     waiting_.erase(waiting_.begin() + targetIndex);
-    device->setHasTimer(false);
+    //device->setHasTimer(false);
   }
   return log;
 }
