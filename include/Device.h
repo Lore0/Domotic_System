@@ -1,61 +1,69 @@
+//COMPAGNO FEDERICO
+
 #ifndef DEVICE_H
 #define DEVICE_H
-#include <string>
 #include <iostream>
+#include <string>
+
 #include "Clock.h"
 
+// Device class to represent an electronic device with a timer
 class Device {
-  protected:
+ protected:
+  std::string name_;  // Name of the device
+  std::string id_;    // Unique identifier for the device
+  double power_;      // Power consumption of the device
+  bool status_;       // Status of the device (on = true, off = false)
+  bool hasTimer_;     // Indicates if the device has a timer
+  Clock start_;       // Start time of the device
+  Clock finish_;      // Finish time of the device
 
-    std::string name_;
+ public:
+  // Constructor to initialize the device with id, name, power, start time, and finish time
+  Device(const std::string& id, const std::string& name, double power,
+         Clock start, Clock finish);
 
-    std::string id_;
+  // Returns the status of the device
+  bool getStatus() const;
 
-    double power_;
+  // Returns whether the device has a timer
+  bool hasTimer() const;
 
-    bool status_; //on = true , off = false
+  // Returns the name of the device
+  const std::string& getName() const;
 
-    bool hasTimer_;
+  // Returns the unique identifier of the device
+  const std::string& getId() const;
 
-    Clock start_;
+  // Returns the start time of the device
+  Clock getStart() const;
 
-    Clock finish_;
+  // Returns the finish time of the device
+  Clock getFinish() const;
 
-  public:
+  // Returns the power consumption of the device
+  double getPowerConsumption() const;
 
-    Device(const std::string& id, const std::string& name, double power, Clock start, Clock finish);
+  // Sets whether the device has a timer
+  void setHasTimer(bool status);
 
-    bool getStatus() const;
+  // Sets the start time of the device (can be overridden by derived classes)
+  virtual void setStart(Clock start);
 
-    bool hasTimer() const;
+  // Sets the finish time of the device (can be overridden by derived classes)
+  virtual void setFinish(Clock finish);
 
-    void setHasTimer(bool status);
+  // Turns the device on
+  void turnOn();
 
-    const std::string& getName() const;
+  // Turns the device off
+  void turnOff();
 
-    const std::string& getId() const;
-
-    Clock getStart() const;
-
-    Clock getFinish() const;
-
-    double getPowerConsumption() const;
-
-    virtual void setStart(Clock start);
-
-    virtual void setFinish(Clock finish);
-
-    void turnOn();
-
-    void turnOff();
-
-    //Device(const Device&) = delete;
-
-    //Device& operator=(const Device&) = delete;
-
-    virtual ~Device() = default;
+  // Destructor (default implementation) for dynamic_cast
+  virtual ~Device() = default;
 };
 
+// Compares if two Device objects are equal
 bool operator==(const Device& d1, const Device& d2);
 
-#endif // DEVICE_H
+#endif  // DEVICE_H

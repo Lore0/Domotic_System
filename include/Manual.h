@@ -1,16 +1,18 @@
+//COMPAGNO FEDERICO
+
 #ifndef MANUAL_H
 #define MANUAL_H
 
 #include "Device.h"
 
-class Manual : public Device{
-  private:
-    //nothing
+// Manual class derived from Device class
+class Manual : public Device {
+ private:
+  // No additional members
 
-  public:
-
-    Manual(const std::string& id, const std::string& name, double power, Clock start, Clock finish);
-    
+ public:
+  // Constructor to initialize the Manual device with id, name, power, start time and finish time
+  Manual(const std::string& id, const std::string& name, double power, Clock start, Clock finish);
 };
 
-#endif // MANUAL_H
+#endif  // MANUAL_H
