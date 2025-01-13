@@ -244,7 +244,7 @@ string DomoticSystem::handleInput(const string &input_) {
         if (Manual *m = searchManual(deviceName)) {
           if (action == "on") {
             if (m->getStatus()) {
-              logError(m->getName() + " è già acceso");
+              return logError(m->getName() + " è già acceso");
             } else {
               m->setStart(scheduler_.getCurrTime());
               m->setFinish(Clock("24:00"));
@@ -253,8 +253,11 @@ string DomoticSystem::handleInput(const string &input_) {
             cout << log << endl;
             return log;
           } else if (action == "off") {
-            log = !m->getStatus() ? logError(m->getName() + " è già spento")
-                                  : setOff(*m);
+            if (!m->getStatus()) {
+              return logError(m->getName() + " è già spento");
+            } else {
+              log = setOff(*m);
+            }
             cout << log << endl;
             return log;
           } else {
@@ -294,8 +297,11 @@ string DomoticSystem::handleInput(const string &input_) {
             cout << log << endl;
             return log;
           } else if (action == "off") {
-            log = !p->getStatus() ? logError(p->getName() + " è già spento")
-                                  : setOff(*p);
+            if (!p->getStatus()) {
+              return logError(p->getName() + " è già spento");
+            } else {
+              setOff(*p);
+            }
             cout << log << endl;
             return log;
           } else {
