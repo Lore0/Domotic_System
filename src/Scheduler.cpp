@@ -26,9 +26,10 @@ string Scheduler::setOn(Device *device) {
     log = getStringCurrTime() +
           " ERRORE: non c'è corrente sufficiente per accendere-> " +
           device->getName() + "\n";
-  }  // cosa fare in caso non c'è abbastanza potenza
+  }  
   if (targetIndex != -1) {
     waiting_.erase(waiting_.begin() + targetIndex);
+    device->setHasTimer(false);
   }
   return log;
 }
