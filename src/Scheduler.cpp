@@ -165,7 +165,7 @@ string Scheduler::resetTime() {
   return getStringCurrTime() + " L'orario attuale è 00:00" + "\n";
 }
 
-string Scheduler::resetTimers()  // da rivedere
+string Scheduler::resetTimers()  
 {
   string log = "";
   for (auto &device : waiting_) {
@@ -176,8 +176,6 @@ string Scheduler::resetTimers()  // da rivedere
   }
   return log;
 }
-
-string Scheduler::showAll() { return ""; }
 
 double Scheduler::showDevice(Device *device) {
   double tothour = 0;
