@@ -37,7 +37,6 @@ string DomoticSystem::showDevice(Device &device_) {
   string time = logTime();
   Device *device = &device_;
   double tot = scheduler_.showDevice(device);
-  tot = round(tot * 100) / 100;
   if (device->getPowerConsumption() < 0) {
     tot *= (-1);
     return time + scheduler_.getStringCurrTime() + " Il dispositivo " +
@@ -64,7 +63,6 @@ string DomoticSystem::showAll() {
   for (Device d : manual_) {
     double consumpt = scheduler_.showDevice(&d);
     tot += consumpt;
-    consumpt = round(consumpt * 100) / 100;
     if (d.getPowerConsumption() < 0) {
       consumpt *= (-1);
       eachDevice += "\n  - Il dispositivo " + d.getName() + " ha consumato " +
@@ -77,7 +75,6 @@ string DomoticSystem::showAll() {
   for (Device d : prefixCycle_) {
     double consumpt = scheduler_.showDevice(&d);
     tot += consumpt;
-    consumpt = round(consumpt * 100) / 100;
     if (d.getPowerConsumption() < 0) {
       consumpt *= (-1);
       eachDevice += "\n  - Il dispositivo " + d.getName() + " ha consumato " +
@@ -87,7 +84,6 @@ string DomoticSystem::showAll() {
                     to_string(consumpt) + " kWh";
     }
   }
-  tot = round(tot * 100) / 100;
   if (tot >= 0) {
     return time + scheduler_.getStringCurrTime() +
            " Attualmente il sistema ha prodotto " + to_string(tot) +
