@@ -150,7 +150,7 @@ string Scheduler::setTime(Clock &time) {
 }
 
 string Scheduler::resetTime() {
-  currTime.setTime("00:00");
+  currTime.setClock("00:00");
   for (Device *d : running_) {
     if (d->hasTimer())
       setDeviceTimer(d);
