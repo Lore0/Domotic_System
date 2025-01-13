@@ -33,7 +33,6 @@ string DomoticSystem::removeFromWaiting(Device &device_) {
 
 /**
  * @brief Displays the current energy consumption or production of a device.
- *
  * @param device_ Reference to the Device object whose energy data is to be
  * displayed.
  * @return A string containing the log time, current time, device name, and the
@@ -58,13 +57,6 @@ string DomoticSystem::showDevice(Device &device_) {
 /**
  * @brief Generates a summary of the energy consumption and production of all
  * devices in the system.
- *
- * This function iterates through all devices in the `manual_` and
- * `prefixCycle_` lists, calculates their energy consumption or production using
- * the `scheduler_`, and accumulates the total energy consumption or production.
- * It then generates a detailed string report of each device's energy usage and
- * the total energy status of the system.
- *
  * @return A string containing the current time, total energy produced or
  * consumed by the system, and detailed information about each device's energy
  * usage.
@@ -100,12 +92,12 @@ string DomoticSystem::showAll() {
   if (tot >= 0) {
     return time + scheduler_.getStringCurrTime() +
            " Attualmente il sistema ha prodotto " + to_string(tot) +
-           " kWh. Nello specifico:" + eachDevice+"\n";
+           " kWh. Nello specifico:" + eachDevice + "\n";
   } else {
     tot *= (-1);
     return time + scheduler_.getStringCurrTime() +
            " Attualmente il sistema ha consumato " + to_string(tot) +
-           " kWh. Nello specifico:" + eachDevice+"\n";
+           " kWh. Nello specifico:" + eachDevice + "\n";
   }
 }
 
@@ -138,6 +130,11 @@ string DomoticSystem::logTime() {
          scheduler_.getCurrTime().to_string() + "\n";
 }
 
+/**
+ * @brief Logs a message to the specified log file.
+ * @param message The message to be logged.
+ * @param logFile The output file stream to write the log message to.
+ */
 void DomoticSystem::log(const string &message, ofstream &logFile) {
   if (logFile.is_open()) {
     logFile << message << endl;
@@ -145,14 +142,8 @@ void DomoticSystem::log(const string &message, ofstream &logFile) {
 }
 
 /**
- * @brief Reads device information from a device.txt file and builds the device
+ * @brief Reads device information from device.txt file and builds the device
  * objects.
- *
- * This function opens the file "../docs/device.txt" and reads its content line
- * by line. Each line is expected to contain device information like this:
- * id,name,type,power. Depending on the type of the device, it creates either a
- * Manual or PrefixCycle object and adds it to the respective vector.
- *
  */
 void DomoticSystem::buildDevices() {
   ifstream file("../docs/device.txt");
@@ -190,11 +181,6 @@ void DomoticSystem::buildDevices() {
 
 /**
  * @brief Searches for a Manual object by its name.
- *
- * This function iterates through the list of Manual objects and returns a
- * pointer to the Manual object that matches the given name. If no match is
- * found, it returns nullptr.
- *
  * @param name The name of the Manual object to search for.
  * @return Manual* pointer to the Manual object if found, otherwise nullptr.
  */
@@ -207,11 +193,6 @@ Manual *DomoticSystem::searchManual(const string &name) {
 
 /**
  * @brief Searches for a PrefixCycle object by its name.
- *
- * This function iterates through the list of PrefixCycle objects and returns a
- * pointer to the PrefixCycle object that matches the given name. If no match is
- * found, it returns nullptr.
- *
  * @param name The name of the PrefixCycle object to search for.
  * @return PrefixCycle* pointer to the PrefixCycle object if found, otherwise
  * nullptr.
@@ -223,12 +204,22 @@ PrefixCycle *DomoticSystem::searchPrefixCycle(const string &name) {
   return nullptr;
 }
 
+/**
+ * @brief Logs an error message.
+ * @param error The error message to log.
+ * @return A string containing the logged error message.
+ */
 string DomoticSystem::logError(const string &error) {
   string logM = scheduler_.getStringCurrTime() + " Errore : " + error + "\n";
   cout << logM << endl;
   return logM;
 }
 
+/**
+ * @brief Handles input commands and performs corresponding actions.
+ * @param input_ The input command string.
+ * @return A string containing the result of the command execution.
+ */
 string DomoticSystem::handleInput(const string &input_) {
   istringstream iss(input_);
   string command, deviceName, target;
@@ -412,6 +403,10 @@ string DomoticSystem::handleInput(const string &input_) {
   return logError("Errore");
 }
 
+/**
+ * @brief Prompts the user for input and returns the entered string.
+ * @return A string containing the user's input.
+ */
 string DomoticSystem::getCustomInput() {
   cout << ">> ";
   string input;
