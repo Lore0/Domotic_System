@@ -110,9 +110,9 @@ string DomoticSystem::resetTimers() {
 string DomoticSystem::resetAll() {
   resetTimers();
   resetTime();
-  string time = logTime() + "\n";
+  string time = logTime();
   string log = time + scheduler_.getStringCurrTime() +
-               " Comando reset all eseguito con successo";
+               " Comando reset all eseguito con successo\n";
   return log;
 }
 

@@ -1,0 +1,75 @@
+>> set Frigorifero 02:00 07:00
+[00:00] L'orario attuale è 00:00
+[00:00] Impostato un timer per il dispositivo Frigorifero dalle 02:00 alle 07:00
+
+>> set time 03:00
+[00:00] L'orario attuale è 00:00
+[02:00] Il dispositivo Frigorifero si è acceso
+[03:00] L'orario attuale è 03:00
+
+>> set Frigorifero off
+[03:00] L'orario attuale è 03:00
+[03:00] Il dispositivo Frigorifero si è spento
+
+>> set Scaldabagno 05:00 12:00
+[03:00] L'orario attuale è 03:00
+[03:00] Impostato un timer per il dispositivo Scaldabagno dalle 05:00 alle 12:00
+
+>> set time 06:00
+[03:00] L'orario attuale è 03:00
+[05:00] Il dispositivo Scaldabagno si è acceso
+[06:00] L'orario attuale è 06:00
+
+>> rm Scaldabagno
+[06:00] L'orario attuale è 06:00
+[06:00] Rimosso il timer dal dispositivo Scaldabagno
+
+>> set time 13:00
+[06:00] L'orario attuale è 06:00
+[13:00] L'orario attuale è 13:00
+
+>> set Scaldabagno on
+[13:00] Errore : Scaldabagno è già acceso
+
+>> set Lavastoviglie on
+[13:00] L'orario attuale è 13:00
+[13:00] Il dispositivo Lavastoviglie si è acceso
+
+>> set Lavatrice on
+[13:00] L'orario attuale è 13:00
+[13:00] ERRORE: non c'è corrente sufficiente per accendere-> Lavatrice
+
+>> show Lavatrice
+[13:00] L'orario attuale è 13:00
+[13:00] Il dispositivo Lavatrice ha attualmente consumato 0.00 kWh
+
+>> set time 16:30
+[13:00] L'orario attuale è 13:00
+[16:15] Il dispositivo Lavastoviglie si è spento
+[16:30] L'orario attuale è 16:30
+
+>> set Lavastoviglie on
+[16:30] L'orario attuale è 16:30
+[16:30] Il dispositivo Lavastoviglie si è acceso
+
+>> set time 19:30
+[16:30] L'orario attuale è 16:30
+[19:30] L'orario attuale è 19:30
+
+>> show
+[19:30] L'orario attuale è 19:30
+[19:30] Attualmente il sistema ha consumato 24.27 kWh. Nello specifico:
+  - Il dispositivo Impianto_fotovoltaico ha prodotto 0.00 kWh
+  - Il dispositivo Pompa_di_calore+termostato ha consumato 0.00 kWh
+  - Il dispositivo Scaldabagno ha consumato 14.50 kWh
+  - Il dispositivo Frigorifero ha consumato 0.40 kWh
+  - Il dispositivo Lavatrice ha consumato 0.00 kWh
+  - Il dispositivo Lavastoviglie ha consumato 9.38 kWh
+  - Il dispositivo Tapparelle_elettriche ha consumato 0.00 kWh
+  - Il dispositivo Forno_a_microonde ha consumato 0.00 kWh
+  - Il dispositivo Asciugatrice ha consumato 0.00 kWh
+  - Il dispositivo Televisore ha consumato 0.00 kWh
+
+>> exit
+
+[19:30] FINE
