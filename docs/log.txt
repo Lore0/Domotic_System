@@ -1,0 +1,139 @@
+
+>> set Frigorifero on
+[00:00] L'orario attuale è 00:00
+[00:00] Il dispositivo Frigorifero si è acceso
+
+>> set Lavatrice on
+[00:00] L'orario attuale è 00:00
+[00:00] Il dispositivo Lavatrice si è acceso
+
+>> set time 06:00
+[00:00] L'orario attuale è 00:00
+[01:50] Il dispositivo Lavatrice si è spento
+[06:00] L'orario attuale è 06:00
+
+>> set Impianto_fotovoltaico on
+[06:00] L'orario attuale è 06:00
+[06:00] Il dispositivo Impianto_fotovoltaico si è acceso
+
+>> show
+[06:00] L'orario attuale è 06:00
+[06:00] Attualmente il sistema ha consumato 6.066667 kWh. Nello specifico:
+  - Il dispositivo Impianto_fotovoltaico ha prodotto 0.000000 kWh
+  - Il dispositivo Pompa_di_calore_+_termostato ha consumato 0.000000 kWh
+  - Il dispositivo Scaldabagno ha consumato 0.000000 kWh
+  - Il dispositivo Frigorifero ha consumato 2.400000 kWh
+  - Il dispositivo Lavatrice ha consumato 3.666667 kWh
+  - Il dispositivo Lavastoviglie ha consumato 0.000000 kWh
+  - Il dispositivo Tapparelle_elettriche ha consumato 0.000000 kWh
+  - Il dispositivo Forno_a_microonde ha consumato 0.000000 kWh
+  - Il dispositivo Asciugatrice ha consumato 0.000000 kWh
+  - Il dispositivo Televisore ha consumato 0.000000 kWh
+
+>> set Pompa_di_calore_+_termostato 10:00 12:00
+[06:00] L'orario attuale è 06:00
+[06:00] Impostato un timer per il dispositivo Pompa_di_calore_+_termostato dalle 10:00 alle 12:00
+
+>> set Televisore 09:00
+[06:00] L'orario attuale è 06:00
+[06:00] Impostato un timer per il dispositivo Televisore dalle 09:00 alle 10:00
+
+>> set time 10:30
+[06:00] L'orario attuale è 06:00
+[09:00] Il dispositivo Televisore si è acceso
+[10:00] Il dispositivo Televisore si è spento
+[10:00] Il dispositivo Pompa_di_calore_+_termostato si è acceso
+[10:30] L'orario attuale è 10:30
+
+>> set Asciugatrice on
+[10:30] L'orario attuale è 10:30
+[10:30] Il dispositivo Asciugatrice si è acceso
+
+>> set time 13:00
+[10:30] L'orario attuale è 10:30
+[11:30] Il dispositivo Asciugatrice si è spento
+[12:00] Il dispositivo Pompa_di_calore_+_termostato si è spento
+[13:00] L'orario attuale è 13:00
+
+>> show
+[13:00] L'orario attuale è 13:00
+[13:00] Attualmente il sistema ha consumato 3.066667 kWh. Nello specifico:
+  - Il dispositivo Impianto_fotovoltaico ha prodotto 10.500000 kWh
+  - Il dispositivo Pompa_di_calore_+_termostato ha consumato 4.000000 kWh
+  - Il dispositivo Scaldabagno ha consumato 0.000000 kWh
+  - Il dispositivo Frigorifero ha consumato 5.200000 kWh
+  - Il dispositivo Lavatrice ha consumato 3.666667 kWh
+  - Il dispositivo Lavastoviglie ha consumato 0.000000 kWh
+  - Il dispositivo Tapparelle_elettriche ha consumato 0.000000 kWh
+  - Il dispositivo Forno_a_microonde ha consumato 0.000000 kWh
+  - Il dispositivo Asciugatrice ha consumato 0.500000 kWh
+  - Il dispositivo Televisore ha consumato 0.200000 kWh
+
+>> rm Televisore
+[13:00] L'orario attuale è 13:00
+[13:00] Errore: dispositivo non in attesa
+
+>> set time 15:00
+[13:00] L'orario attuale è 13:00
+[15:00] L'orario attuale è 15:00
+
+>> show
+[15:00] L'orario attuale è 15:00
+[15:00] Attualmente il sistema ha consumato 0.866667 kWh. Nello specifico:
+  - Il dispositivo Impianto_fotovoltaico ha prodotto 13.500000 kWh
+  - Il dispositivo Pompa_di_calore_+_termostato ha consumato 4.000000 kWh
+  - Il dispositivo Scaldabagno ha consumato 0.000000 kWh
+  - Il dispositivo Frigorifero ha consumato 6.000000 kWh
+  - Il dispositivo Lavatrice ha consumato 3.666667 kWh
+  - Il dispositivo Lavastoviglie ha consumato 0.000000 kWh
+  - Il dispositivo Tapparelle_elettriche ha consumato 0.000000 kWh
+  - Il dispositivo Forno_a_microonde ha consumato 0.000000 kWh
+  - Il dispositivo Asciugatrice ha consumato 0.500000 kWh
+  - Il dispositivo Televisore ha consumato 0.200000 kWh
+
+>> set Televisore off
+[15:00] Errore : Televisore è già spento
+
+>> set Televisore on
+[15:00] L'orario attuale è 15:00
+[15:00] Il dispositivo Televisore si è acceso
+
+>> set time 17:00
+[15:00] L'orario attuale è 15:00
+[16:00] Il dispositivo Televisore si è spento
+[17:00] L'orario attuale è 17:00
+
+>> show
+[17:00] L'orario attuale è 17:00
+[17:00] Attualmente il sistema ha prodotto 1.133333 kWh. Nello specifico:
+  - Il dispositivo Impianto_fotovoltaico ha prodotto 16.500000 kWh
+  - Il dispositivo Pompa_di_calore_+_termostato ha consumato 4.000000 kWh
+  - Il dispositivo Scaldabagno ha consumato 0.000000 kWh
+  - Il dispositivo Frigorifero ha consumato 6.800000 kWh
+  - Il dispositivo Lavatrice ha consumato 3.666667 kWh
+  - Il dispositivo Lavastoviglie ha consumato 0.000000 kWh
+  - Il dispositivo Tapparelle_elettriche ha consumato 0.000000 kWh
+  - Il dispositivo Forno_a_microonde ha consumato 0.000000 kWh
+  - Il dispositivo Asciugatrice ha consumato 0.500000 kWh
+  - Il dispositivo Televisore ha consumato 0.400000 kWh
+
+>>
+[17:00] Errore : Comando non riconosciuto
+
+>> set Impianto_fotovoltaico off
+[17:00] L'orario attuale è 17:00
+[17:00] Il dispositivo Impianto_fotovoltaico si è spento
+
+>> set time 20:00
+[17:00] L'orario attuale è 17:00
+[20:00] L'orario attuale è 20:00
+
+>> show Impianto_fotovoltaico
+[20:00] L'orario attuale è 20:00
+[20:00] Il dispositivo Impianto_fotovoltaico ha attualmente prodotto 16.500000 kWh
+
+>> set time 01:00
+[20:00] L'orario attuale è 20:00
+[24:00] Il dispositivo Frigorifero si è spento
+[00:00] L'orario attuale è 00:00
+[00:00] FINE
