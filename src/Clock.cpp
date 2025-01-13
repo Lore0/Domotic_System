@@ -79,12 +79,12 @@ void Clock::setClock(const string& time) {
  */
 string Clock::to_string() const {
   string hours, minutes, clock = "";
-  // If the hours are between [0,9] I add a 0 in front
+  // If the hours are between [0,9] I add a 0 in front.
   if (hours_ < 10) {
     hours = "0";
   }
   hours = hours + std::to_string(hours_);
-  // If the minutes are between [0,9] I add a 0 in front
+  // If the minutes are between [0,9] I add a 0 in front.
   if (minutes_ < 10) {
     minutes = "0";
   }

@@ -14,7 +14,7 @@ PrefixCycle::PrefixCycle(const std::string& id, const std::string& name, double 
     : Device(id, name, power, start, start),
       cycleDuration_(cycleDuration)
 {
-  // left intentionally blank
+  // Left intentionally blank
 }
 
 /**
