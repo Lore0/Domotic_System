@@ -3,6 +3,7 @@
 
 #include "Device.h"
 #include <vector>
+#include <iostream>
 
 class Scheduler {
   public:

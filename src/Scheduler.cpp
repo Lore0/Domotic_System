@@ -1,9 +1,5 @@
 #include "../include/Scheduler.h"
 
-//#include <algorithm>
-#include <iostream>
-
-// #include "../include/PrefixCycle.h"
 using namespace std;
 
 Scheduler::Scheduler(double maxPower)
@@ -206,17 +202,6 @@ int searchDevice(vector<Device *> list, Device *target) {
   }
   return -1;
 }
-// int searchDevice(vector<Device *> list, Device *target) {
-//   // Usa std::find per cercare il dispositivo
-//   auto iter = find(list.begin(), list.end(), target);
-
-//   if (iter != list.end()) {
-//     // Calcola e restituisci l'indice
-//     return distance(list.begin(), iter);
-//   }
-//   // Se non trovato, restituisce -1
-//   return -1;
-// }
 
 string Scheduler::getStringCurrTime() {
   if (currTime == Clock("24:00"))  // non vogliamo che venga scritto 24:00
