@@ -37,7 +37,7 @@ Domotic_System/
 | Impianto_fotovoltaico         |  Manuale   |   +1.5 kW   |
 | Lavatrice                     |   01:50    |    -2 kW    |
 | Lavastoviglie                 |   03:15    |   -1.5 kW   |
-| Pompa*di_calore*+\_termostato |  Manuale   |    -2 kW    |
+| Pompa*di_calore+termostato    |  Manuale   |    -2 kW    |
 | Tapparelle_elettriche         |   00:01    |   -0.3 kW   |
 | Scaldabagno                   |  Manuale   |    -1 kW    |
 | Frigorifero                   |  Manuale   |   -0.4 kW   |
