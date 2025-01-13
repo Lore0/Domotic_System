@@ -58,42 +58,39 @@ string DomoticSystem::showDevice(Device &device_) {
  */
 string DomoticSystem::showAll() {
   string time = logTime();
-  double tot = 0;
+  double totConsumed = 0;
+  double totProduced = 0;
   string eachDevice = "";
   for (Device d : manual_) {
     double consumpt = scheduler_.showDevice(&d);
-    tot += consumpt;
     if (d.getPowerConsumption() < 0) {
       consumpt *= (-1);
+      totConsumed += consumpt;
       eachDevice += "\n  - Il dispositivo " + d.getName() + " ha consumato " +
                     roundTo2(consumpt) + " kWh";
     } else {
+      totProduced += consumpt;
       eachDevice += "\n  - Il dispositivo " + d.getName() + " ha prodotto " +
                     roundTo2(consumpt) + " kWh";
     }
   }
   for (Device d : prefixCycle_) {
     double consumpt = scheduler_.showDevice(&d);
-    tot += consumpt;
     if (d.getPowerConsumption() < 0) {
       consumpt *= (-1);
+      totConsumed += consumpt;
       eachDevice += "\n  - Il dispositivo " + d.getName() + " ha consumato " +
                     roundTo2(consumpt) + " kWh";
     } else {
+      totProduced += consumpt;
       eachDevice += "\n  - Il dispositivo " + d.getName() + " ha prodotto " +
                     roundTo2(consumpt) + " kWh";
     }
   }
-  if (tot >= 0) {
-    return time + scheduler_.getStringCurrTime() +
-           " Attualmente il sistema ha prodotto " + roundTo2(tot) +
-           " kWh. Nello specifico:" + eachDevice + "\n";
-  } else {
-    tot *= (-1);
-    return time + scheduler_.getStringCurrTime() +
-           " Attualmente il sistema ha consumato " + roundTo2(tot) +
-           " kWh. Nello specifico:" + eachDevice + "\n";
-  }
+  return time + scheduler_.getStringCurrTime() +
+         " Attualmente il sistema ha prodotto " + roundTo2(totProduced) +
+         " kWh e ha consumato " + roundTo2(totConsumed) +
+         ". Nello specifico:" + eachDevice + "\n";
 }
 
 string DomoticSystem::setTime(Clock &time_) {
