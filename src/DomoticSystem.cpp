@@ -224,7 +224,7 @@ string DomoticSystem::logError(const string &error) {
  */
 string DomoticSystem::handleInput(const string &input_) {
   istringstream iss(input_);
-  string command, deviceName, target;
+  string command, deviceName;
   iss >> command;
   string log;
 
@@ -258,22 +258,25 @@ string DomoticSystem::handleInput(const string &input_) {
               m->setStart(scheduler_.getCurrTime());
               m->setFinish(Clock("24:00"));
               log = setOn(*m);
+              cout << log << endl;
+              return log;
             }
-            cout << log << endl;
-            return log;
           } else if (action == "off") {
             if (!m->getStatus()) {
               return logError(m->getName() + " è già spento");
             } else {
               log = setOff(*m);
+              cout << log << endl;
+              return log;
             }
-            cout << log << endl;
-            return log;
           } else {
             string startTime = action, endTime;
             iss >> endTime;
             if (m->hasTimer()) {
               return logError(m->getName() + " ha già un timer");
+            }
+            if (m->getStatus()) {
+              return logError(m->getName() + " è già acceso");
             }
             if (Clock(startTime) < scheduler_.getCurrTime()) {
               return logError("Orario non valido");
@@ -287,9 +290,6 @@ string DomoticSystem::handleInput(const string &input_) {
               m->setFinish(Clock("24:00"));  // andare avanti all'infinito
             }
             m->setStart(Clock(startTime));
-            if (m->getStatus()) {
-              return logError(m->getName() + " è già acceso");
-            }
             log = setDeviceTimer(*m);
             cout << log << endl;
             return log;
@@ -297,22 +297,22 @@ string DomoticSystem::handleInput(const string &input_) {
         } else if (PrefixCycle *p = searchPrefixCycle(deviceName)) {
           if (action == "on") {
             if (p->getStatus()) {
-              logError(p->getName() + " è già acceso");
+              return logError(p->getName() + " è già acceso");
             } else {
               p->setStart(scheduler_.getCurrTime());
               p->setFinish(scheduler_.getCurrTime().addTime(p->getDuration()));
               log = setOn(*p);
+              cout << log << endl;
+              return log;
             }
-            cout << log << endl;
-            return log;
           } else if (action == "off") {
             if (!p->getStatus()) {
               return logError(p->getName() + " è già spento");
             } else {
               setOff(*p);
+              cout << log << endl;
+              return log;
             }
-            cout << log << endl;
-            return log;
           } else {
             string startTime = action;
             string endTime;
