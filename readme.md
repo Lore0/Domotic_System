@@ -8,6 +8,7 @@
 ```
 Domotic_System/
 ├── CMakeLists.txt
+├── README.md
 ├── docs
 │   ├── device.txt
 │   └── progetto.pdf
@@ -19,7 +20,6 @@ Domotic_System/
 │   ├── Manual.h
 │   ├── PrefixCycle.h
 │   └── Scheduler.h
-├── readme.md
 └── src
     ├── Clock.cpp
     ├── Device.cpp
