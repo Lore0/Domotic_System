@@ -190,7 +190,6 @@ double Scheduler::showDevice(Device *device) {
   int targetIndex = searchDevice(running_, device);
   if (targetIndex != -1) {
     tothour += currTime.getDistance(running_.at(targetIndex)->getStart());
-    cout << tothour << endl;
   }
   int i = 0;
   while (i < finished_.size()) {
