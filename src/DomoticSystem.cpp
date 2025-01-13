@@ -90,7 +90,7 @@ string DomoticSystem::showAll() {
   return time + scheduler_.getStringCurrTime() +
          " Attualmente il sistema ha prodotto " + roundTo2(totProduced) +
          " kWh e ha consumato " + roundTo2(totConsumed) +
-         ". Nello specifico:" + eachDevice + "\n";
+         " kWh. Nello specifico:" + eachDevice + "\n";
 }
 
 string DomoticSystem::setTime(Clock &time_) {
