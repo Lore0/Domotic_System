@@ -13,8 +13,10 @@ void Clock::StringToTime(const string& time) {
   int hours, minutes;
   istringstream stream(time);  // stream di time
 
-  if (!(stream >> hours >> div >> minutes) || div != ':' || hours < 0 ||hours > 24 || minutes < 0 || minutes >= 60 || time.length() != 5) {
-    throw InvalidTimeFormat("ERRORE: l'orario deve essere esplicitato come hh:mm.");
+  if (!(stream >> hours >> div >> minutes) || div != ':' || hours < 0 ||
+      hours > 24 || minutes < 0 || minutes >= 60 || time.length() != 5) {
+    throw InvalidTimeFormat(
+        "ERRORE: l'orario deve essere esplicitato come hh:mm.");
   }
 
   hours_ = hours;
@@ -34,7 +36,7 @@ int Clock::getHours() const { return hours_; }
 
 int Clock::getMinutes() const { return minutes_; }
 
-void Clock::setTime(const string& time) { StringToTime(time); }
+void Clock::setClock(const string& time) { StringToTime(time); }
 
 string Clock::to_string() const {  // TODO
   string hours, minutes, clock = "";

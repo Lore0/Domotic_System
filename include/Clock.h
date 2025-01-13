@@ -1,42 +1,42 @@
 #ifndef CLOCK_H
 #define CLOCK_H
 
+#include <sstream>
 #include <stdexcept>
 #include <string>
-#include <sstream>
+
 #include "InvalidTimeFormat.h"
 
 class Clock {
-  private:
-    int hours_;
+ private:
+  int hours_;
 
-    int minutes_;
+  int minutes_;
 
-    void StringToTime(const std::string& time);
+  void StringToTime(const std::string& time);
 
-  public:
+ public:
+  explicit Clock(const std::string time);
 
-    explicit Clock(const std::string time);
+  Clock();
 
-    Clock();
+  Clock addTime(const Clock& time);
 
-    Clock addTime(const Clock& time);
+  void setClock(const std::string& time);
 
-    void setTime(const std::string& time);
+  int getHours() const;
 
-    int getHours() const;
+  int getMinutes() const;
 
-    int getMinutes() const;
+  std::string to_string() const;
 
-    std::string to_string() const;
+  double getDistance(const Clock& time) const;
 
-    double getDistance(const Clock& time) const;
-
-    Clock& operator=(const Clock &time);
+  Clock& operator=(const Clock& time);
 };
 
 bool operator>(const Clock& t1, const Clock& t2);
 bool operator<(const Clock& t1, const Clock& t2);
 bool operator==(const Clock& t1, const Clock& t2);
 
-#endif // CLOCK_H
+#endif  // CLOCK_H
