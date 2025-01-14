@@ -133,7 +133,8 @@ string DomoticSystem::showAll() {
  * @return A string containing the action log.
  */
 string DomoticSystem::setTime(Clock &time_) {
-  return logTime() + scheduler_.setTime(time_);
+  string time = logTime();
+  return time + scheduler_.setTime(time_);
 }
 
 /**
