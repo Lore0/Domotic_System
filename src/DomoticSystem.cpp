@@ -454,7 +454,7 @@ string DomoticSystem::handleInput(const string &input_) {
       return logError("Dispositivo non trovato");
     } else if (command == "exit") {  // handle exit command
       setSystemState(false);         // deactivate system
-      log = "\n" + scheduler_.getStringCurrTime() + " FINE";
+      log = scheduler_.getStringCurrTime() + " FINE";
       cout << log << endl;
       return log;
     } else {

@@ -29,7 +29,7 @@
 [13:00] L'orario attuale è 13:00
 
 >> set Scaldabagno on
-[13:00] Errore : Scaldabagno è già acceso
+[13:00] ERRORE : Scaldabagno è già acceso
 
 >> set Lavastoviglie on
 [13:00] L'orario attuale è 13:00
@@ -48,28 +48,61 @@
 [16:15] Il dispositivo Lavastoviglie si è spento
 [16:30] L'orario attuale è 16:30
 
+>> show Lavastoviglie
+[16:30] L'orario attuale è 16:30
+[16:30] Il dispositivo Lavastoviglie ha attualmente consumato 4.88 kWh
+
 >> set Lavastoviglie on
 [16:30] L'orario attuale è 16:30
 [16:30] Il dispositivo Lavastoviglie si è acceso
 
->> set time 19:30
+>> set time 20:00
 [16:30] L'orario attuale è 16:30
-[19:30] L'orario attuale è 19:30
+[19:45] Il dispositivo Lavastoviglie si è spento
+[20:00] L'orario attuale è 20:00
+
+>> set Lavastoviglie on
+[20:00] L'orario attuale è 20:00
+[20:00] Il dispositivo Lavastoviglie si è acceso
+
+>> set time 21:00
+[20:00] L'orario attuale è 20:00
+[21:00] L'orario attuale è 21:00
 
 >> show
-[19:30] L'orario attuale è 19:30
-[19:30] Attualmente il sistema ha consumato 24.27 kWh. Nello specifico:
+[21:00] L'orario attuale è 21:00
+[21:00] Attualmente il sistema ha prodotto 0.00 kWh e ha consumato 27.65 kWh. Nello specifico:
   - Il dispositivo Impianto_fotovoltaico ha prodotto 0.00 kWh
   - Il dispositivo Pompa_di_calore+termostato ha consumato 0.00 kWh
-  - Il dispositivo Scaldabagno ha consumato 14.50 kWh
+  - Il dispositivo Scaldabagno ha consumato 16.00 kWh
   - Il dispositivo Frigorifero ha consumato 0.40 kWh
   - Il dispositivo Lavatrice ha consumato 0.00 kWh
-  - Il dispositivo Lavastoviglie ha consumato 9.38 kWh
+  - Il dispositivo Lavastoviglie ha consumato 11.25 kWh
+  - Il dispositivo Tapparelle_elettriche ha consumato 0.00 kWh
+  - Il dispositivo Forno_a_microonde ha consumato 0.00 kWh
+  - Il dispositivo Asciugatrice ha consumato 0.00 kWh
+  - Il dispositivo Televisore ha consumato 0.00 kWh
+
+>> reset all
+[00:00] L'orario attuale è 00:00
+[00:00] Comando reset all eseguito con successo
+
+>> set Lavatrice off
+[00:00] ERRORE : Lavatrice è già spento
+
+>> show
+[00:00] L'orario attuale è 00:00
+[00:00] Attualmente il sistema ha prodotto 0.00 kWh e ha consumato 0.00 kWh. Nello specifico:
+  - Il dispositivo Impianto_fotovoltaico ha prodotto 0.00 kWh
+  - Il dispositivo Pompa_di_calore+termostato ha consumato 0.00 kWh
+  - Il dispositivo Scaldabagno ha consumato 0.00 kWh
+  - Il dispositivo Frigorifero ha consumato 0.00 kWh
+  - Il dispositivo Lavatrice ha consumato 0.00 kWh
+  - Il dispositivo Lavastoviglie ha consumato 0.00 kWh
   - Il dispositivo Tapparelle_elettriche ha consumato 0.00 kWh
   - Il dispositivo Forno_a_microonde ha consumato 0.00 kWh
   - Il dispositivo Asciugatrice ha consumato 0.00 kWh
   - Il dispositivo Televisore ha consumato 0.00 kWh
 
 >> exit
-
-[19:30] FINE
+[00:00] FINE
