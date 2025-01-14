@@ -1,3 +1,5 @@
+// LORENZO PANIZZOLO
+
 #include "../include/DomoticSystem.h"
 
 using namespace std;
@@ -220,34 +222,36 @@ string DomoticSystem::logError(const string &error) {
  * @return A string containing the result of the command execution.
  */
 string DomoticSystem::handleInput(const string &input_) {
+  // stream to parse input
   istringstream iss(input_);
   string command, deviceName;
   iss >> command;
   string log;
 
   try {
-    if (command == "set") {
+    if (command == "set") {  // handle set command
       iss >> deviceName;
       if (deviceName == "time") {
         string time;
         iss >> time;
         Clock t(time);
+        // new time in the past (end program)
         if (t < scheduler_.getCurrTime()) {
           Clock end("24:00");
-          log = setTime(end);
+          log = setTime(end);  // set time to end of the day
           log += "[00:00] FINE";
           cout << log << endl;
-          setSystemState(false);
+          setSystemState(false);  // deactivate system
           return log;
         }
-        log = setTime(t);
+        log = setTime(t);  // set the new time
         cout << log << endl;
         return log;
-      } else {
+      } else {  // handle "set [$deviceName] [on|off|timer]"
         string action;
         iss >> action;
 
-        if (Manual *m = searchManual(deviceName)) {
+        if (Manual *m = searchManual(deviceName)) {  // search for manual device
           if (action == "on") {
             if (m->getStatus()) {
               return logError(m->getName() + " è già acceso");
@@ -266,7 +270,7 @@ string DomoticSystem::handleInput(const string &input_) {
               cout << log << endl;
               return log;
             }
-          } else {
+          } else {  // handle timer for manual device
             string startTime = action, endTime;
             iss >> endTime;
             if (m->hasTimer()) {
@@ -284,7 +288,9 @@ string DomoticSystem::handleInput(const string &input_) {
               }
               m->setFinish(Clock(endTime));
             } else {
-              m->setFinish(Clock("24:00"));  // andare avanti all'infinito
+              // set finish at the end of the day
+              // if no end time is provided
+              m->setFinish(Clock("24:00"));
             }
             m->setStart(Clock(startTime));
             log = setDeviceTimer(*m);
@@ -292,11 +298,13 @@ string DomoticSystem::handleInput(const string &input_) {
             return log;
           }
         } else if (PrefixCycle *p = searchPrefixCycle(deviceName)) {
+          // search for prefix cycle device
           if (action == "on") {
             if (p->getStatus()) {
               return logError(p->getName() + " è già acceso");
             } else {
               p->setStart(scheduler_.getCurrTime());
+              // calculate finish time
               p->setFinish(scheduler_.getCurrTime().addTime(p->getDuration()));
               log = setOn(*p);
               cout << log << endl;
@@ -310,7 +318,7 @@ string DomoticSystem::handleInput(const string &input_) {
               cout << log << endl;
               return log;
             }
-          } else {
+          } else { // handle timer for prefix cycle device
             string startTime = action;
             string endTime;
 
@@ -322,7 +330,7 @@ string DomoticSystem::handleInput(const string &input_) {
               return logError("Orario non valido");
             }
 
-            if (iss >> endTime) {
+            if (iss >> endTime) { // CP device supports only start time
               return logError(
                   "Dispositivo CP non supporta orario di fine. Devi "
                   "specificare "
@@ -344,7 +352,7 @@ string DomoticSystem::handleInput(const string &input_) {
           return logError("Dispositivo non trovato");
         }
       }
-    } else if (command == "reset") {
+    } else if (command == "reset") { // handle reset command
       string target;
       iss >> target;
 
@@ -363,7 +371,7 @@ string DomoticSystem::handleInput(const string &input_) {
       } else {
         return logError("Comando non riconosciuto");
       }
-    } else if (command == "show") {
+    } else if (command == "show") { // handle show command
       if (iss >> deviceName) {
         if (Manual *m = searchManual(deviceName)) {
           log = showDevice(*m);
@@ -380,7 +388,7 @@ string DomoticSystem::handleInput(const string &input_) {
         cout << log << endl;
         return log;
       }
-    } else if (command == "rm") {
+    } else if (command == "rm") { // handle "rm" command
       iss >> deviceName;
       if (Manual *m = searchManual(deviceName)) {
         log = m->getStatus() ? removeFromRunning(*m) : removeFromWaiting(*m);
@@ -392,17 +400,17 @@ string DomoticSystem::handleInput(const string &input_) {
         return log;
       }
       return logError("Dispositivo non trovato");
-    } else if (command == "exit") {
-      setSystemState(false);
+    } else if (command == "exit") { // handle exit command
+      setSystemState(false); // deactivate system
       log = "\n" + scheduler_.getStringCurrTime() + " FINE";
       cout << log << endl;
       return log;
     } else {
       return logError("Comando non riconosciuto");
     }
-  } catch (const InvalidTimeFormat &e) {
+  } catch (const InvalidTimeFormat &e) { // handle invalid time format
     return logError("Formato orario non valido");
-  } catch (const exception &e) {
+  } catch (const exception &e) { // handle generic exception
     return logError("Errore: " + string(e.what()));
   }
   return logError("Errore");

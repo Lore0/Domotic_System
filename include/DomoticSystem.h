@@ -1,10 +1,10 @@
+// LORENZO PANIZZOLO
+
 #ifndef DOMOTICSYSTEM_H
 #define DOMOTICSYSTEM_H
 
-#include <cmath>
 #include <fstream>
 #include <iostream>
-#include <regex>
 #include <sstream>
 #include <string>
 #include <vector>
