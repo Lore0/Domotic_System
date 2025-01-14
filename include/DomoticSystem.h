@@ -4,11 +4,11 @@
 #define DOMOTICSYSTEM_H
 
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
-#include <iomanip>
 
 #include "Clock.h"
 #include "Manual.h"

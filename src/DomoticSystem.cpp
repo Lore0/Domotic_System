@@ -4,26 +4,58 @@
 
 using namespace std;
 
+/**
+ * @brief Constructor that initializes scheduler, system status, and
+ * builds the devices.
+ */
 DomoticSystem::DomoticSystem() : scheduler_(kMaxPower), status_(true) {
   buildDevices();
 }
 
+/**
+ * @brief Calls Scheduler function to turn on a device and logs the action.
+ * @param device_ Reference to the device to be turned on.
+ * @return A string containing the action log.
+ */
 string DomoticSystem::setOn(Device &device_) {
   return logTime() + scheduler_.setOn(&device_);
 }
 
+/**
+ * @brief Calls Scheduler function to turn off a device and logs the action.
+ * @param device_ Reference to the device to be turned off.
+ * @return A string containing the action log.
+ */
 string DomoticSystem::setOff(Device &device_) {
   return logTime() + scheduler_.setOff(&device_);
 }
 
+/**
+ * @brief Call Scheduler function to set a timer for a device and logs the
+ * action.
+ * @param device_ Reference to the device.
+ * @return A string containing the action log.
+ */
 string DomoticSystem::setDeviceTimer(Device &device_) {
   return logTime() + scheduler_.setDeviceTimer(&device_);
 }
 
+/**
+ * @brief Call Scheduler function to remove a device from the running list and
+ * logs the action.
+ * @param device_ Reference to the device.
+ * @return A string containing the action log.
+ */
 string DomoticSystem::removeFromRunning(Device &device_) {
   return logTime() + scheduler_.removeTimerFromRunning(&device_);
 }
 
+/**
+ * @brief Call Scheduler function to remove a device from the waiting list and
+ * logs the action.
+ * @param device_ Reference to the device.
+ * @return A string containing the action log.
+ */
 string DomoticSystem::removeFromWaiting(Device &device_) {
   return logTime() + scheduler_.removeTimerFromWaiting(&device_);
 }
@@ -95,17 +127,33 @@ string DomoticSystem::showAll() {
          " kWh. Nello specifico:" + eachDevice + "\n";
 }
 
+/**
+ * @brief Call Scheduler function to set a new time in the system.
+ * @param time_ The new time to set.
+ * @return A string containing the action log.
+ */
 string DomoticSystem::setTime(Clock &time_) {
-  string time = logTime();
-  return time + scheduler_.setTime(time_);
+  return logTime() + scheduler_.setTime(time_);
 }
 
+/**
+ * @brief Call Scheduler function to resets the time to its initial state.
+ * @return A string containing the action log.
+ */
 string DomoticSystem::resetTime() { return logTime() + scheduler_.resetTime(); }
 
+/**
+ * @brief Call Scheduler function to reset all device timers in the system.
+ * @return A string containing the action log.
+ */
 string DomoticSystem::resetTimers() {
   return logTime() + scheduler_.resetTimers();
 }
 
+/**
+ * @brief Resets all system parameters including device timers and time.
+ * @return A string containing the action log.
+ */
 string DomoticSystem::resetAll() {
   resetTimers();
   resetTime();
@@ -115,6 +163,10 @@ string DomoticSystem::resetAll() {
   return log;
 }
 
+/**
+ * @brief Logs the current time: [HH:MM] L'orario attuale è HH:MM.
+ * @return A string containing the current time.
+ */
 string DomoticSystem::logTime() {
   return scheduler_.getStringCurrTime() + " L'orario attuale è " +
          scheduler_.getCurrTime().to_string() + "\n";
@@ -158,7 +210,7 @@ void DomoticSystem::buildDevices() {
     stringstream ss(line);
     string id, name, type, pow;
 
-    // leggo dati separati da virgola
+    // read data
     getline(ss, id, ',');
     getline(ss, name, ',');
     getline(ss, type, ',');
@@ -168,7 +220,7 @@ void DomoticSystem::buildDevices() {
 
     Clock null("00:00");
 
-    // gestione di M o CP
+    // M or CP handling
     if (type == "Manuale") {
       manual_.push_back(Manual(id, name, power, null, null));
     } else {
@@ -318,7 +370,7 @@ string DomoticSystem::handleInput(const string &input_) {
               cout << log << endl;
               return log;
             }
-          } else { // handle timer for prefix cycle device
+          } else {  // handle timer for prefix cycle device
             string startTime = action;
             string endTime;
 
@@ -330,7 +382,7 @@ string DomoticSystem::handleInput(const string &input_) {
               return logError("Orario non valido");
             }
 
-            if (iss >> endTime) { // CP device supports only start time
+            if (iss >> endTime) {  // CP device supports only start time
               return logError(
                   "Dispositivo CP non supporta orario di fine. Devi "
                   "specificare "
@@ -352,7 +404,7 @@ string DomoticSystem::handleInput(const string &input_) {
           return logError("Dispositivo non trovato");
         }
       }
-    } else if (command == "reset") { // handle reset command
+    } else if (command == "reset") {  // handle reset command
       string target;
       iss >> target;
 
@@ -371,7 +423,7 @@ string DomoticSystem::handleInput(const string &input_) {
       } else {
         return logError("Comando non riconosciuto");
       }
-    } else if (command == "show") { // handle show command
+    } else if (command == "show") {  // handle show command
       if (iss >> deviceName) {
         if (Manual *m = searchManual(deviceName)) {
           log = showDevice(*m);
@@ -388,7 +440,7 @@ string DomoticSystem::handleInput(const string &input_) {
         cout << log << endl;
         return log;
       }
-    } else if (command == "rm") { // handle "rm" command
+    } else if (command == "rm") {  // handle "rm" command
       iss >> deviceName;
       if (Manual *m = searchManual(deviceName)) {
         log = m->getStatus() ? removeFromRunning(*m) : removeFromWaiting(*m);
@@ -400,17 +452,17 @@ string DomoticSystem::handleInput(const string &input_) {
         return log;
       }
       return logError("Dispositivo non trovato");
-    } else if (command == "exit") { // handle exit command
-      setSystemState(false); // deactivate system
+    } else if (command == "exit") {  // handle exit command
+      setSystemState(false);         // deactivate system
       log = "\n" + scheduler_.getStringCurrTime() + " FINE";
       cout << log << endl;
       return log;
     } else {
       return logError("Comando non riconosciuto");
     }
-  } catch (const InvalidTimeFormat &e) { // handle invalid time format
+  } catch (const InvalidTimeFormat &e) {  // handle invalid time format
     return logError("Formato orario non valido");
-  } catch (const exception &e) { // handle generic exception
+  } catch (const exception &e) {  // handle generic exception
     return logError("Errore: " + string(e.what()));
   }
   return logError("Errore");
@@ -427,6 +479,14 @@ string DomoticSystem::getCustomInput() {
   return input;
 }
 
+/**
+ * @brief Sets the state of the domotic system.
+ * @param state true to activate the system, false to deactivate it.
+ */
 void DomoticSystem::setSystemState(bool state) { status_ = state; }
 
+/**
+ * @brief Gets the current state of the system.
+ * @return true if the system is active, false otherwise.
+ */
 bool DomoticSystem::getSystemState() const { return status_; }
