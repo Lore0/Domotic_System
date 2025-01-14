@@ -1,4 +1,4 @@
-//COMPAGNO FEDERICO
+// FEDERICO COMPAGNO
 
 #include "../include/Clock.h"
 

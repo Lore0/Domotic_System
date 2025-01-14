@@ -1,4 +1,4 @@
-//COMPAGNO FEDERICO
+// FEDERICO COMPAGNO
 
 #ifndef DEVICE_H
 #define DEVICE_H
@@ -12,7 +12,7 @@ class Device {
  protected:
   std::string name_;  // Name of the device.
   std::string id_;    // Unique identifier for the device.
-  double power_;      // Power consumption of the device.
+  double power_;      // Power consumption of the device in kWh.
   bool status_;       // Status of the device (on = true, off = false).
   bool hasTimer_;     // Indicates if the device has a timer.
   Clock start_;       // Start time of the device.

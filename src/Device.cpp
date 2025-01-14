@@ -1,4 +1,4 @@
-//COMPAGNO FEDERICO
+// FEDERICO COMPAGNO
 
 #include "../include/Device.h"
 
@@ -8,7 +8,7 @@ using namespace std;
  * @brief Constructs a Device object with specified parameters.
  * @param id The unique identifier for the device.
  * @param name The name of the device.
- * @param power The power consumption of the device in kiloWatts.
+ * @param power The power consumption of the device in kWh.
  * @param start The start time of the device's timer.
  * @param finish The finish time of the device's timer.
  */
